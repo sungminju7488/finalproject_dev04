@@ -13,8 +13,8 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component= {Navbar} />
-          <Route exact path="/Join" component= {Join}/>
-          <Route exact path="/Login" component= {Login}/>
+          <Route exact path="/member/join" component= {Join}/>
+          <Route exact path="/member/login" component= {Login}/>
         </Switch>
       </BrowserRouter>
     );

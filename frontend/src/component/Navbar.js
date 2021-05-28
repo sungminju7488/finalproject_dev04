@@ -42,12 +42,12 @@ function navbar(){
         
             <ul className="navbar-nav">
                 <li className="nav-item">
-                <Link to="/Join" className="nav-link">
+                <Link to="/member/join" className="nav-link">
                   회원가입
                 </Link>
                 </li>
                 <li className="nav-item">
-                <Link to="/Login" className="nav-link">
+                <Link to="/member/login" className="nav-link">
                   로그인
                 </Link>
                 </li>
