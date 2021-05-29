@@ -16,12 +16,12 @@ public class MemberController {
 //	public void joinBakery(MemberVO memberVO) {
 //		memberService.joinBakery(memberVO);		
 //	}
-//	
-//	@PostMapping("/member/myPage")
-//	public MemberVO myPage(MemberVO memberVO) {
-//		return memberService.myPage(memberVO).get();
-//	}
-//	
+	
+	@PostMapping("/member/myPage")
+	public MemberVO myPage(MemberVO memberVO) {
+		return memberService.myPage(memberVO).get();
+	}
+	
 //	@PostMapping("/member/changeMyInfo")
 //	public void update(MemberVO memberVO) {
 //		memberService.update(memberVO);

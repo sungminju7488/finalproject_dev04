@@ -15,10 +15,10 @@ public class MemberService {
 	public void join(MemberVO memberVO) {
 		mr.save(memberVO);
 	}
-//	public Optional<MemberVO> myPage(MemberVO memberVO){
-//		return mr.findById(memberVO.getMemberId());
-//	}
-//	
+	public Optional<MemberVO> myPage(MemberVO memberVO){
+		return mr.findById(memberVO.getMemberId());
+	}
+	
 //	public void update(MemberVO memberVO) {
 //		mr.save(memberVO);
 //	}
