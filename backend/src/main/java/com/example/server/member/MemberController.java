@@ -22,10 +22,10 @@ public class MemberController {
 		return memberService.myPage(memberVO).get();
 	}
 	
-//	@PostMapping("/member/changeMyInfo")
-//	public void update(MemberVO memberVO) {
-//		memberService.update(memberVO);
-//	}
+	@PostMapping("/member/changeMember")
+	public void update(MemberVO memberVO) {
+		memberService.update(memberVO);
+	}
 //	@PostMapping("/member/quit")
 //	public MemberVO quit(MemberVO memberVO) {
 //		

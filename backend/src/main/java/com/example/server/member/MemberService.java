@@ -19,9 +19,9 @@ public class MemberService {
 		return mr.findById(memberVO.getMemberId());
 	}
 	
-//	public void update(MemberVO memberVO) {
-//		mr.save(memberVO);
-//	}
+	public void update(MemberVO memberVO) {
+		mr.save(memberVO);
+	}
 //	public Optional<MemberVO> delete(MemberVO memberVO){
 //		return mr.deleteByIdAndPassword(memberVO.getMemberId(), memberVO.getPassword());
 //	}
