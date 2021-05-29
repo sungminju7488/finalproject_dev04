@@ -3,7 +3,7 @@ import '../css/Join.css';
 
 function join() {
     return(
-        
+      <form>  
         <div id="content">              
             {/* header부분 */}
             <div id="header">
@@ -109,11 +109,12 @@ function join() {
             </div>
             {/* 가입하기 버튼 */}
             <div className="btn_area">
-                <button type="button" id="btnJoin">
+                <button type="submit" id="btnJoin">
                     <span>가입하기</span>
                 </button>
             </div>
         </div>
+      </form>  
          
     );
  }
