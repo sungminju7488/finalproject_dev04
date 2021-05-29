@@ -1,4 +1,4 @@
-package com.example.server.member;
+package com.example.server.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -3,6 +3,8 @@ package com.example.server.member;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.server.model.MemberVO;
+
 @RestController
 public class MemberController {
 
@@ -12,10 +14,6 @@ public class MemberController {
 	public void join(MemberVO memberVO) {
 		memberService.join(memberVO);		
 	}
-//	@PostMapping("/member/joinBakery")
-//	public void joinBakery(MemberVO memberVO) {
-//		memberService.joinBakery(memberVO);		
-//	}
 	
 	@PostMapping("/member/myPage")
 	public MemberVO myPage(MemberVO memberVO) {

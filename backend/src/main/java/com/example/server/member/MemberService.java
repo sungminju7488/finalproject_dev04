@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.server.model.MemberVO;
+
 @Transactional
 @Service
 public class MemberService {
@@ -13,6 +15,9 @@ public class MemberService {
 	MemberRepository mr;
 	
 	public void join(MemberVO memberVO) {
+		mr.save(memberVO);
+	}
+	public void joinBakery(MemberVO memberVO) {
 		mr.save(memberVO);
 	}
 	public Optional<MemberVO> myPage(MemberVO memberVO){
