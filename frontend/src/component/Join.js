@@ -23,14 +23,14 @@ function join() {
                 <label for="pswd1">비밀번호</label>
             </h3>
             <span className="box var_pass">
-                <input type="text" id="pswd1" className="var" maxLength="20" ></input>
+                <input type="password" id="pswd1" className="var" maxLength="20" ></input>
             </span>
             {/* pw 2차 부분 */}
             <h3 className="join_title">
                 <label for="pawd2">비밀번호  재확인</label>
             </h3>
             <span className="box var_pass_check">
-                <input type="text" id="pswd2" className="var" maxLength="20"></input>
+                <input type="password" id="pswd2" className="var" maxLength="20"></input>
             </span>
             {/* 이름 부분 */}
             <h3 className="join_title">
