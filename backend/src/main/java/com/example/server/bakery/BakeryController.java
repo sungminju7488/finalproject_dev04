@@ -22,27 +22,27 @@ public class BakeryController {
 	}
 	
 	@RequestMapping("/bakery/menuList")
-	public void update(BakeryVO bakeryVO) {
+	public void menuList(BakeryVO bakeryVO) {
 		return bakeryService.menuList(bakeryVO);
 	}	
 	
 	@RequestMapping("/bakery/addMenu")
-	public void update(BakeryVO bakeryVO) {
+	public void addMenu(BakeryVO bakeryVO) {
 		return bakeryService.addMenu(bakeryVO);
 	}
 	
 	@RequestMapping("/bakery/modifyMenu")
-	public void update(BakeryVO bakeryVO) {
+	public void modifyMenu(BakeryVO bakeryVO) {
 		return bakeryService.modifyMenu(bakeryVO);
 	}
 	
 	@RequestMapping("/bakery/deleteMenu")
-	public void update(BakeryVO bakeryVO) {
+	public void deleteMenu(BakeryVO bakeryVO) {
 		return bakeryService.deleteMenu(bakeryVO);
 	}
 	
 	@RequestMapping("/bakery/boardToggle")
-	public void update(BakeryVO bakeryVO) {
+	public void boardToggle(BakeryVO bakeryVO) {
 		return bakeryService.boardToggle(bakeryVO);
 	}
 }
