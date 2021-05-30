@@ -1,0 +1,20 @@
+@font-face {
+    font-family: Jua;
+    src: url(../resource/BMJUA_otf.otf);
+}
+
+#BrandName {
+    font-family: Jua;
+    font-size: 32px;
+    
+}
+
+body{
+    background-color: #f0e8d9;
+}
+
+.nav-item {
+    font-family: Jua;
+    font-size: 16px;
+    color: #58595b;;
+}
