@@ -1,4 +1,4 @@
-package com.example.server.member;
+package com.example.server.bakery;
 
 import java.util.Optional;
 
@@ -12,24 +12,29 @@ import com.example.server.model.MemberVO;
 @Service
 public class BakeryService {
 	@Autowired
-	MemberRepository mr;
+	BakeryRepository mr;
 	
-	public void join(MemberVO memberVO) {
-		mr.save(memberVO);
+	public void joinBakery(BakeryVO bakeryVO) {
+		mr.save(bakeryVO);
 	}
-	public String findId(MemberVO memberVO){
-		return mr.findByPhoneNumberAndEMail(memberVO.getPhoneNumber(), memberVO.getEMail()).get().getMemberId();
+	public Optional<BakeryVO> myshop(BakeryVO bakeryVO){
+		return mr.findByCOPREGNUM(BakeryVO.getCOPREGNUM());
 	}
-	public String findPassword(MemberVO memberVO){
-		return mr.findByPhoneNumberAndEMail(memberVO.getPhoneNumber(), memberVO.getEMail()).get().getPassword();
+	public String changeBakery(BakeryVO bakeryVO){
+		mr.save(bakeryVO);
 	}
-	public Optional<MemberVO> myPage(MemberVO memberVO){
-		return mr.findByMemberId(memberVO.getMemberId());
+	public Optional<BakeryVO>menuList(BakeryVO bakeryVO){
+		mr.save(bakeryVO);
 	}
-	public void update(MemberVO memberVO) {
-		mr.save(memberVO);
+	public void addMenu(BakeryVO bakeryVO) {
+		mr.save(bakeryVO);
+	}	
+	public void modifyMenu(BakeryVO bakeryVO) {
+		mr.save(bakeryVO);
 	}
-	public Optional<MemberVO> delete(MemberVO memberVO){
-		return mr.deleteByMemberIdAndPassword(memberVO.getMemberId(), memberVO.getPassword());
+	public Optional<BakeryVO> deleteMenu(BakeryVO bakeryVO){
+		mr.save(bakeryVO);
 	}
-}
+	public void boardToggle(BakeryVO bakeryVO) {
+		mr.save(bakeryVO);
+	}}

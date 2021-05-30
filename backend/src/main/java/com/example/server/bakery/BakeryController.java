@@ -10,6 +10,12 @@ public class BakeryController {
 
 	BakeryService bakeryService;
 	
+	@RequestMapping("/bakery/joinBakery")
+	public void join(bakeryVO bakeryVO) {
+		bakeryService.joinBakery(bakeryrVO);		
+	}
+	
+	
 	@RequestMapping("/bakery/myShop")
 	public void myShop(BakeryVO bakeryVO) {
 		return bakeryService.myShop(bakeryVO);		
