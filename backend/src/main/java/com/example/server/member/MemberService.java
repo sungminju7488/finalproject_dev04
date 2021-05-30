@@ -17,17 +17,19 @@ public class MemberService {
 	public void join(MemberVO memberVO) {
 		mr.save(memberVO);
 	}
-	public void joinBakery(MemberVO memberVO) {
-		mr.save(memberVO);
+	public String findId(MemberVO memberVO){
+		return mr.findByPhoneNumberAndEMail(memberVO.getPhoneNumber(), memberVO.getEMail()).get().getMemberId();
+	}
+	public String findPassword(MemberVO memberVO){
+		return mr.findByPhoneNumberAndEMail(memberVO.getPhoneNumber(), memberVO.getEMail()).get().getPassword();
 	}
 	public Optional<MemberVO> myPage(MemberVO memberVO){
-		return mr.findById(memberVO.getMemberId());
+		return mr.findByMemberId(memberVO.getMemberId());
 	}
-	
 	public void update(MemberVO memberVO) {
 		mr.save(memberVO);
 	}
-//	public Optional<MemberVO> delete(MemberVO memberVO){
-//		return mr.deleteByIdAndPassword(memberVO.getMemberId(), memberVO.getPassword());
-//	}
+	public Optional<MemberVO> delete(MemberVO memberVO){
+		return mr.deleteByMemberIdAndPassword(memberVO.getMemberId(), memberVO.getPassword());
+	}
 }
