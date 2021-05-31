@@ -6,10 +6,11 @@ spring:
     hikari:
       connection-timeout: 60000
       maximum-pool-size: 5
-    password: DEV4_FINAL
+    password: FINAL_DEV04
     url: jdbc:oracle:thin:@localhost:1521:orcl
-    username: DEV4_FINAL
+    username: FINAL_DEV04
   jpa:
     hibernate:
       ddl-auto: create
     show-sql: true
+
