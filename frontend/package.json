@@ -39,6 +39,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://192.168.0.109:9407/"
+  "proxy": "http://localhost:9407/"
+  
 
 }

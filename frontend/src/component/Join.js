@@ -52,22 +52,35 @@ function Join() {
     const birthday = year + "-" + month + "-" + day;
 
     const data = {
-      id: id,
+      memberId: id,
       password: pw,
-      confirmpassword: c_pw,
       name: name,
-      birthday: birthday,
-      gender: gender,
-      email: email,
-      phonenumber: phonenumber,
+      nickName: "test",
+      address1: "road",
+      address2: "detail address",
+      phoneNumber: phonenumber,
+      eMail: email,
+      birthDay: birthday,
+      sex: gender,
+      joinDate: "2021-05-31",
+      grade: 0,
+      alarmSet: "0",
+      followSet: "0",
+      flatForm: "bbang",
     };
 
     axios
-      .post("/member/join", { data })
+      .post(`/member/join`, { data })
       .then((res) => {
-        alert("정상적으로 통신이 이루어졌습니다.");
+        alert(res.data);
       })
       .catch((err) => alert(err.response.data.msg));
+    // axios
+    //   .get(`/member/join`)
+    //   .then((res) => {
+    //     alert(res.data);
+    //   })
+    //   .catch((err) => alert(err.response.data.msg));
   };
 
   return (

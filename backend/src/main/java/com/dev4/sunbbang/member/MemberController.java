@@ -1,17 +1,24 @@
 package com.dev4.sunbbang.member;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev4.sunbbang.model.MemberVO;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import jdk.nashorn.internal.runtime.JSONFunctions;
 
 @RestController
-@RequestMapping("/member")
+//@RequestMapping("/member")
 public class MemberController {
 
 	@Autowired
@@ -20,12 +27,23 @@ public class MemberController {
 	@Autowired
 	Gson gson;
 	
-	@PostMapping("/join")
-	public String join(MemberVO memberVO) {
+	@PostMapping("/member/join")
+	public String join(@RequestBody MemberVO memberVO, HttpServletRequest request) {
+		
+//		String id = request.getParameter("id");
+//		System.out.println("id : " + id);
+		System.out.println(request.getParameter("memberId"));
 		System.out.println(memberVO.getMemberId());
-		return gson.toJson(memberVO);
+		int a = 0;
+		System.out.println(a);
+		return "리턴";
 //		memberService.join(memberVO);
 	}
+//	@GetMapping("/member/join")
+//	public String getjoin() {
+//		System.out.println("Get 통신에 성공했습니다.");
+//		return "가입 리턴이 정상작동합니다";
+//	}
 	
 //	@PostMapping("/findId")
 //	public String findId(MemberVO memberVO) {
