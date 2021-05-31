@@ -86,7 +86,7 @@ function Join() {
         flatForm,
       })
       .then((res) => {
-        alert(res.data);
+        alert(res.data.memberId);
       })
       .catch((err) => alert(err.response.data.msg));
   };
