@@ -1,4 +1,4 @@
-package com.example.server.model;
+package com.dev4.sunbbang.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
