@@ -3,6 +3,7 @@ package com.dev4.sunbbang.member;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,16 +28,12 @@ public class MemberController {
 	@Autowired
 	Gson gson;
 	
+	@Async
 	@PostMapping("/member/join")
-	public String join(@RequestBody MemberVO memberVO, HttpServletRequest request) {
+	public String join(@RequestBody MemberVO memberVO) {
 		
-//		String id = request.getParameter("id");
-//		System.out.println("id : " + id);
-		System.out.println(request.getParameter("memberId"));
-		System.out.println(memberVO.getMemberId());
-		int a = 0;
-		System.out.println(a);
-		return "리턴";
+		System.out.println(memberVO.toString());
+		return memberVO.toString();
 //		memberService.join(memberVO);
 	}
 //	@GetMapping("/member/join")
