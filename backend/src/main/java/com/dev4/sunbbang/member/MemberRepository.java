@@ -8,9 +8,9 @@ import com.dev4.sunbbang.model.MemberVO;
 
 public interface MemberRepository extends JpaRepository<MemberVO, Integer>{
 
-//	Optional<MemberVO> deleteByMemberIdAndPassword(String memberId, String password);
-//	Optional<MemberVO> findByMemberIdAndPassword(String memberId, String password);
-//	Optional<MemberVO> findByPhoneNumberAndEMail(String phoneNumber, String eMail);
-//	Optional<MemberVO> findByMemberId(String memberId);
+	Optional<MemberVO> deleteByMemberIdAndPassword(String memberId, String password);
+	Optional<MemberVO> findByMemberIdAndPassword(String memberId, String password);
+	Optional<MemberVO> findByPhoneNumberAndEMail(String phoneNumber, String eMail);
+	Optional<MemberVO> findByMemberId(String memberId);
 
 }
