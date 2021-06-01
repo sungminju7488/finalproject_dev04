@@ -1,4 +1,4 @@
-package com.example.server.model;
+package com.dev4.sunbbang.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,10 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Data
 @SequenceGenerator(name="memberSeq",sequenceName="no_seq",initialValue = 1 , allocationSize = 1)
 @Entity
 @Table(name="MEMBER")
@@ -35,7 +36,7 @@ public class MemberVO {
 	@Column(name="PHONENUMBER",length=11)
 	private String phoneNumber;
 	@Column(name="EMAIL",length=40)
-	private String eMail;
+	private String email;
 	@Column(name="BIRTHDAY",length=10)
 	private String birthDay;
 	@Column(name="SEX",length=6)
