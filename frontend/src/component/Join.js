@@ -3,20 +3,36 @@ import axios from "axios";
 import "../css/Join.css";
 
 function Join() {
-  const [id, setId] = useState(null);
-  const [pw, setPw] = useState(null);
-  const [c_pw, setC_Pw] = useState(null);
+  const [memberId, setMemberId] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [confirmPassword, setConfirmPassword] = useState(null);
   const [name, setName] = useState(null);
   const [year, setYear] = useState(null);
   const [month, setMonth] = useState(null);
   const [day, setDay] = useState(null);
-  const [gender, setGender] = useState(null);
+  const [sex, setSex] = useState(null);
   const [email, setEmail] = useState(null);
-  const [phonenumber, setPhonenumber] = useState(null);
+  const [phoneNumber, setPhonenumber] = useState(null);
+  const [nickName, setNickName] = useState(null);
+  const [address1, setAddress1] = useState(null);
+  const [address2, setAddress2] = useState(null);
+  const [joinDate, setJoinDate] = useState(null);
+  const [grade, setGrade] = useState(null);
+  const [alarmSet, setAlarmSet] = useState(null);
+  const [followSet, setFollowSet] = useState(null);
+  const [flatForm, setFlatForm] = useState(null);
 
   const joinHandler = async (event) => {
-    event.preventDefault();
+    setNickName("test");
+    setAddress1("address1");
+    setAddress2("address2");
+    setJoinDate("2021-05-31");
+    setGrade("0");
+    setAlarmSet("Alarm");
+    setFollowSet("Follow");
+    setFlatForm("SunBBang");
 
+    event.preventDefault();
     // alert(
     //   "id : " +
     //     id +
@@ -49,23 +65,28 @@ function Join() {
     //     phonenumber
     // );
 
-    const birthday = year + "-" + month + "-" + day;
-
-    const data = {
-      id: id,
-      password: pw,
-      confirmpassword: c_pw,
-      name: name,
-      birthday: birthday,
-      gender: gender,
-      email: email,
-      phonenumber: phonenumber,
-    };
+    const birthDay = year + "-" + month + "-" + day;
 
     axios
-      .post("/member/join", { data })
+      .post("/member/join", {
+        memberId,
+        password,
+        name,
+        nickName,
+        address1,
+        address2,
+        phoneNumber,
+        email,
+        birthDay,
+        sex,
+        joinDate,
+        grade,
+        alarmSet,
+        followSet,
+        flatForm,
+      })
       .then((res) => {
-        alert("정상적으로 통신이 이루어졌습니다.");
+        alert(res.data.memberId);
       })
       .catch((err) => alert(err.response.data.msg));
   };
@@ -89,8 +110,7 @@ function Join() {
             id="id"
             className="var"
             maxLength="20"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
+            onChange={(e) => setMemberId(e.target.value)}
           ></input>
         </span>
         {/* pw 1차 부분 */}
@@ -103,7 +123,7 @@ function Join() {
             id="pswd1"
             className="var"
             maxLength="20"
-            onChange={(e) => setPw(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           ></input>
         </span>
         {/* pw 2차 부분 */}
@@ -116,7 +136,7 @@ function Join() {
             id="pswd2"
             className="var"
             maxLength="20"
-            onChange={(e) => setC_Pw(e.target.value)}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           ></input>
         </span>
         {/* 이름 부분 */}
@@ -196,7 +216,7 @@ function Join() {
             <select
               id="gender"
               className="sel"
-              onChange={(e) => setGender(e.target.value)}
+              onChange={(e) => setSex(e.target.value)}
             >
               <option>성별</option>
               <option value="M">남자</option>

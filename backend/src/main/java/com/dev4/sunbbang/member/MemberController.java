@@ -1,17 +1,16 @@
 package com.dev4.sunbbang.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev4.sunbbang.model.MemberVO;
 import com.google.gson.Gson;
 
+@Async
 @RestController
-@RequestMapping("/member")
 public class MemberController {
 
 	@Autowired
@@ -20,11 +19,10 @@ public class MemberController {
 	@Autowired
 	Gson gson;
 	
-	@PostMapping("/join")
-	public String join(MemberVO memberVO) {
-		System.out.println(memberVO.getMemberId());
+	@PostMapping("/member/join")
+	public Object join(@RequestBody MemberVO memberVO) {
+		
 		return gson.toJson(memberVO);
-//		memberService.join(memberVO);
 	}
 	
 //	@PostMapping("/findId")
