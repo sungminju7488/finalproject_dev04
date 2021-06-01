@@ -1,40 +1,34 @@
-package com.example.server.bakery;
-
-import java.util.Optional;
+package com.dev4.sunbbang.bakery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.server.model.MemberVO;
+import com.dev4.sunbbang.member.MemberRepository;
+import com.dev4.sunbbang.model.BakeryVO;
+import com.dev4.sunbbang.model.MemberVO;
 
 @Transactional
 @Service
 public class BakeryService {
+
 	@Autowired
-	BakeryRepository mr;
+	BakeryRepository br;
+
+	@Autowired
+	MemberRepository mr;
+
+	public void joinBakery(MemberVO memberVO, BakeryVO bakeryVO) {
+		mr.save(memberVO);
+		br.save(bakeryVO);
+	}
+
+	public BakeryVO myShop(BakeryVO bakeryVO) {
+		return br.findByMemberSeq(bakeryVO.getMemberSeq()).get();
+	}
 	
-	public void joinBakery(BakeryVO bakeryVO) {
-		mr.save(bakeryVO);
+	public void changeBakery(BakeryVO bakeryVO) {
+		br.save(bakeryVO);
 	}
-	public Optional<BakeryVO> myshop(BakeryVO bakeryVO){
-		return mr.findByCOPREGNUM(BakeryVO.getCOPREGNUM());
-	}
-	public String changeBakery(BakeryVO bakeryVO){
-		mr.save(bakeryVO);
-	}
-	public Optional<BakeryVO>menuList(BakeryVO bakeryVO){
-		mr.save(bakeryVO);
-	}
-	public void addMenu(BakeryVO bakeryVO) {
-		mr.save(bakeryVO);
-	}	
-	public void modifyMenu(BakeryVO bakeryVO) {
-		mr.save(bakeryVO);
-	}
-	public Optional<BakeryVO> deleteMenu(BakeryVO bakeryVO){
-		mr.save(bakeryVO);
-	}
-	public void boardToggle(BakeryVO bakeryVO) {
-		mr.save(bakeryVO);
-	}}
+
+}
