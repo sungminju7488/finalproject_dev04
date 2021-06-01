@@ -1,54 +1,38 @@
-package com.example.server.bakery;
+package com.dev4.sunbbang.bakery;
 
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.example.server.model.MemberVO;
+import com.dev4.sunbbang.model.BakeryVO;
+import com.dev4.sunbbang.model.MemberVO;
+import com.google.gson.Gson;
 
+@Async
 @RestController
 public class BakeryController {
 
+	@Autowired
 	BakeryService bakeryService;
 	
+	@Autowired
+	Gson gson;
+
 	@RequestMapping("/bakery/joinBakery")
-	public void join(bakeryVO bakeryVO) {
-		bakeryService.joinBakery(bakeryrVO);		
+	public void joinBakery(@RequestBody MemberVO memberVO, BakeryVO bakeryVO) {
+		bakeryService.joinBakery(memberVO, bakeryVO);
 	}
-	
 	
 	@RequestMapping("/bakery/myShop")
-	public void myShop(BakeryVO bakeryVO) {
-		return bakeryService.myShop(bakeryVO);		
+	public Object myShop(@RequestBody BakeryVO bakeryVO) {
+		return gson.toJson(bakeryService.myShop(bakeryVO));
 	}
-	
-	
-	@RequestMapping("/bakery/changeBakery")
-	public void update(BakeryVO bakeryVO) {
-		return bakeryService.update(bakeryVO);
-	}
-	
-	@RequestMapping("/bakery/menuList")
-	public void menuList(BakeryVO bakeryVO) {
-		return bakeryService.menuList(bakeryVO);
-	}	
-	
-	@RequestMapping("/bakery/addMenu")
-	public void addMenu(BakeryVO bakeryVO) {
-		return bakeryService.addMenu(bakeryVO);
-	}
-	
-	@RequestMapping("/bakery/modifyMenu")
-	public void modifyMenu(BakeryVO bakeryVO) {
-		return bakeryService.modifyMenu(bakeryVO);
-	}
-	
-	@RequestMapping("/bakery/deleteMenu")
-	public void deleteMenu(BakeryVO bakeryVO) {
-		return bakeryService.deleteMenu(bakeryVO);
-	}
-	
-	@RequestMapping("/bakery/boardToggle")
-	public void boardToggle(BakeryVO bakeryVO) {
-		return bakeryService.boardToggle(bakeryVO);
+
+	public void changeBakery(@RequestBody BakeryVO bakeryVO) {
+		bakeryService.myShop(bakeryVO);
+
 	}
 }
