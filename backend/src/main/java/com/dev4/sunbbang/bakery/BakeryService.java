@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dev4.sunbbang.member.MemberRepository;
 import com.dev4.sunbbang.model.BakeryVO;
+import com.dev4.sunbbang.model.FoodVO;
 import com.dev4.sunbbang.model.MemberVO;
 
 @Transactional
@@ -18,6 +19,9 @@ public class BakeryService {
 	@Autowired
 	MemberRepository mr;
 
+	@Autowired
+	FoodRepository fd;
+
 	public void joinBakery(MemberVO memberVO, BakeryVO bakeryVO) {
 		mr.save(memberVO);
 		br.save(bakeryVO);
@@ -26,9 +30,26 @@ public class BakeryService {
 	public BakeryVO myShop(BakeryVO bakeryVO) {
 		return br.findByMemberSeq(bakeryVO.getMemberSeq()).get();
 	}
-	
+
 	public void changeBakery(BakeryVO bakeryVO) {
 		br.save(bakeryVO);
+	}
+
+	public BakeryVO menuList(FoodVO foodVO) {
+		return fd.findByBakerySeq(foodVO.getBakerySeq()).get();
+
+	}
+
+	public void addMenu(FoodVO foodVO) {
+		fd.save(foodVO);
+	}
+
+	public void modifyMenu(FoodVO foodVO) {
+		fd.save(foodVO);
+	}
+
+	public void deleteMenu(FoodVO foodVO) {
+		fd.delete(foodVO);
 	}
 
 }
