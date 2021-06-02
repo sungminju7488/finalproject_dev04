@@ -35,7 +35,7 @@ public class BakeryService {
 	}
 
 	public void setFollow(AuthVO authVO, BakeryVO bakeryVO) {
-		String followSet = mr.findById(authVO.getMemberSeq()).get().getFollowSet() + bakeryVO.getMemberSeq() + ",";
+		String followSet = authVO.getFollowSet() + bakeryVO.getMemberSeq() + ",";
 		mr.modifyToFollowSet(followSet, authVO.getMemberSeq());
 	}
 	
@@ -44,7 +44,7 @@ public class BakeryService {
 	}
 	
 	public void setAlarm(AuthVO authVO, FoodVO foodVO) {
-		String alarmSet = mr.findById(authVO.getMemberSeq()).get().getAlarmSet() + foodVO.getFoodSeq() + ",";
+		String alarmSet = authVO.getAlarmSet() + foodVO.getFoodSeq() + ",";
 		mr.modifyToAlarmSet(alarmSet, authVO.getMemberSeq());
 	}
 	
