@@ -8,7 +8,7 @@ import lombok.Setter;
 public class PageVO {
 
 	private int pagaNo = 0;
-	private int pageSize = 10;
+	private int pageSize = 5;
 	private String condition = "";
 	private String keyword = "";
 }

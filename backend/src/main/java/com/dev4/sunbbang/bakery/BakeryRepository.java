@@ -10,5 +10,5 @@ import com.dev4.sunbbang.model.BakeryVO;
 
 public interface BakeryRepository extends JpaRepository<BakeryVO, Integer>{
 	public Optional<BakeryVO> findByMemberSeq(String memberSeq);
-	public Page<BakeryVO> findByStoreNameContaining(String keyword, Pageable pagealbe);
+	public Optional<Page<BakeryVO>> findByStoreNameContaining(String keyword, Pageable pagealbe);
 }

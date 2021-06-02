@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dev4.sunbbang.model.AuthVO;
 import com.dev4.sunbbang.model.BakeryVO;
+import com.dev4.sunbbang.model.FoodVO;
 import com.dev4.sunbbang.model.PageVO;
 import com.google.gson.Gson;
 
@@ -31,8 +32,19 @@ public class BakeryController {
 		bakeryService.setFollow(authVO, bakeryVO);
 	}
 	
-//	@RequestMapping("/bakery/menuViewList")
-//	public Object menuViewList(@RequestBody BakeryVO bakeryVO) {
-//		bakeryService.menuViewList(bakeryVO);
-//	}
+	@RequestMapping("/bakery/menuViewList")
+	public Object menuViewList(@RequestBody BakeryVO bakeryVO) {
+		return gson.toJson(bakeryService.menuViewList(bakeryVO));
+	}
+	
+	@RequestMapping("/bakery/setAlarm")
+	public void setAlarm(@RequestBody AuthVO authVO, FoodVO foodVO) {
+		bakeryService.setAlarm(authVO, foodVO);
+	}
+	
+	@RequestMapping("/bakery/searchFood")
+	public Object searchFood(@RequestBody FoodVO foodVO) {
+		return gson.toJson(bakeryService.searchFood(foodVO));
+	}
+	
 }
