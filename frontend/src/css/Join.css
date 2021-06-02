@@ -129,3 +129,17 @@ select {
     background-color: #f0e8d9;
 }
 
+#postbtn {
+    margin: 30px 0 40px;
+}
+
+#post {
+    width: 30%;
+    padding: 18px 0 13px;
+    border: 0;
+    cursor: pointer;
+    background-color: #F4A460;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: Arial, Helvetica, sans-serif;
+}

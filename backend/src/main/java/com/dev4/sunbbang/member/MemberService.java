@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dev4.sunbbang.model.AuthVO;
 import com.dev4.sunbbang.model.MemberVO;
 
 @Transactional
@@ -32,4 +33,10 @@ public class MemberService {
 //	public Optional<MemberVO> delete(MemberVO memberVO){
 //		return mr.deleteByMemberIdAndPassword(memberVO.getMemberId(), memberVO.getPassword());
 //	}
+	
+	public Optional<AuthVO> login(MemberVO memberVO){
+		return mr.findByMemberIdAndPassword(memberVO.getMemberId(), memberVO.getPassword());
+	}
+	
+	
 }
