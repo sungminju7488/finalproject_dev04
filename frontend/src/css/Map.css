@@ -1,6 +1,17 @@
+/* html,
+body,
+body * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  background-color: inherit;
+  border: 2px solid orange;
+} */
+
 #myMap {
-  width: 99%;
-  height: 99%;
+  left: auto;
+  right: 0px;
 }
 
 .wrap {

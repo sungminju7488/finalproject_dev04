@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "../css/Map.css";
+import Sidebar from "../subcomponent/Sidebar";
 
 const { kakao } = window;
 
@@ -7,15 +8,15 @@ const { kakao } = window;
 const BackeryMap = () => {
   //브라우저 크기에 맞게 지도 크기를 변경할 수 있도록 변수설정
   const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth - 1,
-    height: window.innerHeight - 1,
+    width: window.innerWidth,
+    height: window.innerHeight,
   });
 
   //브라우저 크기가 변경되면 windowSize변수 값도 변경하는 함수
   const handleResize = () => {
     setWindowSize({
-      width: window.innerWidth - 1,
-      height: window.innerHeight - 1,
+      width: window.innerWidth,
+      height: window.innerHeight,
     });
   };
 
@@ -254,10 +255,19 @@ const BackeryMap = () => {
   }
 
   return (
-    <div
-      id="myMap"
-      style={{ width: windowSize.width, height: windowSize.height }}
-    ></div>
+    <div>
+      <Sidebar width={300} height={"100vh"}>
+        <h1>테스트용</h1>
+        <h1>슬라이드바</h1>
+      </Sidebar>
+      <div
+        id="myMap"
+        style={{
+          width: windowSize.width,
+          height: windowSize.height,
+        }}
+      ></div>
+    </div>
   );
 };
 
