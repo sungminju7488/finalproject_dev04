@@ -1,24 +1,13 @@
 import { Link } from "react-router-dom";
-import Navbar from "react-bootstrap/Navbar";
-import {
-  Nav,
-  Form,
-  FormControl,
-  Button,
-  NavbarBrand,
-  NavLink,
-} from "react-bootstrap";
-import NavbarToggle from "react-bootstrap/esm/NavbarToggle";
-import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import "../css/Navbar.css";
 
 function navbar() {
   return (
-    <body>
+    <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-#f0e8d9">
-        <a className="navbar-brand" href="#" ID="BrandName">
+        <Link to="/" className="navbar-brand" id="BrandName">
           선 빵
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -34,7 +23,7 @@ function navbar() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link to="#" className="nav-link">
+              <Link to="/service/backeryMap" className="nav-link">
                 빵 집 찾기
               </Link>
             </li>
@@ -69,7 +58,7 @@ function navbar() {
           </ul>
         </div>
       </nav>
-    </body>
+    </div>
   );
 }
 
