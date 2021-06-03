@@ -3,6 +3,7 @@ package com.dev4.sunbbang.bakery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.dev4.sunbbang.member.MemberRepository;
 import com.dev4.sunbbang.model.BakeryVO;
@@ -52,4 +53,14 @@ public class BakeryService {
 		fd.delete(foodVO);
 	}
 
-}
+	public void boardToggle(@RequestBody BakeryVO bakeryVO) throws Exception {
+		if(bakeryVO.getBoardSet()==null);
+		
+		
+	
+	}
+
+		
+	}
+
+

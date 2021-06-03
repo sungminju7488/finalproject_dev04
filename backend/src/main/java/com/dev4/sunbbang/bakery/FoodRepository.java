@@ -12,7 +12,7 @@ public interface FoodRepository extends JpaRepository<FoodVO, Integer>{
 	
 	
 
-	public Optional<BakeryVO> findByBakerySeq(String bakerySeq);
+	public Optional<BakeryVO> findByBakerySeq(int bakerySeq);
 
 
 }

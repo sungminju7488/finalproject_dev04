@@ -2,6 +2,7 @@ package com.dev4.sunbbang.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -12,7 +13,7 @@ import lombok.Getter;
 @Table(name="BAKERY")
 public class BakeryVO {
 	@Column(name="COPREGNUM",nullable=false,length=10)
-	private String copRegNum;
+	private int copRegNum;
 	@Column(name="MANAGER",nullable=false,length=50)
 	private String manager;
 	@Column(name="STORENAME",nullable=false,length=50)
@@ -32,15 +33,15 @@ public class BakeryVO {
 	@Column(name="SPECIALHOLIDAY",length=100)
 	private String specialHoliday;
 	@Column(name="EATABLE",nullable=false,length=1)
-	private String eatable;
+	private char eatable;
 	@Column(name="LATITUDE",nullable=false,length=10)
 	private String latitude;
 	@Column(name="LONGITUDE",nullable=false,length=10)
 	private String longitude;
 	@Column(name="BOARDSET",nullable=false,length=1)
-	private String boardSet;
-	@Column(name="MEMBERSEQ",nullable=false,length=8)
-	private String memberSeq;
+	private char boardSet;
+	@JoinColumn(name="MEMBERSEQ",nullable=false,length=8)
+	private int memberSeq;
 	
 	
 	

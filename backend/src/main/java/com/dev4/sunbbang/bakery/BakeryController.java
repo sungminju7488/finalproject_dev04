@@ -13,6 +13,8 @@ import com.dev4.sunbbang.model.FoodVO;
 import com.dev4.sunbbang.model.MemberVO;
 import com.google.gson.Gson;
 
+import lombok.Data;
+
 @Async
 @RestController
 public class BakeryController {
@@ -56,8 +58,15 @@ public class BakeryController {
 	}
 	
 	@DeleteMapping("/bakery/deleteMenu")
-	public Object deleteMenu(@RequestBody FoodVO foodVO) {
-		return gson.toJson(bakeryService.deleteMenu(foodVO));
+	public void deleteMenu(@RequestBody FoodVO foodVO) {
+		bakeryService.deleteMenu(foodVO);
 	}
 	
-}
+	@RequestMapping("/bakery/boardToggle")
+	public void boardToggle(@RequestBody BakeryVO bakeryVO) throws Exception {
+		bakeryService.boardToggle(bakeryVO);
+	
+	}
+
+	}
+	
