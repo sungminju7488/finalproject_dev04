@@ -44,10 +44,13 @@ const BackeryMap = () => {
           const map = new kakao.maps.Map(container, options);
 
           //마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다.
-          const locPosition = new kakao.maps.LatLng(
+          const userLocPosition = new kakao.maps.LatLng(
             position.coords.latitude,
             position.coords.longitude
           );
+
+          //사용자의 마커를 표시한다.
+          displayUserMarker(userLocPosition, map);
         },
         //에러가 났을경우 에러출력
         function (error) {
@@ -63,6 +66,14 @@ const BackeryMap = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  //사용자 마커 표시 메서드
+  function displayUserMarker(userLocPosition, map) {
+    const userMarker = new kakao.maps.Marker({
+      map: map,
+      position: userLocPosition,
+    });
+  }
 
   return (
     <div
