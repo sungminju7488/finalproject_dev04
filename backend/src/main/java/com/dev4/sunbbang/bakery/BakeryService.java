@@ -1,14 +1,22 @@
 package com.dev4.sunbbang.bakery;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.dev4.sunbbang.member.MemberRepository;
+import com.dev4.sunbbang.model.AuthVO;
 import com.dev4.sunbbang.model.BakeryVO;
 import com.dev4.sunbbang.model.FoodVO;
 import com.dev4.sunbbang.model.MemberVO;
+import com.dev4.sunbbang.model.PageVO;
+import com.dev4.sunbbang.repository.BakeryRepository;
+import com.dev4.sunbbang.repository.FoodRepository;
+import com.dev4.sunbbang.repository.MemberRepository;
 
 @Transactional
 @Service
@@ -21,7 +29,7 @@ public class BakeryService {
 	MemberRepository mr;
 
 	@Autowired
-	FoodRepository fd;
+	FoodRepository fr;
 
 	public void joinBakery(MemberVO memberVO, BakeryVO bakeryVO) {
 		mr.save(memberVO);
@@ -36,31 +44,49 @@ public class BakeryService {
 		br.save(bakeryVO);
 	}
 
-	public BakeryVO menuList(FoodVO foodVO) {
-		return fd.findByBakerySeq(foodVO.getBakerySeq()).get();
-
+	public List<FoodVO> menuList(FoodVO foodVO) {
+		return fr.findByBakerySeq(foodVO.getBakerySeq()).get();
 	}
 
 	public void addMenu(FoodVO foodVO) {
-		fd.save(foodVO);
+		fr.save(foodVO);
 	}
 
 	public void modifyMenu(FoodVO foodVO) {
-		fd.save(foodVO);
+		fr.save(foodVO);
 	}
 
 	public void deleteMenu(FoodVO foodVO) {
-		fd.delete(foodVO);
+		fr.delete(foodVO);
 	}
 
 	public void boardToggle(@RequestBody BakeryVO bakeryVO) throws Exception {
-		if(bakeryVO.getBoardSet()==null);
-		
-		
+//		if (bakeryVO.getBoardSet() == null)
+//			;
+
+	}
 	
+	public Page<BakeryVO> searchBakery(PageVO pageVO) {
+		return br.findByStoreNameContaining(pageVO.getKeyword(),
+				PageRequest.of(pageVO.getPagaNo(), pageVO.getPageSize())).get();
 	}
 
-		
+	public void setFollow(AuthVO authVO, BakeryVO bakeryVO) {
+		String followSet = authVO.getFollowSet() + bakeryVO.getMemberSeq() + ",";
+		mr.modifyToFollowSet(followSet, authVO.getMemberSeq());
+	}
+	
+	public List<FoodVO> menuViewList(BakeryVO bakeryVO){
+		return fr.findByBakerySeq(bakeryVO.getMemberSeq()).get();
+	}
+	
+	public void setAlarm(AuthVO authVO, FoodVO foodVO) {
+		String alarmSet = authVO.getAlarmSet() + foodVO.getFoodSeq() + ",";
+		mr.modifyToAlarmSet(alarmSet, authVO.getMemberSeq());
+	}
+	
+	public List<FoodVO> searchFood(FoodVO foodVO){
+		return fr.findByFoodName(foodVO.getFoodName()).get();
 	}
 
-
+}

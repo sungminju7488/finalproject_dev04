@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev4.sunbbang.model.MemberVO;
+import com.dev4.sunbbang.repository.MemberRepository;
 
 @Transactional
 @Service
@@ -18,7 +19,7 @@ public class MemberService {
 		mr.save(memberVO);
 	}
 	public String findId(MemberVO memberVO){
-		return mr.findByPhoneNumberAndEMail(memberVO.getPhoneNumber(), memberVO.getEmail()).get().getMemberId();
+		return mr.findByPhoneNumberAndEmail(memberVO.getPhoneNumber(), memberVO.getEmail()).get().getMemberId();
 	}
 //	public String findPassword(MemberVO memberVO){
 //		return mr.findByPhoneNumberAndEMail(memberVO.getPhoneNumber(), memberVO.getEmail()).get().getPassword();

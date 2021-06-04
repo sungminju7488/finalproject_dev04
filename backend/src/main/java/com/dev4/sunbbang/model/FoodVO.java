@@ -4,18 +4,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
+import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
-import lombok.Getter;
 
 @Data
 @SequenceGenerator(name="foodSeq",sequenceName="food_seq",initialValue = 1 , allocationSize = 1)
 @Entity
 @Table(name="FOOD")
 public class FoodVO {
+	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_seq")
 	@Column(name="FOODSEQ",nullable=false,length=8)
 	private int foodSeq;
@@ -29,7 +29,7 @@ public class FoodVO {
 	private int price;
 	@Column(name="SALETIME",length=8)
 	private String saleTime;
-	@JoinColumn(name="BAKERYSEQ",nullable=false,length=8)
+	@Column(name="BAKERYSEQ",nullable=false,length=8)
 	private int bakerySeq;
 	
 	

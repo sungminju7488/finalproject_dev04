@@ -2,11 +2,10 @@ package com.dev4.sunbbang.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
-import lombok.Getter;
 
 @Data
 @Entity
@@ -40,7 +39,8 @@ public class BakeryVO {
 	private String longitude;
 	@Column(name="BOARDSET",nullable=false,length=1)
 	private char boardSet;
-	@JoinColumn(name="MEMBERSEQ",nullable=false,length=8)
+	@Id
+	@Column(name="MEMBERSEQ",nullable=false,length=8)
 	private int memberSeq;
 	
 	
