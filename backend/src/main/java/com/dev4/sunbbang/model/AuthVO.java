@@ -12,4 +12,6 @@ public class AuthVO {
 	private String name;
 	private String nickName;
 	private String grade;
+	private String alarmSet;
+	private String followSet;
 }
