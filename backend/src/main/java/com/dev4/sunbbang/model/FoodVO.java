@@ -2,6 +2,7 @@ package com.dev4.sunbbang.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -11,6 +12,7 @@ import lombok.Getter;
 @Entity
 @Table(name="FOOD")
 public class FoodVO {
+	@Id
 	@Column(name="FOODSEQ",nullable=false,length=8)
 	private String foodSeq;
 	@Column(name="FOODNAME",nullable=false,length=50)

@@ -12,10 +12,10 @@ public interface MemberRepository extends JpaRepository<MemberVO, Integer>{
 //	Optional<MemberVO> findByPhoneNumberAndEMail(String phoneNumber, String eMail);
 //	Optional<MemberVO> findByMemberId(String memberId);
 	
-	@Query("UPDATE MEMBER SET FOLLOWSET=?1 WHERE MEMBERSEQ=?2")
+	@Query(value = "UPDATE MEMBER SET FOLLOWSET=?1 WHERE MEMBERSEQ=?2", nativeQuery = true)
 	public void modifyToFollowSet(String followSet, int MemberSeq);
 	
-	@Query("UPDATE MEMBER SET ALARMSET=?1 WHERE MEMBERSEQ=?2")
+	@Query(value = "UPDATE MEMBER SET ALARMSET=?1 WHERE MEMBERSEQ=?2", nativeQuery = true)
 	public void modifyToAlarmSet(String followSet, int MemberSeq);
 
 }

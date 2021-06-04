@@ -2,6 +2,7 @@ package com.dev4.sunbbang.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,16 +15,22 @@ import com.google.gson.Gson;
 
 @Async
 @RestController
-public class BakeryController {
+public class BakerController {
 
 	@Autowired
-	BakeryService bakeryService;
+	BakerService bakeryService;
 	
 	@Autowired
 	Gson gson;
+	
+	@GetMapping("/bakery/searchBaker")
+	public String testFunc() {
+		return "접속테스트";
+	}
 
+	//POST로 제한되는 방식
 	@RequestMapping("/bakery/searchBakery")
-	public Object searchBakery(@RequestBody PageVO pageVO) {
+	public String searchBakery(@RequestBody PageVO pageVO) {
 		return gson.toJson(bakeryService.searchBakery(pageVO));
 	}
 	
