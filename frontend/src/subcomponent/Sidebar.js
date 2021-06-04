@@ -6,10 +6,6 @@ const Sidebar = ({ width, height, children }) => {
   //움직일 X값 세팅
   const [xPosition, setX] = useState(-width);
 
-  function getXPosition() {
-    return xPosition;
-  }
-
   //슬라이드바 X위치 변경
   const toggleMenu = () => {
     if (xPosition < 0) {

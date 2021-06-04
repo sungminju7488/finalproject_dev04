@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
 import "../css/Map.css";
 import Sidebar from "../subcomponent/Sidebar";
@@ -25,6 +26,18 @@ const BackeryMap = () => {
     //브라우저 크기 리사이징 이벤트 등록
     window.addEventListener("resize", handleResize);
 
+    //통신을 통해 빵집 데이터를 가져온다.
+    // axios.post
+
+    init();
+
+    //마운트 종료시 이벤트 삭제
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  function init() {
     //GPS지원 여부 검사
     if (navigator.geolocation) {
       //GPS로 현재 위치의 경고와 위도를 받아옵니다.
@@ -64,12 +77,7 @@ const BackeryMap = () => {
     } else {
       alert("GPS를 지원하지 않습니다.");
     }
-
-    //마운트 종료시 이벤트 삭제
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  }
 
   //사용자 마커 표시 메서드
   function displayUserMarker(userLocPosition, map) {
