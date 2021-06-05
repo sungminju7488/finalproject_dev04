@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -86,6 +87,11 @@ public class BakeryController {
 	@RequestMapping("/bakery/setAlarm")
 	public void setAlarm(@RequestBody AuthVO authVO, FoodVO foodVO) {
 		bakeryService.setAlarm(authVO, foodVO);
+	}
+	
+	@RequestMapping("/bakery/useAlarm")
+	public Object useAlarm(@RequestBody AuthVO authVO) {
+		return gson.toJson(bakeryService.useAlarm(authVO));
 	}
 	
 	@RequestMapping("/bakery/searchFood")

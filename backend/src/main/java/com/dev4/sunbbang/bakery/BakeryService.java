@@ -1,6 +1,8 @@
 package com.dev4.sunbbang.bakery;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -83,6 +85,18 @@ public class BakeryService {
 	public void setAlarm(AuthVO authVO, FoodVO foodVO) {
 		String alarmSet = authVO.getAlarmSet() + foodVO.getFoodSeq() + ",";
 		mr.modifyToAlarmSet(alarmSet, authVO.getMemberSeq());
+	}
+	
+	public List<FoodVO> useAlarm(AuthVO authVO){
+		StringTokenizer st = new StringTokenizer(authVO.getAlarmSet()); 
+		List<FoodVO> list = new ArrayList<FoodVO>();
+		while(st.hasMoreTokens()) {
+			list.add(new FoodVO(Integer.parseInt(st.nextToken(","))));
+		}
+		for(FoodVO foodVO:list) {
+			foodVO = fr.findById(foodVO.getFoodSeq()).get();
+		}
+		return list;
 	}
 	
 	public List<FoodVO> searchFood(FoodVO foodVO){

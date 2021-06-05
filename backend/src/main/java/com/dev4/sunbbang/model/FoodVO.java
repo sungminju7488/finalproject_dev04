@@ -15,6 +15,14 @@ import lombok.Data;
 @Entity
 @Table(name="FOOD")
 public class FoodVO {
+	
+	public FoodVO() {
+	}
+	
+	public FoodVO(int foodSeq) {
+		this.foodSeq = foodSeq;
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_seq")
 	@Column(name="FOODSEQ",nullable=false,length=8)

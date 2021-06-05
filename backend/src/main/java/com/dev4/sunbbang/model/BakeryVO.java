@@ -37,7 +37,7 @@ public class BakeryVO {
 	private String latitude;
 	@Column(name="LONGITUDE",nullable=false,length=10)
 	private String longitude;
-	@Column(name="BOARDSET",nullable=false,length=1)
+	@Column(name="BOARDSET",length=1)
 	private char boardSet;
 	@Id
 	@Column(name="MEMBERSEQ",nullable=false,length=8)
