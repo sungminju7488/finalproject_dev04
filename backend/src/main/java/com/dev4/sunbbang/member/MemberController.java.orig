@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dev4.sunbbang.model.AuthVO;
 import com.dev4.sunbbang.model.MemberVO;
 import com.google.gson.Gson;
 
@@ -22,8 +23,15 @@ public class MemberController {
 	Gson gson;
 
 	@PostMapping("/member/join")
+<<<<<<< HEAD
+	public Object join(@RequestBody MemberVO memberVO) {
+		
+		return gson.toJson(memberVO);
+		
+=======
 	public void join(@RequestBody MemberVO memberVO) {
 		memberService.join(memberVO);
+>>>>>>> HANS
 	}
 
 	@PostMapping("/findId")
@@ -36,6 +44,24 @@ public class MemberController {
 //	public String findPassword(MemberVO memberVO) {
 //		return memberService.findPassword(memberVO);
 //	}
+<<<<<<< HEAD
+//	@DeleteMapping("/quit")
+//	public MemberVO quit(MemberVO memberVO) {
+//		return memberService.delete(memberVO).get();
+//	}
+	
+	@PostMapping("/member/login")
+	public Object login(@RequestBody MemberVO memberVo) {
+		
+		AuthVO avo = memberService.login(memberVo).get();
+		
+						
+		return gson.toJson(avo);
+		
+	}
+	
+	
+=======
 
 	@PostMapping("/myPage")
 	public Object myPage(MemberVO memberVO) {
@@ -53,4 +79,5 @@ public class MemberController {
 		memberService.delete(memberVO);
 	}
 
+>>>>>>> HANS
 }

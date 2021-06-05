@@ -1,8 +1,6 @@
 package com.dev4.sunbbang.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class PageVO {
