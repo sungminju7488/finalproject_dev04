@@ -27,29 +27,33 @@ public class MemberController {
 	}
 
 	@PostMapping("/findId")
-	public Object findId(MemberVO memberVO) {
+	public Object findId(@RequestBody MemberVO memberVO) {
 		String mvo = memberService.findId(memberVO);
 		return gson.toJson(mvo);
 	}
 
-//	@PostMapping("/findPassword")
-//	public String findPassword(MemberVO memberVO) {
-//		return memberService.findPassword(memberVO);
-//	}
+	@PostMapping("/confirmPassword")
+	public void confirmPassword(@RequestBody MemberVO memberVO) {
+		 memberService.confirmPassword(memberVO);
+	}
+	@PostMapping("/changePassword")
+	public void changePassword(@RequestBody MemberVO memberVO) {
+		memberService.changePassword(memberVO);
+	}
 
 	@PostMapping("/myPage")
-	public Object myPage(MemberVO memberVO) {
+	public Object myPage(@RequestBody MemberVO memberVO) {
 		MemberVO mvo = memberService.myPage(memberVO).get();
 		return gson.toJson(mvo);
 	}
 
 	@PutMapping("/changeMember")
-	public void update(MemberVO memberVO) {
+	public void update(@RequestBody MemberVO memberVO) {
 		memberService.update(memberVO);
 	}
 
 	@DeleteMapping("/quit")
-	public void quit(MemberVO memberVO) {
+	public void quit(@RequestBody MemberVO memberVO) {
 		memberService.delete(memberVO);
 	}
 

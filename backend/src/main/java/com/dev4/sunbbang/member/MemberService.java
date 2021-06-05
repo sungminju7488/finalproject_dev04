@@ -21,9 +21,12 @@ public class MemberService {
 	public String findId(MemberVO memberVO){
 		return mr.findByPhoneNumberAndEmail(memberVO.getPhoneNumber(), memberVO.getEmail()).get().getMemberId();
 	}
-//	public String findPassword(MemberVO memberVO){
-//		return mr.findByPhoneNumberAndEMail(memberVO.getPhoneNumber(), memberVO.getEmail()).get().getPassword();
-//	}
+	public void confirmPassword(MemberVO memberVO){
+		mr.findByPhoneNumberAndEMail(memberVO.getPhoneNumber(), memberVO.getEmail());
+	}
+	public void changePassword(MemberVO memberVO) {
+		mr.save(memberVO);
+	}
 	public Optional<MemberVO> myPage(MemberVO memberVO){
 		return mr.findByMemberId(memberVO.getMemberId());
 	}
