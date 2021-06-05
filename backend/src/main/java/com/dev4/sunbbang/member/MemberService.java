@@ -22,7 +22,7 @@ public class MemberService {
 		return mr.findByPhoneNumberAndEmail(memberVO.getPhoneNumber(), memberVO.getEmail()).get().getMemberId();
 	}
 	public void confirmPassword(MemberVO memberVO){
-		mr.findByPhoneNumberAndEMail(memberVO.getPhoneNumber(), memberVO.getEmail());
+		mr.findByPhoneNumberAndEmail(memberVO.getPhoneNumber(), memberVO.getEmail());
 	}
 	public void changePassword(MemberVO memberVO) {
 		mr.save(memberVO);
