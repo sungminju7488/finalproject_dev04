@@ -2,19 +2,31 @@ package com.dev4.sunbbang.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
-import lombok.Getter;
 
 @Data
+@SequenceGenerator(name="foodSeq",sequenceName="food_seq",initialValue = 1 , allocationSize = 1)
 @Entity
 @Table(name="FOOD")
 public class FoodVO {
+	
+	public FoodVO() {
+	}
+	
+	public FoodVO(int foodSeq) {
+		this.foodSeq = foodSeq;
+	}
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_seq")
 	@Column(name="FOODSEQ",nullable=false,length=8)
-	private String foodSeq;
+	private int foodSeq;
 	@Column(name="FOODNAME",nullable=false,length=50)
 	private String foodName;
 	@Column(name="KIND",nullable=false,length=50)
@@ -22,11 +34,11 @@ public class FoodVO {
 	@Column(name="FOODPATH",nullable=false,length=255)
 	private String foodPath;
 	@Column(name="PRICE",nullable=false,length=8)
-	private String price;
+	private int price;
 	@Column(name="SALETIME",length=8)
 	private String saleTime;
 	@Column(name="BAKERYSEQ",nullable=false,length=8)
-	private String bakerySeq;
+	private int bakerySeq;
 	
 	
 }
