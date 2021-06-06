@@ -14,8 +14,11 @@ import javax.validation.constraints.Pattern;
 import org.springframework.validation.annotation.Validated;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 @Validated
 @Data
+@Getter@Setter
 @SequenceGenerator(name="memberSeq",sequenceName="no_seq",initialValue = 1 , allocationSize = 1)
 @Entity
 @Table(name="MEMBER")
@@ -28,21 +31,17 @@ public class MemberVO {
 	@Column(name="MEMBERID",length=16)
 	@Pattern(regexp = "/^[a-zA-Z0-9]((?=.*\\d)|(?=.*\\W)).{5,16}$/")//아이디는5 ~16자의 영문 대소문자와 특수문자,숫자로만 입력
 	private String memberId;
-	
 	@NotBlank(message = "패스워드를 입력해주세요.")
 	@Column(name="PASSWORD",length=16)
 	@Pattern(regexp = "/^[a-zA-Z0-9]((?=.*\\\\d)|(?=.*\\\\W)).{8,16}$/")//비밀번호는 8~16자의 영문 대소문자와 특수문자,숫자로만 입력
 	private String password;
-	
 	@NotBlank(message = "이름을 입력해주세요.")
 	@Column(name="NAME",length=50,nullable=false)
 	private String name;
-	
 	@NotBlank(message = "닉네임을 입력해주세요.")
 	@Column(name="NICKNAME",length=16)
 	@Pattern(regexp ="/^[a-zA-Z0-9] {4,16}")
 	private String nickName;
-	
 	@Column(name="ADDRESS1",length=100)
 	private String address1;
 	@Column(name="ADDRESS2",length=100)
@@ -51,12 +50,10 @@ public class MemberVO {
 	@Column(name="PHONENUMBER",length=11)
 	@Pattern(regexp ="/(\\d{3}).*(\\d{3}).*(\\d{4})/")
 	private String phoneNumber;
-	
 	@NotBlank(message = "이메일을 입력해주세요.")
 	@Column(name="EMAIL",length=40)
 	@Email
 	private String email;
-	
 	@NotBlank(message = "생년월일을 입력해주세요.")
 	@Column(name="BIRTHDAY",length=10)
 	@Pattern(regexp ="/^\\d{1,2}\\/\\d{1,2}\\/\\d{2,4}$/")
