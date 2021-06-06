@@ -1,0 +1,57 @@
+.carousel-item {
+    background-color: gray;
+    height: 400px;
+    background-size: cover;
+    text-align: center;
+}
+
+.carousel-item.item1 {
+    background-image: url('../resource/bread1.jpg');
+    background-position: center center;
+  }
+  .carousel-item.item2 {
+    background-image: url('../resource/bread2.jpg');
+    background-position: center center;
+  }
+
+  .carousel-item.item3 {
+    background-image: url('../resource/bread3.jpg');
+    background-position: center center;
+  }
+
+  .helper {
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+  }
+
+  .intro {
+      display: inline-block;
+      vertical-align: middle;
+  }
+
+
+  .intro h2 {
+    font-size: 32px;
+    color: white;
+    font-weight: 300;
+    margin-top: 0;
+    margin-bottom: 18px;
+  }
+
+  .intro h3 {
+      font-size: 32px;
+      color: white;
+      font-weight: 300;
+      margin-top: 0;
+      margin-bottom: 48px;
+  }
+
+  #carouselLink {
+      background-color: #5900e7;
+      border-radius: 2px;
+      padding: 10px 30px;
+      color: white;
+      font-weight: 300;
+  }
+
