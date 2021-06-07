@@ -28,28 +28,28 @@ public class MemberController {
 		memberService.join(memberVO);
 	}
 
-	@PostMapping("/findId")
+	@PostMapping("/member/findId")
 	public Object findId(@RequestBody MemberVO memberVO) {
 		String mvo = memberService.findId(memberVO);
 		return gson.toJson(mvo);
 	}
 
-	@PostMapping("/confirmPassword")
+	@PostMapping("/member/confirmPassword")
 	public void confirmPassword(@RequestBody MemberVO memberVO) {
 		 memberService.confirmPassword(memberVO);
 	}
-	@PostMapping("/changePassword")
+	@PostMapping("/member/changePassword")
 	public void changePassword(@Valid@RequestBody MemberVO memberVO) {
 		memberService.changePassword(memberVO);
 	}
 
-	@PostMapping("/myPage")
+	@PostMapping("/member/myPage")
 	public Object myPage(@RequestBody MemberVO memberVO) {
 		MemberVO mvo = memberService.myPage(memberVO).get();
 		return gson.toJson(mvo);
 	}
 
-	@PutMapping("/changeMember")
+	@PutMapping("/member/changeMember")
 	public void update(@Valid@RequestBody MemberVO memberVO) {
 		memberService.update(memberVO);
 	}

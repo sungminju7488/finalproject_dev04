@@ -18,7 +18,6 @@ import lombok.Getter;
 import lombok.Setter;
 @Validated
 @Data
-@Getter@Setter
 @SequenceGenerator(name="memberSeq",sequenceName="no_seq",initialValue = 1 , allocationSize = 1)
 @Entity
 @Table(name="MEMBER")
