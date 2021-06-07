@@ -1,5 +1,7 @@
 package com.dev4.sunbbang.member;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,7 +24,7 @@ public class MemberController {
 	Gson gson;
 
 	@PostMapping("/member/join")
-	public void join(@RequestBody MemberVO memberVO) {
+	public void join(@Valid@RequestBody MemberVO memberVO) {
 		memberService.join(memberVO);
 	}
 
@@ -37,7 +39,7 @@ public class MemberController {
 		 memberService.confirmPassword(memberVO);
 	}
 	@PostMapping("/changePassword")
-	public void changePassword(@RequestBody MemberVO memberVO) {
+	public void changePassword(@Valid@RequestBody MemberVO memberVO) {
 		memberService.changePassword(memberVO);
 	}
 
@@ -48,7 +50,7 @@ public class MemberController {
 	}
 
 	@PutMapping("/changeMember")
-	public void update(@RequestBody MemberVO memberVO) {
+	public void update(@Valid@RequestBody MemberVO memberVO) {
 		memberService.update(memberVO);
 	}
 
