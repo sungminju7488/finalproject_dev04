@@ -2,6 +2,7 @@ package com.example.application.repository;
 
 import com.example.application.model.AuthVO;
 import com.example.application.model.FoodVO;
+import com.example.application.model.MemberVO;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class AppRepository {
         this.appService = appService;
     }
 
-    public void useAlarm(AuthVO authVO, Callback<List<FoodVO>> callback){
-        appService.useAlarm(authVO).enqueue(callback);
+    public void useAlarm(MemberVO memberVO, Callback<List<FoodVO>> callback){
+        appService.useAlarm(memberVO).enqueue(callback);
     }
 }

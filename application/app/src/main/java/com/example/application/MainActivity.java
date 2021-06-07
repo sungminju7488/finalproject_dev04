@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import com.example.application.ui.alarm.AlarmListFragment;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -13,10 +15,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        navigateTO(new LoginFragment(), false);
+        navigateTo(new AlarmListFragment(), false);
     }
 
-    public void navigateTO(Fragment fragment, boolean addToBackStack){
+    public void navigateTo(Fragment fragment, boolean addToBackStack){
         if(!getSupportFragmentManager().popBackStackImmediate(fragment.getClass().getName(), 0)){
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, fragment);

@@ -91,6 +91,7 @@ public class BakeryController {
 	
 	@RequestMapping("/bakery/useAlarm")
 	public Object useAlarm(@RequestBody AuthVO authVO) {
+		System.out.println("Controller: useAlarm");
 		return gson.toJson(bakeryService.useAlarm(authVO));
 	}
 	
