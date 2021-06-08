@@ -4,11 +4,11 @@ import "../css/carousel.css";
 
 function main() {
   return (
-    <body>
+    <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-#f0e8d9">
-        <a className="navbar-brand" href="#" ID="BrandName">
+        <Link to="/" className="navbar-brand" id="BrandName">
           선 빵
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -84,7 +84,7 @@ function main() {
               </a>
             </div>
           </div>
-          <div class="carousel-item item2">
+          <div className="carousel-item item2">
             <div className="helper"></div>
             <div className="intro">
               <h2>어떤 빵을 드시고 싶으신가요??</h2>
@@ -130,7 +130,7 @@ function main() {
           <span className="sr-only">Next</span>
         </a>
       </div>
-    </body>
+    </div>
   );
 }
 

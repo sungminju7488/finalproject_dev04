@@ -22,8 +22,15 @@ public class MemberController {
 	Gson gson;
 
 	@PostMapping("/member/join")
-	public void join(@RequestBody MemberVO memberVO) {
+	public boolean join(@RequestBody MemberVO memberVO) {
 		memberService.join(memberVO);
+		return true;
+	}
+	
+	@PostMapping("/member/login")
+	public Object login(@RequestBody MemberVO memberVO) {
+		return gson.toJson(memberService.login(memberVO).get());
+		
 	}
 
 	@PostMapping("/findId")

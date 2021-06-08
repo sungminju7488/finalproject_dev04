@@ -18,6 +18,10 @@ public class MemberService {
 	public void join(MemberVO memberVO) {
 		mr.save(memberVO);
 	}
+	public Optional<MemberVO> login(MemberVO memberVO) {
+		return mr.findByMemberIdAndPassword(memberVO.getMemberId(), memberVO.getPassword());
+	}
+	
 	public String findId(MemberVO memberVO){
 		return mr.findByPhoneNumberAndEmail(memberVO.getPhoneNumber(), memberVO.getEmail()).get().getMemberId();
 	}

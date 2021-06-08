@@ -16,7 +16,7 @@ import lombok.Data;
 @Table(name="MEMBER")
 public class MemberVO {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "no_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "memberSeq")
 	@Column(name="MEMBERSEQ",nullable=false, unique = true)
 	private int memberSeq; 
 	@Column(name="MEMBERID",length=16)
