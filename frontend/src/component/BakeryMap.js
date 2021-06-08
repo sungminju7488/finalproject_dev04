@@ -2,11 +2,17 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../css/Map.css";
 import Sidebar from "../subcomponent/Sidebar";
+import BreadTimeModal from "./BreadTimeModal";
 
 const { kakao } = window;
 
 //메서드 컴포넌트의 경우 맨 앞글자가 대문자여야함
-const BackeryMap = () => {
+const BakeryMap = () => {
+  var [modalOpen, setModalOpen] = useState(false);
+  var [bakeryData, setBakeryData] = useState(null);
+  var [breadData, setBreadData] = useState(null);
+  var [viewMap, setViewMap] = useState(null);
+  var [viewOverlay, setViewOverlay] = useState(null);
   //브라우저 크기에 맞게 지도 크기를 변경할 수 있도록 변수설정
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -19,6 +25,20 @@ const BackeryMap = () => {
       width: window.innerWidth,
       height: window.innerHeight,
     });
+  };
+
+  //빵나오는 시간 Modal열기
+  const openBreadTimeModal = (bakeryInfoData, breadInfoData) => {
+    setBakeryData(bakeryInfoData);
+    setBreadData(breadInfoData);
+    //console.log("Data storeName : " + data.storeName);
+    setModalOpen(true);
+  };
+
+  //빵나오는 시간 Modale닫기
+  const closeBreadTimeModal = () => {
+    setModalOpen(false);
+    setBakeryData(null);
   };
 
   const handleFirstPage = async () => {
@@ -85,6 +105,7 @@ const BackeryMap = () => {
           };
           //지도를 그립니다.
           const map = new kakao.maps.Map(container, options);
+          saveMap(map);
 
           //마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다.
           const userLocPosition = new kakao.maps.LatLng(
@@ -96,7 +117,7 @@ const BackeryMap = () => {
           displayUserMarker(userLocPosition, map);
 
           //베이커리 마커를 표시한다.
-          displayBackeryMarker(map, listData);
+          displayBakeryMarker(map, listData);
         },
         //에러가 났을경우 에러출력
         function (error) {
@@ -117,9 +138,9 @@ const BackeryMap = () => {
   }
 
   //베이커리 마커 표시 메서드
-  function displayBackeryMarker(map, listData) {
+  function displayBakeryMarker(map, listData) {
     //베이커리 위치 정보
-    const backeryPositions = backeryDummyData(listData);
+    const bakeryPositions = bakeryDummyData(listData);
 
     //베이커리 마커 이미지
     var imageSrc =
@@ -129,42 +150,62 @@ const BackeryMap = () => {
     var imageSize = new kakao.maps.Size(26, 50);
 
     //마커 이미지 생성
-    var backeryMarkerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+    var bakeryMarkerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
-    //backeryPositions를 모두 표기합니다.
-    for (let i = 0; i < backeryPositions.length; i++) {
+    //bakeryPositions를 모두 표기합니다.
+    for (let i = 0; i < bakeryPositions.length; i++) {
       //베이커리 마커 생성
-      var backeryMarker = new kakao.maps.Marker({
+      var bakeryMarker = new kakao.maps.Marker({
         map: map,
-        position: backeryPositions[i].latlng,
-        image: backeryMarkerImage,
+        position: bakeryPositions[i].latlng,
+        image: bakeryMarkerImage,
         clickable: true,
       });
 
       //커스텀 오버레이 생성
       var overlay = new kakao.maps.CustomOverlay({
-        content: backeryPositions[i].content,
+        content: bakeryPositions[i].content,
         map: null,
-        position: backeryPositions[i].latlng,
+        position: bakeryPositions[i].latlng,
+        clickable: true,
       });
 
       //메서드 등록
-      (function (BackeryMarker, Overlay) {
-        //베이커리 마커에 mouseover이벤트를 등록
-        kakao.maps.event.addListener(BackeryMarker, "mouseover", function () {
+      (function (BakeryMarker, Overlay) {
+        //베이커리 마커에 mouseover이벤트를 등록(Overlay On)
+        kakao.maps.event.addListener(BakeryMarker, "mouseover", function () {
           Overlay.setMap(map);
         });
 
-        //베이커리 마커에 mouseout이벤트를 등록
-        kakao.maps.event.addListener(BackeryMarker, "mouseout", function () {
+        //베이커리 마커에 mouseout이벤트를 등록(Overlay Off)
+        kakao.maps.event.addListener(BakeryMarker, "mouseout", function () {
           Overlay.setMap(null);
         });
-      })(backeryMarker, overlay);
+
+        //베이커리 마커에 click이벤트를 등록(팝업 생성)
+        kakao.maps.event.addListener(BakeryMarker, "click", function () {
+          //베이커리 SEQ
+          const memberSeq = listData[i].memberSeq;
+          console.log("memberSeq : " + memberSeq);
+          //통신
+          axios.post("/bakery/menuViewList", { memberSeq }).then((res) => {
+            openBreadTimeModal(listData[i], res.data);
+          });
+        });
+      })(bakeryMarker, overlay);
     }
   }
 
+  const saveOverlay = (data) => {
+    setViewOverlay(data);
+  };
+
+  const saveMap = (data) => {
+    setViewMap(data);
+  };
+
   //임시 빵집 더미데이터
-  function backeryDummyData(listData) {
+  function bakeryDummyData(listData) {
     var testData = [];
 
     console.log("length : " + listData.length);
@@ -198,9 +239,10 @@ const BackeryMap = () => {
           `</div>`,
       });
     }
-
     return testData;
   }
+
+  //jQuery 처리
 
   return (
     <div>
@@ -214,6 +256,13 @@ const BackeryMap = () => {
           2
         </button>
       </Sidebar>
+      <BreadTimeModal
+        open={modalOpen}
+        close={closeBreadTimeModal}
+        bakeryData={bakeryData}
+        breadData={breadData}
+      />
+
       <div
         id="myMap"
         style={{
@@ -225,4 +274,4 @@ const BackeryMap = () => {
   );
 };
 
-export default BackeryMap;
+export default BakeryMap;

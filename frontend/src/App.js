@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Main from "./component/Main";
 import Join from "./component/Join";
 import Login from "./component/Login";
-import BackeryMap from "./component/BackeryMap";
+import BakeryMap from "./component/BakeryMap";
 
 class App extends Component {
   render() {
@@ -13,7 +13,7 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Main} />
-          <Route exact path="/service/backeryMap" component={BackeryMap} />
+          <Route exact path="/service/bakeryMap" component={BakeryMap} />
           <Route exact path="/member/joinpage" component={Join} />
           <Route exact path="/member/loginpage" component={Login} />
         </Switch>

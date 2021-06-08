@@ -70,7 +70,7 @@ public class BakeryService {
 	
 	public Page<BakeryVO> searchBakery(PageVO pageVO) {
 		return br.findByStoreNameContaining(pageVO.getKeyword(),
-				PageRequest.of(pageVO.getPagaNo(), pageVO.getPageSize())).get();
+				PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize())).get();
 	}
 
 	public void setFollow(AuthVO authVO, BakeryVO bakeryVO) {
