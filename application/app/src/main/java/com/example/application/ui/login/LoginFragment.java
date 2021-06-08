@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,15 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.application.R;
-import com.example.application.model.MemberVO;
-import com.example.application.ui.base.ViewModelFactory;
 import com.example.application.databinding.FragmentLoginBinding;
-import com.example.application.model.LoginAccount;
+import com.example.application.model.AuthVO;
+import com.example.application.model.MemberVO;
+import com.example.application.ui.alarm.AlarmListFragment;
 import com.example.application.ui.base.ViewModelFactory;
 import com.example.application.ui.base.MainActivity;
 import com.example.application.ui.join.JoinInFragment;
-
-import java.lang.reflect.Member;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,34 +51,39 @@ public class LoginFragment extends Fragment {
         binding.setVm(loginViewModel);
 
         final Button loginButton = view.findViewById(R.id.login_btn);
-        final TextView joinInButton = view.findViewById(R.id.sign_up_btn);
+
 
         loginButton.setOnClickListener(v -> {
+            // ID, PW 비어있는지 확인
             if (!loginViewModel.validateLoginInfo()) {
                 Toast.makeText(requireActivity().getApplicationContext(), "아이디, 비밀번호는 반드시 입력해야합니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             loginViewModel.login(new Callback<MemberVO>() {
-          
-                @Override
-                public Object onResponse(Call<MemberVO> call, Response<MemberVO> response) {
-                    if (response.isSuccessful()) {
-                        MemberVO member = response.body();
-                        // 로그인된 회원 정보 저장
-                        LoginAccount.getInstance().setMember(MemberVO);
+                /**
+                 * 로그인 성공
+                 */
 
-                        // 팝업 메세지
+                @Override
+                public void onResponse(Call<MemberVO> call, Response<MemberVO> response) {
+                    if (response.isSuccessful()) {
+                        MemberVO memberVO = response.body();
+                        // 로그인된 회원 정보 저장
+                        AuthVO.getInstance().setMemberVO(memberVO);
+
+
                         if (requireActivity() != null) {
-                            Toast.makeText(requireActivity().getApplicationContext().getApplicationContext(), String.format("%s 회원님, 환영합니다.", member.getName()), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireActivity().getApplicationContext().getApplicationContext(), String.format("%s 회원님, 환영합니다.", memberVO.getName()), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent();
+                            //(LoginFragment  ，AlarmListFragment)
+                            intent.setClass(LoginFragment.this, AlarmListFragment.class);
+                            startActivity(intent);
                         }
 
-                     
+                }
                 }
 
-                /**
-                 * 로그인 실패
-                 */
                 @Override
                 public void onFailure(Call<MemberVO> call, Throwable t) {
                     if (requireActivity() != null) {
@@ -89,8 +93,6 @@ public class LoginFragment extends Fragment {
             });
         });
 
-        signUpButton.setOnClickListener(v -> {
-            ((MainActivity) requireActivity()).navigateTo(new JoinInFragment(), true);
-        });
+       ;
     }
 }
