@@ -19,6 +19,9 @@ public class MemberVO {
     private String followSet;
     private String flatForm;
 
+    public MemberVO(Object value, String value1, String value2, String value3, String value4, Object o) {
+    }
+
     public int getMemberSeq() {
         return memberSeq;
     }
