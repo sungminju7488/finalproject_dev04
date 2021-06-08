@@ -18,4 +18,7 @@ public class AppRepository {
     public void useAlarm(MemberVO memberVO, Callback<List<FoodVO>> callback){
         appService.useAlarm(memberVO).enqueue(callback);
     }
+    public void loginMember(MemberVO memberVO, Callback<MemberVO> callback) {
+        appService.loginMember(memberVO).enqueue(callback);
+    }
 }
