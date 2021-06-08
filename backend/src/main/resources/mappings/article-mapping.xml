@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="BoardDAO">
+<mapper namespace="ArticleDAO">
 
 <resultMap id="articleVO" type="article">
 	<result property="articleSeq" column="ARTICLESEQ" />
@@ -14,37 +14,7 @@
 	<result property="bakerySeq" column="BAKERYSEQ" />
 </resultMap>
 
-<insert id="insertBoard">
-	INSERT INTO DEV_BOARD(
-						NUMBER
-						,ID
-						,NAME
-						,TITLE
-						,REGDATE
-						,MODDATE
-						,READ_CNT
-						,CONTENT)
-				VALUES((SELECT NVL(MAX(NUMBER), 
-							0)+1 FROM DEV_BOARD)
-						,#{id}
-						,#{name}
-						,#{title}
-						,#{regDate}
-						,#{modDate}
-						,#{read_cnt}
-						,#{content})
-</insert>
-
-<select id="getBoardList" resultType="board">
-	SELECT * FROM DEV_BOARD	ORDER BY NUMBER DESC
+<select id="getBoardList" resultType="article">
+	SELECT * FROM Article	ORDER BY NUMBER DESC
 </select>
-
-<select id="getBoard" resultType="board">
-	SELECT * FROM DEV_BOARD WHERE NUMBER=#{number}
-</select>
-
-<update id="readArticle">
-	UPDATE DEV_BOARD SET READ_CNT=READ_CNT+1 WHERE NUMBER=#{number}
-</update>
-
 </mapper>
