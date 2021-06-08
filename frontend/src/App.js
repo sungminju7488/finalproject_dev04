@@ -6,7 +6,8 @@ import Main from "./component/Main";
 import Join from "./component/Join";
 import Login from "./component/Login";
 import Mypage from "./component/Mypage";
-import modify from "./component/Modify";
+import Modify from "./component/Modify";
+import Quit from "./component/Quit";
 
 class App extends Component {
   render() {
@@ -19,7 +20,8 @@ class App extends Component {
           <Route exact path="/member/join1" component={Join} />
           <Route exact path="/member/login1" component={Login} />
           <Route exact path="/member/mypage1" component={Mypage}/>
-          <Route exact path="/member/changemember1" component={modify}/>
+          <Route exact path="/member/changemember1" component={Modify}/>
+          <Route exact path="/member/quit1" component={Quit}/>
         </Switch>
       </BrowserRouter>
      );
