@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.example.application.repository.NetworkAPI;
 import com.example.application.repository.AppRepository;
+import com.example.application.ui.alarm.AlarmListViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
@@ -14,8 +15,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         AppRepository appRepository = new AppRepository(NetworkAPI.getInstance().getMemberService());
-//        if (modelClass.isAssignableFrom(LoginViewModel.class)) {
-//            return (T) new LoginViewModel(memberRepository);
+        if (modelClass.isAssignableFrom(AlarmListViewModel.class)) {
+            return (T) new AlarmListViewModel(appRepository);
 //        } else if (modelClass.isAssignableFrom(ReadViewModel.class)) {
 //            return (T) new ReadViewModel(articleRepository);
 //        } else if (modelClass.isAssignableFrom(JoinViewModel.class)) {
@@ -28,8 +29,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 //            return (T) new QuitViewModel(memberRepository);
 //        } else if (modelClass.isAssignableFrom(ListViewModel.class)) {
 //            return (T) new ListViewModel(articleRepository);
-//        } else {
-//            throw new IllegalArgumentException("Unknown ViewModel class");
-//        }
+        } else {
+            throw new IllegalArgumentException("Unknown ViewModel class");
+        }
     }
 }
