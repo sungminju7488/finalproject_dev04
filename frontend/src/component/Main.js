@@ -16,6 +16,8 @@ import "../css/Navbar.css";
 import "../css/carousel.css";
 
 function main() {
+  const isLogin = false;
+
   return (
     <body>
       <nav className="navbar navbar-expand-lg navbar-light bg-#f0e8d9">
@@ -56,18 +58,29 @@ function main() {
                 빵 집 추천
               </Link>
             </li>
+            
           </ul>
 
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link to="/member/join1" className="nav-link">
+              {isLogin ? (
+              <Link to="/member/mypage1" className="nav-link">
+                마이페이지
+              </Link>) : (
+                <Link to="/member/join1" className="nav-link">
                 회원가입
-              </Link>
+                </Link>
+              )}
             </li>
             <li className="nav-item">
-              <Link to="/member/login1" className="nav-link">
+              {isLogin ? (
+              <Link to="/" className="nav-link">
+                로그아웃
+              </Link>) : (
+                <Link to="/member/login1" className="nav-link">
                 로그인
               </Link>
+              )}
             </li>
           </ul>
         </div>

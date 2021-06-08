@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Jua;
+  src: url(../resource/BMJUA_otf.otf);
+}
+
 .carousel-item {
     background-color: gray;
     height: 400px;
@@ -28,6 +33,7 @@
   .intro {
       display: inline-block;
       vertical-align: middle;
+      font-family: Jua;
   }
 
 
