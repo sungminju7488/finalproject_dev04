@@ -19,7 +19,7 @@ class App extends Component {
           <Route exact path="/member/join1" component={Join} />
           <Route exact path="/member/login1" component={Login} />
           <Route exact path="/member/mypage1" component={Mypage}/>
-          <Route exact path="/member/modify" component={modify}/>
+          <Route exact path="/member/changemember1" component={modify}/>
         </Switch>
       </BrowserRouter>
      );

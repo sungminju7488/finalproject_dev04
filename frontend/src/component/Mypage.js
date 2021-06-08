@@ -65,7 +65,7 @@ function mypage(){
             <span className="box var_grade"></span>
 
             <div id="btn_area">
-              <Link to="/member/modify">    
+              <Link to="/member/changemember1">    
                 <button type="button" id="mypage_btn">
                     <span>정보를 바꾸고싶어요</span>
                 </button>
