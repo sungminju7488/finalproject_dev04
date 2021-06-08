@@ -3,7 +3,6 @@ package com.example.application.ui.alarm;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.application.model.AuthVO;
 import com.example.application.model.FoodVO;
 import com.example.application.model.MemberVO;
 import com.example.application.repository.AppRepository;
@@ -27,8 +26,12 @@ public class AlarmListViewModel extends ViewModel {
     }
 
     public void useAlarm(MemberVO memberVO, Callback<List<FoodVO>> callback){
-        memberVO = new MemberVO();
-        memberVO.setAlarmSet("1,2,3,4,5,");
         appRepository.useAlarm(memberVO, callback);
     }
+
+    public void deleteAlarm(MemberVO memberVO, FoodVO foodVO, Callback<MemberVO> callback){
+        appRepository.deleteAlarm(memberVO, foodVO, callback);
+    }
+
+
 }

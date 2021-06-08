@@ -1,11 +1,12 @@
 package com.dev4.sunbbang.bakery;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -85,14 +86,20 @@ public class BakeryController {
 	}
 	
 	@RequestMapping("/bakery/setAlarm")
-	public void setAlarm(@RequestBody AuthVO authVO, FoodVO foodVO) {
+	public void setAlarm(@RequestBody AuthVO authVO, @RequestBody FoodVO foodVO) {
 		bakeryService.setAlarm(authVO, foodVO);
 	}
 	
 	@RequestMapping("/bakery/useAlarm")
 	public Object useAlarm(@RequestBody AuthVO authVO) {
 		System.out.println("Controller: useAlarm");
-		return gson.toJson(bakeryService.useAlarm(authVO));
+		List<FoodVO> list = bakeryService.useAlarm(authVO);
+		return gson.toJson(list);
+	}
+	
+	@RequestMapping("/bakery/deleteAlarm")
+	public Object deleteAlarm(@RequestBody AuthVO authVO, @RequestBody FoodVO foodVO) {
+		return gson.toJson(bakeryService.deleteAlarm(authVO, foodVO));
 	}
 	
 	@RequestMapping("/bakery/searchFood")

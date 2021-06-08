@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import com.example.application.model.AuthVO;
+import com.example.application.model.MemberVO;
 import com.example.application.ui.alarm.AlarmListFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,6 +16,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MemberVO memberVO = new MemberVO();
+        memberVO.setMemberId("hans");
+        memberVO.setAlarmSet("1,2,3,4,5,");
+        memberVO.setMemberSeq(1);
+
+        AuthVO.getInstance().setMemberVO(memberVO);
+
 
         navigateTo(new AlarmListFragment(), false);
     }
