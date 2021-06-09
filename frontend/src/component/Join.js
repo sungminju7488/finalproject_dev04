@@ -143,7 +143,7 @@ function Join() {
         <div id="content">              
             {/* header부분 */}
             <div id="header">
-            <a href="/" target="_self" title="선빵 회원가입 페이지 보러가기">
+            <a href="/" target="_self" title="선빵 메인 페이지 보러가기">
                 <span id="sunbbang">선 빵</span>
             </a>
             </div>   
@@ -331,7 +331,7 @@ function Join() {
                            onChange={PhonenumHandler} 
                            className="var" 
                            maxLength="16" 
-                           placeholder="전화번호를 입력하세요"></input>
+                           placeholder="-를 빼고 입력하세요."></input>
                 </span>
             </div>
             {/*일반회원,사업자구분 */}

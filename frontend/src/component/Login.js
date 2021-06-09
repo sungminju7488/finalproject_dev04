@@ -1,18 +1,23 @@
-<<<<<<< HEAD
-import React from "react";
-
-function Login() {
-  return <h1> 로그인 페이지 패치중 ^^</h1>;
-=======
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import '../css/login.css';
+import Join from "./Join";
 
-function Login() {
-    return(
+function Loginpage() {
+
+    const loginHandler = async (event) => {
         
+        event.preventDefault();
+
+    }
+
+
+
+
+    return(
+        <form onsubmit={loginHandler}>
             <div id="content">
                 <div id="header">
-                <a href="/" target="_self" title="선빵 회원가입 페이지 보러가기">
+                <a href="/" target="_self" title="선빵 메인 페이지 보러가기">
                     <span id="sunbbang">선 빵</span>
                 </a>
                 </div>
@@ -30,13 +35,12 @@ function Login() {
                     </button>
                 </div>
             </div>
-
+        </form>
 
        
 
 
     );
->>>>>>> 4c8559afab6ad6782f5d85500d5136b0ffe637be
 }
 
-export default Login;
+export default Loginpage;
