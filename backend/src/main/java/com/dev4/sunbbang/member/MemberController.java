@@ -33,11 +33,6 @@ public class MemberController {
 		return true;
 	}
 	
-//	@PostMapping("/member/login")
-//	public Object login(@RequestBody MemberVO memberVO) {
-//		return gson.toJson(memberService.login(memberVO).get());
-//	}
-	
 	@PostMapping("/member/login")
 	public ResponseToken login(@RequestBody MemberVO memberVO) {
 		MemberVO selectMemberVO = memberService.login(memberVO).get();
