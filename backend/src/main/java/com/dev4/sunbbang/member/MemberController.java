@@ -20,18 +20,17 @@ public class MemberController {
 
 	@Autowired
 	Gson gson;
-
+	
 	@PostMapping("/member/join")
 	public boolean join(@RequestBody MemberVO memberVO) {
 		memberService.join(memberVO);
 		return true;
 	}
 	
-	@PostMapping("/member/login")
-	public Object login(@RequestBody MemberVO memberVO) {
-		return gson.toJson(memberService.login(memberVO).get());
-		
-	}
+//	@PostMapping("/member/login")
+//	public Object login(@RequestBody MemberVO memberVO) {
+//		return gson.toJson(memberService.login(memberVO).get());
+//	}
 
 	@PostMapping("/findId")
 	public Object findId(@RequestBody MemberVO memberVO) {
