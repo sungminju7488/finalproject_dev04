@@ -67,7 +67,7 @@ public class BakeryService {
 //			;
 
 	}
-	
+
 	public Page<BakeryVO> searchBakery(PageVO pageVO) {
 		return br.findByStoreNameContaining(pageVO.getKeyword(),
 				PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize())).get();
@@ -77,29 +77,43 @@ public class BakeryService {
 		String followSet = authVO.getFollowSet() + bakeryVO.getMemberSeq() + ",";
 		mr.modifyToFollowSet(followSet, authVO.getMemberSeq());
 	}
-	
-	public List<FoodVO> menuViewList(BakeryVO bakeryVO){
+
+	public List<FoodVO> menuViewList(BakeryVO bakeryVO) {
 		return fr.findByBakerySeq(bakeryVO.getMemberSeq()).get();
 	}
-	
+
 	public void setAlarm(AuthVO authVO, FoodVO foodVO) {
 		String alarmSet = authVO.getAlarmSet() + foodVO.getFoodSeq() + ",";
 		mr.modifyToAlarmSet(alarmSet, authVO.getMemberSeq());
 	}
-	
-	public List<FoodVO> useAlarm(AuthVO authVO){
-		StringTokenizer st = new StringTokenizer(authVO.getAlarmSet()); 
+
+	public List<FoodVO> useAlarm(AuthVO authVO) {
+		StringTokenizer st = new StringTokenizer(authVO.getAlarmSet());
 		List<FoodVO> list = new ArrayList<FoodVO>();
-		while(st.hasMoreTokens()) {
-			list.add(new FoodVO(Integer.parseInt(st.nextToken(","))));
+		List<FoodVO> returnList = new ArrayList<FoodVO>();
+		while (st.hasMoreTokens()) {
+			int token = Integer.parseInt(st.nextToken(","));
+			list.add(new FoodVO(token));
 		}
-		for(FoodVO foodVO:list) {
-			foodVO = fr.findById(foodVO.getFoodSeq()).get();
+		for (FoodVO foodVO : list) {
+			returnList.add(fr.findById(foodVO.getFoodSeq()).get());
 		}
-		return list;
+		return returnList;
 	}
-	
-	public List<FoodVO> searchFood(FoodVO foodVO){
+
+	public MemberVO deleteAlarm(AuthVO authVO, FoodVO foodVO) {
+		StringTokenizer st = new StringTokenizer(authVO.getAlarmSet());
+		String alarmSet = "";
+		while (st.hasMoreTokens()) {
+			int token = Integer.parseInt(st.nextToken(","));
+			if (foodVO.getFoodSeq() != token)
+				alarmSet += token+",";
+		}
+		mr.modifyToAlarmSet(alarmSet, authVO.getMemberSeq());
+		return mr.findById(authVO.getMemberSeq()).get();
+	}
+
+	public List<FoodVO> searchFood(FoodVO foodVO) {
 		return fr.findByFoodName(foodVO.getFoodName()).get();
 	}
 
