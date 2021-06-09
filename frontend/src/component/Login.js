@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState } from "react";
-import "../css/Login.css";
 
 function Login() {
   const [memberId, setMemberId] = useState("");
@@ -9,9 +8,7 @@ function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    console.log("id : " + memberId + " | pw : " + password);
-    axios.post("/member/login", {memberId, password})
-    .then((res) => {})
+    axios.post("/member/login", { memberId, password }).then((res) => {});
   };
 
   return (
