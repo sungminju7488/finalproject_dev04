@@ -1,5 +1,7 @@
 package com.dev4.sunbbang.member;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,33 +24,33 @@ public class MemberController {
 	Gson gson;
 
 	@PostMapping("/member/join")
-	public void join(@RequestBody MemberVO memberVO) {
+	public void join(@Valid@RequestBody MemberVO memberVO) {
 		memberService.join(memberVO);
 	}
 
-	@PostMapping("/findId")
+	@PostMapping("/member/findId")
 	public Object findId(@RequestBody MemberVO memberVO) {
 		String mvo = memberService.findId(memberVO);
 		return gson.toJson(mvo);
 	}
 
-	@PostMapping("/confirmPassword")
+	@PostMapping("/member/confirmPassword")
 	public void confirmPassword(@RequestBody MemberVO memberVO) {
 		 memberService.confirmPassword(memberVO);
 	}
-	@PostMapping("/changePassword")
-	public void changePassword(@RequestBody MemberVO memberVO) {
+	@PostMapping("/member/changePassword")
+	public void changePassword(@Valid@RequestBody MemberVO memberVO) {
 		memberService.changePassword(memberVO);
 	}
 
-	@PostMapping("/myPage")
+	@PostMapping("/member/myPage")
 	public Object myPage(@RequestBody MemberVO memberVO) {
 		MemberVO mvo = memberService.myPage(memberVO).get();
 		return gson.toJson(mvo);
 	}
 
-	@PutMapping("/changeMember")
-	public void update(@RequestBody MemberVO memberVO) {
+	@PutMapping("/member/changeMember")
+	public void update(@Valid@RequestBody MemberVO memberVO) {
 		memberService.update(memberVO);
 	}
 
