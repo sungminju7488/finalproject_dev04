@@ -23,7 +23,7 @@ import lombok.Setter;
 @Table(name="MEMBER")
 public class MemberVO {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "no_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "memberSeq")
 	@Column(name="MEMBERSEQ",nullable=false, unique = true)
 	private int memberSeq; 
 	@NotBlank(message = "아이디를 입력해주세요.")

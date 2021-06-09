@@ -5,26 +5,20 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Main from "./component/Main";
 import Join from "./component/Join";
 import Login from "./component/Login";
-import Mypage from "./component/Mypage";
-import Modify from "./component/Modify";
-import Quit from "./component/Quit";
+import BakeryMap from "./component/BakeryMap";
 
 class App extends Component {
   render() {
-    const isLogin = false;
     return (
-      
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Main} />
-          <Route exact path="/member/join1" component={Join} />
-          <Route exact path="/member/login1" component={Login} />
-          <Route exact path="/member/mypage1" component={Mypage}/>
-          <Route exact path="/member/changemember1" component={Modify}/>
-          <Route exact path="/member/quit1" component={Quit}/>
+          <Route exact path="/service/bakeryMap" component={BakeryMap} />
+          <Route exact path="/member/joinpage" component={Join} />
+          <Route exact path="/member/loginpage" component={Login} />
         </Switch>
       </BrowserRouter>
-     );
+    );
   }
 }
 
