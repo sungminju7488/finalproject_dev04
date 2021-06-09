@@ -1,5 +1,6 @@
 package com.dev4.sunbbang.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dev4.sunbbang.model.AuthVO;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class JwtService {
+	@Autowired
 	private final JwtManager jwtManager;
 	
 	//토큰 발급

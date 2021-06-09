@@ -6,6 +6,8 @@ import java.security.Key;
 import java.util.Date;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import com.dev4.sunbbang.model.AuthVO;
 
@@ -19,6 +21,7 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 
 //JWT를 관리할 매니저 클래스
+@Configuration
 public class JwtManager {
 	
 	// 토큰 유지시간(30분)
@@ -31,16 +34,15 @@ public class JwtManager {
 	private final String secretKey;
 	
 	@Bean
-	public JwtManager JwtManager() {
+	public JwtManager BeanjwtManager() {
 		String secretKey = "secretKey-finalproject-dev04-jwt-manager-token";
 		Long accessTokenExpireSecond = 60L * 60L * 24L; //1일
 		Long refreshTokenExpireSecond = 60L * 60L * 24L * 30L;//1개월
 		return new JwtManager(secretKey, accessTokenExpireSecond, refreshTokenExpireSecond);
 	}
-
-	//시크릿 키만 받음
-	public JwtManager(String secretKey) {
-		this.secretKey = secretKey;
+	
+	public JwtManager() {
+		this.secretKey = "secretKey-finalproject-dev04-jwt-manager-token";
 	}
 	
 	//시크릿 키 + 토큰 유효시간 조절
