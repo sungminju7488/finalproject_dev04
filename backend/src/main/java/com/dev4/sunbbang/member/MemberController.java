@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dev4.sunbbang.model.AuthVO;
 import com.dev4.sunbbang.model.MemberVO;
+import com.dev4.sunbbang.util.JwtService;
+import com.dev4.sunbbang.util.ResponseToken;
 import com.google.gson.Gson;
 
 @Async
@@ -17,6 +20,9 @@ public class MemberController {
 
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	private JwtService jwtService;
 
 	@Autowired
 	Gson gson;
@@ -27,10 +33,12 @@ public class MemberController {
 		return true;
 	}
 	
-//	@PostMapping("/member/login")
-//	public Object login(@RequestBody MemberVO memberVO) {
-//		return gson.toJson(memberService.login(memberVO).get());
-//	}
+	@PostMapping("/member/login")
+	public ResponseToken login(@RequestBody MemberVO memberVO) {
+		MemberVO selectMemberVO = memberService.login(memberVO).get();
+		AuthVO authVO = new AuthVO(selectMemberVO);
+		return new ResponseToken(jwtService.createToken(authVO));
+	}
 
 	@PostMapping("/findId")
 	public Object findId(@RequestBody MemberVO memberVO) {
