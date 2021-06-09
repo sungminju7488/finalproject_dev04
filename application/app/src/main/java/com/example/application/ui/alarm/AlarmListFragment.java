@@ -14,9 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.application.MainActivity;
 import com.example.application.R;
-import com.example.application.ViewModelFactory;
+import com.example.application.ui.base.ViewModelFactory;
 import com.example.application.databinding.FragmentAlarmListBinding;
 import com.example.application.model.AuthVO;
 import com.example.application.model.FoodVO;
