@@ -20,47 +20,67 @@ public class MemberController {
 
 	@Autowired
 	Gson gson;
-	
+
 	@PostMapping("/member/join")
 	public boolean join(@RequestBody MemberVO memberVO) {
-		memberService.join(memberVO);
-		return true;
+		try {
+			memberService.join(memberVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
-	
+
 //	@PostMapping("/member/login")
 //	public Object login(@RequestBody MemberVO memberVO) {
 //		return gson.toJson(memberService.login(memberVO).get());
 //	}
 
-	@PostMapping("/findId")
+	@PostMapping("/member/findId")
 	public Object findId(@RequestBody MemberVO memberVO) {
-		String mvo = memberService.findId(memberVO);
-		return gson.toJson(mvo);
+		String foundId = memberService.findId(memberVO);
+		return gson.toJson(foundId);
 	}
 
-	@PostMapping("/confirmPassword")
-	public void confirmPassword(@RequestBody MemberVO memberVO) {
-		 memberService.confirmPassword(memberVO);
-	}
-	@PostMapping("/changePassword")
-	public void changePassword(@RequestBody MemberVO memberVO) {
-		memberService.changePassword(memberVO);
+	@PostMapping("/member/findPassword")
+	public boolean findPassword(@RequestBody MemberVO memberVO) {
+		return memberService.findPassword(memberVO);
 	}
 
-	@PostMapping("/myPage")
+	@PostMapping("/member/changePassword")
+	public boolean changePassword(@RequestBody MemberVO memberVO) {
+		try {
+			memberService.changePassword(memberVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@PostMapping("/member/myPage")
 	public Object myPage(@RequestBody MemberVO memberVO) {
 		MemberVO mvo = memberService.myPage(memberVO).get();
 		return gson.toJson(mvo);
 	}
 
-	@PutMapping("/changeMember")
-	public void update(@RequestBody MemberVO memberVO) {
-		memberService.update(memberVO);
+	@PostMapping("/member/changeMember")
+	public boolean changeMember(@RequestBody MemberVO memberVO) {
+		try {
+			memberService.changeMember(memberVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
-	@DeleteMapping("/quit")
-	public void quit(@RequestBody MemberVO memberVO) {
-		memberService.delete(memberVO);
+	@PostMapping("/member/quit")
+	public boolean quit(@RequestBody MemberVO memberVO) {
+		try {
+			memberService.quit(memberVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 }

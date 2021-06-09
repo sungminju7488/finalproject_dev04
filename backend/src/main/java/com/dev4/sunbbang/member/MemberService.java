@@ -13,31 +13,41 @@ import com.dev4.sunbbang.repository.MemberRepository;
 @Service
 public class MemberService {
 	@Autowired
-	MemberRepository mr;
+	MemberRepository memberRepository;
 	
 	public void join(MemberVO memberVO) {
-		mr.save(memberVO);
+		memberRepository.save(memberVO);
 	}
+	
 	public Optional<MemberVO> login(MemberVO memberVO) {
-		return mr.findByMemberIdAndPassword(memberVO.getMemberId(), memberVO.getPassword());
+		return memberRepository.findByMemberIdAndPassword(memberVO.getMemberId(), memberVO.getPassword());
 	}
 	
 	public String findId(MemberVO memberVO){
-		return mr.findByPhoneNumberAndEmail(memberVO.getPhoneNumber(), memberVO.getEmail()).get().getMemberId();
+		return memberRepository.findByPhoneNumberAndEmail(memberVO.getPhoneNumber(), memberVO.getEmail()).get().getMemberId();
 	}
-	public void confirmPassword(MemberVO memberVO){
-		mr.findByPhoneNumberAndEmail(memberVO.getPhoneNumber(), memberVO.getEmail());
+	
+	public boolean findPassword(MemberVO memberVO){
+		if(memberRepository.findByPhoneNumberAndEmail(memberVO.getPhoneNumber(), memberVO.getEmail()).get()!=null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
+	
 	public void changePassword(MemberVO memberVO) {
-		mr.save(memberVO);
+		memberRepository.save(memberVO);
 	}
+	
 	public Optional<MemberVO> myPage(MemberVO memberVO){
-		return mr.findByMemberId(memberVO.getMemberId());
+		return memberRepository.findByMemberId(memberVO.getMemberId());
 	}
-	public void update(MemberVO memberVO) {
-		mr.save(memberVO);
+	
+	public void changeMember(MemberVO memberVO) {
+		memberRepository.save(memberVO);
 	}
-	public Optional<MemberVO> delete(MemberVO memberVO){
-		return mr.deleteByMemberIdAndPassword(memberVO.getMemberId(), memberVO.getPassword());
+	
+	public void quit(MemberVO memberVO){
+		memberRepository.deleteByMemberIdAndPassword(memberVO.getMemberId(), memberVO.getPassword());
 	}
 }

@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -45,10 +47,4 @@ public class BakeryVO {
 	@OneToOne
 	@JoinColumn(name="MEMBERSEQ", nullable = false)
 	private MemberVO memberVO;
-//	@Column(name="MEMBERSEQ",nullable=false,length=8)
-//	private int memberSeq;
-	
-	
-	
-	
 }
