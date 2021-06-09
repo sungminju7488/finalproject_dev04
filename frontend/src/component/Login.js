@@ -10,8 +10,12 @@ function Login() {
     e.preventDefault();
 
     console.log("id : " + memberId + " | pw : " + password);
-    axios.post("/member/login", {memberId, password})
-    .then((res) => {})
+    axios
+      .post("/member/login", { memberId, password })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => alert(err.response.data.msg));
   };
 
   return (
