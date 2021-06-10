@@ -14,4 +14,16 @@ public class AuthVO {
 	private String grade;
 	private String alarmSet;
 	private String followSet;
+	
+	public AuthVO() {}
+	
+	public AuthVO(MemberVO memberVO) {
+		this.memberSeq = memberVO.getMemberSeq();
+		this.memberId = memberVO.getMemberId();
+		this.name = memberVO.getName();
+		this.nickName = memberVO.getNickName();
+		this.grade = memberVO.getGrade();
+		this.alarmSet = memberVO.getAlarmSet();
+		this.followSet = memberVO.getFollowSet();
+	}
 }

@@ -1,8 +1,56 @@
 import { Link } from "react-router-dom";
+import auth from "../Logic/Auth";
 import "../css/Navbar.css";
 import "../css/carousel.css";
+import { Fragment } from "react";
 
-function main() {
+function Main() {
+  function ViewLogFunc(props) {
+    const isloggedIn = props.isloggedIn;
+    if (isloggedIn) return <LoginFunc />;
+    else return <NotLoginFunc />;
+  }
+
+  function LoginFunc() {
+    const handleLogout = () => {
+      alert("로그아웃되셨습니다.");
+      auth.logout();
+      window.location.reload();
+    };
+
+    return (
+      <Fragment>
+        {/* <li className="nav-item">
+          <Link to="/member/joinpage" className="nav-link">
+            회원가입
+          </Link>
+        </li> */}
+        <li className="nav-item">
+          <button className="nav-link logoutBtn" onClick={handleLogout}>
+            로그아웃
+          </button>
+        </li>
+      </Fragment>
+    );
+  }
+
+  function NotLoginFunc() {
+    return (
+      <Fragment>
+        <li className="nav-item">
+          <Link to="/member/joinpage" className="nav-link">
+            회원가입
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/member/loginpage" className="nav-link">
+            로그인
+          </Link>
+        </li>
+      </Fragment>
+    );
+  }
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-#f0e8d9">
@@ -46,16 +94,7 @@ function main() {
           </ul>
 
           <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link to="/member/joinpage" className="nav-link">
-                회원가입
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/member/loginpage" className="nav-link">
-                로그인
-              </Link>
-            </li>
+            <ViewLogFunc isloggedIn={auth.loggedIn} />
           </ul>
         </div>
       </nav>
@@ -134,4 +173,4 @@ function main() {
   );
 }
 
-export default main;
+export default Main;
