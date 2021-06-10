@@ -26,3 +26,17 @@ body {
   border: none;
   outline: none;
 }
+
+.grade,
+.grade:hover {
+  width: 120px;
+  border: 0px solid #58595b;
+  text-align: center;
+  border-radius: 25px 25px 25px 25px;
+  color: #58595b !important;
+  cursor: default;
+}
+
+.grade-member {
+  background-color: rgb(252, 255, 169);
+}

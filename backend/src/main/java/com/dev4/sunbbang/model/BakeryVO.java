@@ -12,7 +12,7 @@ import lombok.Data;
 @Table(name="BAKERY")
 public class BakeryVO {
 	@Column(name="COPREGNUM",nullable=false,length=10)
-	private int copRegNum;
+	private String copRegNum;
 	@Column(name="MANAGER",nullable=false,length=50)
 	private String manager;
 	@Column(name="STORENAME",nullable=false,length=50)
