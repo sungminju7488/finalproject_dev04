@@ -5,12 +5,14 @@ import "../css/carousel.css";
 import { Fragment } from "react";
 
 function Main() {
+  //로그인 상태에 따른 태그 구분
   function ViewLogFunc(props) {
     const isloggedIn = props.isloggedIn;
     if (isloggedIn) return <LoginFunc />;
     else return <NotLoginFunc />;
   }
 
+  //로그인 상태일때 사용되는 태그 함수
   function LoginFunc() {
     const handleLogout = () => {
       alert("로그아웃되셨습니다.");
@@ -20,11 +22,12 @@ function Main() {
 
     return (
       <Fragment>
-        {/* <li className="nav-item">
-          <Link to="/member/joinpage" className="nav-link">
-            회원가입
+        <GradeFunc grade={auth.grade} />
+        <li className="nav-item">
+          <Link to="/member/mypagepage" className="nav-link">
+            마이페이지
           </Link>
-        </li> */}
+        </li>
         <li className="nav-item">
           <button className="nav-link logoutBtn" onClick={handleLogout}>
             로그아웃
@@ -34,6 +37,7 @@ function Main() {
     );
   }
 
+  //로그인이 아닐 때 사용되는 태그 함수
   function NotLoginFunc() {
     return (
       <Fragment>
@@ -45,6 +49,28 @@ function Main() {
         <li className="nav-item">
           <Link to="/member/loginpage" className="nav-link">
             로그인
+          </Link>
+        </li>
+      </Fragment>
+    );
+  }
+
+  //사용자 등급에 따른 태그 구분
+  function GradeFunc(props) {
+    const userGrade = props.grade;
+    if (userGrade === "0") return <MemberFunc />;
+  }
+
+  //일반 회원 태그
+  function MemberFunc() {
+    return (
+      <Fragment>
+        <li className="nav-item">
+          <span className="grade grade-member nav-link">일반회원</span>
+        </li>
+        <li className="nav-item">
+          <Link to="/member/changegradeconfirmpage" className="nav-link">
+            사업자전환
           </Link>
         </li>
       </Fragment>
@@ -72,7 +98,7 @@ function Main() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link to="#" className="nav-link">
+              <Link to="/service/bakerymap" className="nav-link">
                 빵 집 찾기
               </Link>
             </li>
