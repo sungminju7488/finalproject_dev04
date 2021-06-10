@@ -22,7 +22,8 @@ const JoinBakery = () => {
   const [longitude, setLongitude] = useState("");
   const [boardSet, setBoardSet] = useState("");
   const memberSeq = auth.memberSeq;
-  //   const [bakeryPath, setBakeryPath] = useState("");
+  const [bakeryPath, setBakeryPath] = useState("");
+  const [bakeryImage, setBakeryImage] = useState(null);
   //주소 Modal
   const [ModalOpen, setModalOpen] = useState(false);
 
@@ -304,17 +305,9 @@ const JoinBakery = () => {
           <h3 className="join_title">
             <label>매장사진 등록</label>
           </h3>
-          {/* <span className="box">
-            <input
-              type="text"
-              id="bakeryPath"
-              onChange={(e) => {
-                setPhoneNumber(e.target.value);
-              }}
-              className="var"
-              maxLength="11"
-            ></input>
-          </span> */}
+          <span className="box">
+            <input type="file" id="file" onChange={null} className="var" />
+          </span>
         </div>
 
         {/* 가입하기 버튼 */}
