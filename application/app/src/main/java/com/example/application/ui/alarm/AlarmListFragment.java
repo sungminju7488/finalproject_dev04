@@ -12,11 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.application.MainActivity;
 import com.example.application.R;
-import com.example.application.ViewModelFactory;
+import com.example.application.ui.base.ViewModelFactory;
 import com.example.application.databinding.FragmentAlarmListBinding;
 import com.example.application.model.AuthVO;
 import com.example.application.model.FoodVO;
@@ -51,11 +51,12 @@ public class AlarmListFragment extends Fragment {
         reloadButton = view.findViewById(R.id.reload_btn);
         logoutButton = view.findViewById(R.id.logout_btn);
 
-        adapter = new AlarmListAdapter(viewModel);
+        adapter = new AlarmListAdapter();
         RecyclerView recyclerView = view.findViewById(R.id.alarm_list);
         recyclerView.setAdapter(adapter);
 
         updateAlarmList();
+
         reloadButton.setOnClickListener(v -> {
            updateAlarmList();
         });

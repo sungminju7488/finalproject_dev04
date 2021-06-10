@@ -1,5 +1,6 @@
 package com.example.application.ui.alarm;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,20 +14,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.application.BR;
 import com.example.application.R;
 import com.example.application.model.FoodVO;
+import com.example.application.model.MemberVO;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    private AlarmListViewModel viewModel;
+public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final int HEADER_POSITION = 0;
+//    private AlarmListViewModel viewModel;
+//    private MemberVO memberVO;
     private List<FoodVO> alarmList = new ArrayList<>();
 
-    public AlarmListAdapter(AlarmListViewModel viewModel) {
-        this.viewModel = viewModel;
-    }
+//    public AlarmListAdapter(AlarmListViewModel viewModel, MemberVO memberVO) {
+//        this.viewModel = viewModel;
+//        this.memberVO = memberVO;
+//    }
 
     public void setAlarmList(List<FoodVO> alarmList) {
         this.alarmList = alarmList;
@@ -53,11 +61,15 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return alarmList.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return R.layout.item_list;
+    }
+
     private class AlarmViewHolder extends RecyclerView.ViewHolder {
 
         private ViewDataBinding binding;
-        private TextView food_name;
-        private TextView sale_time;
+
         private TextView delete_btn;
 
         private FoodVO foodVO;
@@ -67,8 +79,6 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             this.binding = binding;
 
             View itemView = binding.getRoot();
-            food_name = itemView.findViewById(R.id.food_name);
-            sale_time = itemView.findViewById(R.id.sale_time);
             delete_btn = itemView.findViewById(R.id.delete_btn);
         }
 

@@ -3,7 +3,11 @@ package com.dev4.sunbbang.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -11,6 +15,7 @@ import lombok.Data;
 @Entity
 @Table(name="BAKERY")
 public class BakeryVO {
+	@Id
 	@Column(name="COPREGNUM",nullable=false,length=10)
 	private String copRegNum;
 	@Column(name="MANAGER",nullable=false,length=50)
@@ -39,11 +44,7 @@ public class BakeryVO {
 	private String longitude;
 	@Column(name="BOARDSET",length=1)
 	private char boardSet;
-	@Id
-	@Column(name="MEMBERSEQ",nullable=false,length=8)
-	private int memberSeq;
-	
-	
-	
-	
+	@OneToOne
+	@JoinColumn(name="MEMBERSEQ", nullable = false)
+	private MemberVO memberVO;
 }

@@ -9,10 +9,16 @@ import com.dev4.sunbbang.model.MemberVO;
 
 public interface MemberRepository extends JpaRepository<MemberVO, Integer>{
 
-	Optional<MemberVO> deleteByMemberIdAndPassword(String memberId, String password);
 	Optional<MemberVO> findByMemberIdAndPassword(String memberId, String password);
-	Optional<MemberVO> findByPhoneNumberAndEmail(String phoneNumber, String eMail);
+	
+	Optional<MemberVO> findByPhoneNumberAndEmail(String phoneNumber, String email);
+	
 	Optional<MemberVO> findByMemberId(String memberId);
+	
+	Optional<MemberVO> deleteByMemberIdAndPassword(String memberId, String password);
+	
+	
+	
 	
 	@Query(value = "UPDATE MEMBER SET FOLLOWSET=?1 WHERE MEMBERSEQ=?2", nativeQuery = true)
 	public void modifyToFollowSet(String followSet, int MemberSeq);

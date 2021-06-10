@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -37,8 +39,10 @@ public class FoodVO {
 	private int price;
 	@Column(name="SALETIME",length=8)
 	private String saleTime;
-	@Column(name="BAKERYSEQ",nullable=false,length=8)
-	private int bakerySeq;
+	@ManyToOne
+	@JoinColumn(name="COPREGNUM", nullable = false)
+	private BakeryVO bakeryVO;
+	
 	
 	
 }

@@ -16,4 +16,7 @@ public interface AppService {
 
     @POST("bakery/useAlarm")
     Call<List<FoodVO>> useAlarm(@Body MemberVO memberVO);
+
+    @POST("bakeyr/deleteAlarm")
+    Call<MemberVO> deleteAlarm(@Body MemberVO memberVO, @Body FoodVO foodVO);
 }

@@ -1,11 +1,12 @@
 package com.dev4.sunbbang.bakery;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,8 +28,13 @@ public class BakeryController {
 	Gson gson;
 
 	@RequestMapping("/bakery/joinBakery")
-	public void joinBakery(@RequestBody MemberVO memberVO, BakeryVO bakeryVO) {
-		bakeryService.joinBakery(memberVO, bakeryVO);
+	public boolean joinBakery(@RequestBody MemberVO memberVO, @RequestBody BakeryVO bakeryVO, @RequestBody MultipartFile image) {
+		try {
+			bakeryService.joinBakery(memberVO, bakeryVO, image);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@RequestMapping("/bakery/myShop")
@@ -37,64 +43,92 @@ public class BakeryController {
 	}
 
 	@RequestMapping("/bakery/changeBakery")
-	public void changeBakery(@RequestBody BakeryVO bakeryVO, MultipartFile image) {
-		bakeryService.myShop(bakeryVO);
-
+	public boolean changeBakery(@RequestBody BakeryVO bakeryVO, @RequestBody MultipartFile image) {
+		try {
+			bakeryService.myShop(bakeryVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@RequestMapping("/bakery/menuList")
-	public Object menuList(@RequestBody FoodVO foodVO) {
-		return gson.toJson(bakeryService.menuList(foodVO));
-
+	public Object menuList(@RequestBody BakeryVO bakeryVO) {
+		return gson.toJson(bakeryService.menuList(bakeryVO));
 	}
 
 	@RequestMapping("/bakery/addMenu")
-	public void addMenu(@RequestBody FoodVO foodVO) {
-		bakeryService.addMenu(foodVO);
+	public boolean addMenu(@RequestBody FoodVO foodVO) {
+		try {
+			bakeryService.addMenu(foodVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@RequestMapping("/bakery/modifyMenu")
-	public void modifyMenu(@RequestBody FoodVO foodVO) {
-		bakeryService.modifyMenu(foodVO);
+	public boolean modifyMenu(@RequestBody FoodVO foodVO) {
+		try {
+			bakeryService.modifyMenu(foodVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
-	@DeleteMapping("/bakery/deleteMenu")
-	public void deleteMenu(@RequestBody FoodVO foodVO) {
-		bakeryService.deleteMenu(foodVO);
+	@RequestMapping("/bakery/deleteMenu")
+	public boolean deleteMenu(@RequestBody FoodVO foodVO) {
+		try {
+			bakeryService.deleteMenu(foodVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@RequestMapping("/bakery/boardToggle")
-	public void boardToggle(@RequestBody BakeryVO bakeryVO) throws Exception {
-		bakeryService.boardToggle(bakeryVO);
-
+	public Object boardToggle(@RequestBody BakeryVO bakeryVO) {
+		return gson.toJson(bakeryService.boardToggle(bakeryVO));
 	}
-	
+
 	@RequestMapping("/bakery/searchBakery")
 	public Object searchBakery(@RequestBody PageVO pageVO) {
 		return gson.toJson(bakeryService.searchBakery(pageVO));
 	}
-	
+
 	@RequestMapping("/bakery/setFollow")
-	public void setFollow(@RequestBody AuthVO authVO, @RequestBody BakeryVO bakeryVO) {
-		bakeryService.setFollow(authVO, bakeryVO);
+	public boolean setFollow(@RequestBody AuthVO authVO, @RequestBody BakeryVO bakeryVO) {
+		try {
+			bakeryService.setFollow(authVO, bakeryVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
-	
-	@RequestMapping("/bakery/menuViewList")
-	public Object menuViewList(@RequestBody BakeryVO bakeryVO) {
-		return gson.toJson(bakeryService.menuViewList(bakeryVO));
-	}
-	
+
 	@RequestMapping("/bakery/setAlarm")
-	public void setAlarm(@RequestBody AuthVO authVO, FoodVO foodVO) {
-		bakeryService.setAlarm(authVO, foodVO);
+	public boolean setAlarm(@RequestBody AuthVO authVO, @RequestBody FoodVO foodVO) {
+		try {
+			bakeryService.setAlarm(authVO, foodVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
-	
+
 	@RequestMapping("/bakery/useAlarm")
 	public Object useAlarm(@RequestBody AuthVO authVO) {
 		System.out.println("Controller: useAlarm");
-		return gson.toJson(bakeryService.useAlarm(authVO));
+		List<FoodVO> list = bakeryService.useAlarm(authVO);
+		return gson.toJson(list);
 	}
-	
+
+	@RequestMapping("/bakery/deleteAlarm")
+	public Object deleteAlarm(@RequestBody AuthVO authVO, @RequestBody FoodVO foodVO) {
+		return gson.toJson(bakeryService.deleteAlarm(authVO, foodVO));
+	}
+
 	@RequestMapping("/bakery/searchFood")
 	public Object searchFood(@RequestBody FoodVO foodVO) {
 		return gson.toJson(bakeryService.searchFood(foodVO));
