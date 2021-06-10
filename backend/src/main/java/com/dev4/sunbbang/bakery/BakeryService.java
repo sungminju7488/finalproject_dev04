@@ -40,6 +40,8 @@ public class BakeryService {
 	FoodRepository foodRepository;
 
 	public void joinBakery(MemberVO memberVO, BakeryVO bakeryVO, MultipartFile image) throws IOException {
+		memberVO = memberRepository.getById(memberVO.getMemberSeq());
+		memberVO.setGrade("1");
 		if (!image.isEmpty()) {
 			String path = "http://localhost:8080/bakery/" + bakeryVO.getCopRegNum() + "."
 					+ image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf(".") + 1);

@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.dev4.sunbbang.model.BakeryVO;
 import com.dev4.sunbbang.model.MemberVO;
 
-public interface BakeryRepository extends JpaRepository<BakeryVO, Integer>{
+public interface BakeryRepository extends JpaRepository<BakeryVO, String>{
 	
 	public Optional<BakeryVO> findByMemberVO(MemberVO memberVO);
 	public Optional<Page<BakeryVO>> findByStoreNameContaining(String keyword, Pageable pagealbe);
