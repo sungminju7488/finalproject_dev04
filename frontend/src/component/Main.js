@@ -59,6 +59,7 @@ function Main() {
   function GradeFunc(props) {
     const userGrade = props.grade;
     if (userGrade === "0") return <MemberFunc />;
+    else if (userGrade === "1") return <IdentificationFunc />;
   }
 
   //일반 회원 태그
@@ -72,6 +73,19 @@ function Main() {
           <Link to="/member/changegradeconfirmpage" className="nav-link">
             사업자전환
           </Link>
+        </li>
+      </Fragment>
+    );
+  }
+
+  //일반 회원 태그
+  function IdentificationFunc() {
+    return (
+      <Fragment>
+        <li className="nav-item">
+          <span className="grade grade-identification nav-link">
+            사업자회원
+          </span>
         </li>
       </Fragment>
     );
