@@ -39,14 +39,15 @@ public class BakeryService {
 	@Autowired
 	FoodRepository foodRepository;
 
-	public void joinBakery(MemberVO memberVO, BakeryVO bakeryVO, MultipartFile image) throws IOException {
+	public void joinBakery(MemberVO memberVO, BakeryVO bakeryVO, MultipartFile image, String imageName) throws IOException {
 		memberVO = memberRepository.getById(memberVO.getMemberSeq());
 		memberVO.setGrade("1");
+		bakeryVO.setMemberVO(memberVO);
 		if (!image.isEmpty()) {
-			String path = "http://localhost:8080/bakery/" + bakeryVO.getCopRegNum() + "."
-					+ image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf(".") + 1);
+			String fileName = bakeryVO.getCopRegNum() + "." + imageName.substring(imageName.lastIndexOf(".")+1);
+			image.transferTo(new File("C://images/bakery/" + fileName));
+			String path = "http://localhost:8080/images/bakery/" + fileName;
 			bakeryVO.setBakeryPath(path);
-			image.transferTo(new File(path));
 		}
 		memberRepository.save(memberVO);
 		bakeryRepository.save(bakeryVO);
@@ -56,12 +57,12 @@ public class BakeryService {
 		return bakeryRepository.findByMemberVO(bakeryVO.getMemberVO()).get();
 	}
 
-	public void changeBakery(BakeryVO bakeryVO, MultipartFile image) throws IOException {
+	public void changeBakery(BakeryVO bakeryVO, MultipartFile image, String imageName) throws IOException {
 		if (!image.isEmpty()) {
-			String path = "http://localhost:8080/bakery/" + bakeryVO.getCopRegNum() + "."
-					+ image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf(".") + 1);
+			String fileName = bakeryVO.getCopRegNum() + "." + imageName.substring(imageName.lastIndexOf(".")+1);
+			image.transferTo(new File("C://images/bakery/" + fileName));
+			String path = "http://localhost:8080/images/bakery/" + fileName;
 			bakeryVO.setBakeryPath(path);
-			image.transferTo(new File(path));
 		}
 		bakeryRepository.save(bakeryVO);
 	}

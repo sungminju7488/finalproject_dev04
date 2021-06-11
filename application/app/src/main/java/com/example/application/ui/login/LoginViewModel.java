@@ -20,7 +20,7 @@ public class LoginViewModel extends ViewModel {
 
 
     void login(Callback<MemberVO> callback) {
-        repository.loginMember(new MemberVO(id.getValue(), password.getValue()), callback);
+//        repository.loginMember(new MemberVO(id.getValue(), password.getValue()), callback);
     }
 
 

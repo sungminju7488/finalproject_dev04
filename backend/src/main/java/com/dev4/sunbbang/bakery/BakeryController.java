@@ -28,9 +28,9 @@ public class BakeryController {
 	Gson gson;
 
 	@RequestMapping("/bakery/joinBakery")
-	public boolean joinBakery(@RequestBody MemberVO memberVO, @RequestBody BakeryVO bakeryVO, @RequestBody MultipartFile image) {
+	public boolean joinBakery(MemberVO memberVO, BakeryVO bakeryVO,	MultipartFile image, String imageName) {
 		try {
-			bakeryService.joinBakery(memberVO, bakeryVO, image);
+			bakeryService.joinBakery(memberVO, bakeryVO, image, imageName);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -41,11 +41,11 @@ public class BakeryController {
 	public Object myShop(@RequestBody BakeryVO bakeryVO) {
 		return gson.toJson(bakeryService.myShop(bakeryVO));
 	}
-
+	
 	@RequestMapping("/bakery/changeBakery")
-	public boolean changeBakery(@RequestBody BakeryVO bakeryVO, @RequestBody MultipartFile image) {
+	public boolean changeBakery(BakeryVO bakeryVO, MultipartFile image, String imageName) {
 		try {
-			bakeryService.myShop(bakeryVO);
+			bakeryService.changeBakery(bakeryVO, image, imageName);
 			return true;
 		} catch (Exception e) {
 			return false;

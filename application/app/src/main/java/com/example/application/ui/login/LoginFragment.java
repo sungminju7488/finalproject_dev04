@@ -21,8 +21,6 @@ import com.example.application.model.AuthVO;
 import com.example.application.model.MemberVO;
 import com.example.application.ui.alarm.AlarmListFragment;
 import com.example.application.ui.base.ViewModelFactory;
-import com.example.application.ui.base.MainActivity;
-import com.example.application.ui.join.JoinInFragment;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,17 +46,17 @@ public class LoginFragment extends Fragment {
 
         // Data Binding 연결
         loginViewModel = new ViewModelProvider(this, new ViewModelFactory()).get(LoginViewModel.class);
-        binding.setVm(loginViewModel);
+//        binding.setVm(loginViewModel);
+//
+//        final Button loginButton = view.findViewById(R.id.login_btn);
 
-        final Button loginButton = view.findViewById(R.id.login_btn);
 
-
-        loginButton.setOnClickListener(v -> {
-            // ID, PW 비어있는지 확인
-            if (!loginViewModel.validateLoginInfo()) {
-                Toast.makeText(requireActivity().getApplicationContext(), "아이디, 비밀번호는 반드시 입력해야합니다.", Toast.LENGTH_SHORT).show();
-                return;
-            }
+//        loginButton.setOnClickListener(v -> {
+//            // ID, PW 비어있는지 확인
+//            if (!loginViewModel.validateLoginInfo()) {
+//                Toast.makeText(requireActivity().getApplicationContext(), "아이디, 비밀번호는 반드시 입력해야합니다.", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
 
             loginViewModel.login(new Callback<MemberVO>() {
                 /**
@@ -77,7 +75,7 @@ public class LoginFragment extends Fragment {
                             Toast.makeText(requireActivity().getApplicationContext().getApplicationContext(), String.format("%s 회원님, 환영합니다.", memberVO.getName()), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent();
                             //(LoginFragment  ，AlarmListFragment)
-                            intent.setClass(LoginFragment.this, AlarmListFragment.class);
+//                            intent.setClass(LoginFragment.this, AlarmListFragment.class);
                             startActivity(intent);
                         }
 
@@ -91,7 +89,7 @@ public class LoginFragment extends Fragment {
                     }
                 }
             });
-        });
+//        });
 
        ;
     }
