@@ -43,10 +43,17 @@ public class BakeryService {
 		memberVO = memberRepository.getById(memberVO.getMemberSeq());
 		memberVO.setGrade("1");
 		if (!image.isEmpty()) {
-			String path = "http://localhost:8080/bakery/" + bakeryVO.getCopRegNum() + "."
+			String namePath = "http://localhost:8080/images/bakery" + bakeryVO.getCopRegNum() + "."
 					+ image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf(".") + 1);
-			bakeryVO.setBakeryPath(path);
-			image.transferTo(new File(path));
+			
+			String savePath = "C:\\images\\bakery\\" + bakeryVO.getCopRegNum() + "."
+					+ image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf(".") + 1);
+			
+			System.out.println("namePath : " + namePath);
+			System.out.println("savePath : " + savePath);
+			
+			bakeryVO.setBakeryPath(namePath);
+			image.transferTo(new File(savePath));
 		}
 		memberRepository.save(memberVO);
 		bakeryRepository.save(bakeryVO);

@@ -23,35 +23,42 @@ const JoinBakery = () => {
   const [boardSet, setBoardSet] = useState("");
   const memberSeq = auth.memberSeq;
   const [bakeryPath, setBakeryPath] = useState("");
-  const [bakeryImage, setBakeryImage] = useState(null);
+  const [image, setBakeryImage] = useState(null);
+  const [imageName, setImageName] = useState("");
   //주소 Modal
   const [ModalOpen, setModalOpen] = useState(false);
 
-  const joinBakeryHandler = (event) => {
+  const joinBakeryHandler = async (event) => {
     event.preventDefault();
 
-    const bakeryPath = "bakeryImage.jpg";
     const grade = "1";
 
+    let formData = new FormData();
+    formData.append("copRegNum", copRegNum);
+    formData.append("manager", manager);
+    formData.append("storeName", storeName);
+    formData.append("storeAddress1", storeAddress1);
+    formData.append("storeAddress2", storeAddress2);
+    formData.append("storeContact", storeContact);
+    formData.append("bakeryPath", bakeryPath);
+    formData.append("businessHour", businessHour);
+    formData.append("holiday", holiday);
+    formData.append("specialHoliday", specialHoliday);
+    formData.append("eatable", eatable);
+    formData.append("latitude", latitude);
+    formData.append("longitude", longitude);
+    formData.append("boardSet", boardSet);
+    formData.append("memberSeq", memberSeq);
+    formData.append("grade", grade);
+    formData.append("image", image);
+    formData.append("imageName", imageName);
+
+    const config = {
+      headers: { "Content-Type": "multipart/form-data" },
+    };
+
     axios
-      .post("/bakery/joinBakery", {
-        copRegNum,
-        manager,
-        storeName,
-        storeAddress1,
-        storeAddress2,
-        storeContact,
-        bakeryPath,
-        businessHour,
-        holiday,
-        specialHoliday,
-        eatable,
-        latitude,
-        longitude,
-        boardSet,
-        memberSeq,
-        grade,
-      })
+      .post("/bakery/joinBakery", formData, config)
       .then((res) => {
         alert("등록완료");
       })
@@ -102,6 +109,19 @@ const JoinBakery = () => {
 
     //Modal닫기
     closeModal();
+  };
+
+  //이미지 변경
+  const changeImageHandler = (event) => {
+    let reader = new FileReader();
+    if (event.target.files[0]) {
+      reader.readAsDataURL(event.target.files[0]); //1.파일을 읽어 버퍼에 저장
+      setBakeryImage(event.target.files[0]);
+      setBakeryPath(URL.createObjectURL(event.target.files[0]));
+      setImageName(event.target.files[0].name);
+
+      console.log(event.target.files[0]);
+    }
   };
 
   return (
@@ -305,9 +325,35 @@ const JoinBakery = () => {
           <h3 className="join_title">
             <label>매장사진 등록</label>
           </h3>
-          <span className="box">
-            <input type="file" id="file" onChange={null} className="var" />
-          </span>
+          <div className="box">
+            <input
+              type="file"
+              id="image"
+              onChange={changeImageHandler}
+              className="var"
+            />
+          </div>
+          {bakeryPath ? (
+            <div
+              className="bakeryImage"
+              style={{
+                width: "300px",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            >
+              <img
+                src={bakeryPath}
+                style={{
+                  backgroundColor: "#efefef",
+                  width: "300px",
+                  height: "300px",
+                }}
+              />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
 
         {/* 가입하기 버튼 */}

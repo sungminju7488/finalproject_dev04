@@ -17,6 +17,9 @@ import com.dev4.sunbbang.model.MemberVO;
 import com.dev4.sunbbang.model.PageVO;
 import com.google.gson.Gson;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Async
 @RestController
 public class BakeryController {
@@ -28,11 +31,17 @@ public class BakeryController {
 	Gson gson;
 
 	@RequestMapping("/bakery/joinBakery")
-	public boolean joinBakery(@RequestBody MemberVO memberVO, @RequestBody BakeryVO bakeryVO, @RequestBody MultipartFile image) {
+	public boolean joinBakery( MemberVO memberVO, BakeryVO bakeryVO, MultipartFile image, String imageName) {
 		try {
+			log.info("memberVO :: {}", memberVO);
+			log.info("bakeryVO :: {}", bakeryVO);
+			log.info("image :: {}", image);
+			log.info("imageName :: {}", imageName);
+
 			bakeryService.joinBakery(memberVO, bakeryVO, image);
 			return true;
 		} catch (Exception e) {
+			System.out.println("error : " + e.getMessage());
 			return false;
 		}
 	}
