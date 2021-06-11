@@ -39,7 +39,7 @@ public class BakeryService {
 	@Autowired
 	FoodRepository foodRepository;
 
-	public void joinBakery(MemberVO memberVO, BakeryVO bakeryVO, MultipartFile image, String imageName) throws IOException {
+	public AuthVO joinBakery(MemberVO memberVO, BakeryVO bakeryVO, MultipartFile image, String imageName) throws IOException {
 		memberVO = memberRepository.getById(memberVO.getMemberSeq());
 		memberVO.setGrade("1");
 		bakeryVO.setMemberVO(memberVO);
@@ -51,6 +51,7 @@ public class BakeryService {
 		}
 		memberRepository.save(memberVO);
 		bakeryRepository.save(bakeryVO);
+		return new AuthVO(memberVO);
 	}
 
 	public BakeryVO myShop(BakeryVO bakeryVO) {

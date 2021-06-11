@@ -33,7 +33,7 @@ public class FCMService extends FirebaseMessagingService {
     }
 
     private RemoteViews getCustomDesign(String title, String message) {
-        RemoteViews remoteViews = new RemoteViews(getApplicationContext().getPackageName(), R.layout.notification);
+        RemoteViews remoteViews = new RemoteViews(getApplicationContext().getPackageName(), 1300059);
         remoteViews.setTextViewText(R.id.noti_title, title);
         remoteViews.setTextViewText(R.id.noti_message, message);
         remoteViews.setImageViewResource(R.id.noti_icon, R.mipmap.ic_launcher);

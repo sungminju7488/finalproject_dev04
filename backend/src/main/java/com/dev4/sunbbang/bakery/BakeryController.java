@@ -1,5 +1,6 @@
 package com.dev4.sunbbang.bakery;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import com.dev4.sunbbang.model.BakeryVO;
 import com.dev4.sunbbang.model.FoodVO;
 import com.dev4.sunbbang.model.MemberVO;
 import com.dev4.sunbbang.model.PageVO;
+import com.dev4.sunbbang.util.JwtService;
+import com.dev4.sunbbang.util.ResponseToken;
 import com.google.gson.Gson;
 
 @Async
@@ -23,18 +26,18 @@ public class BakeryController {
 
 	@Autowired
 	BakeryService bakeryService;
+	
+	@Autowired
+	private JwtService jwtService;
 
 	@Autowired
 	Gson gson;
 
 	@RequestMapping("/bakery/joinBakery")
-	public boolean joinBakery(MemberVO memberVO, BakeryVO bakeryVO,	MultipartFile image, String imageName) {
-		try {
-			bakeryService.joinBakery(memberVO, bakeryVO, image, imageName);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
+	public ResponseToken joinBakery(MemberVO memberVO, BakeryVO bakeryVO, 
+			MultipartFile image, String imageName) throws IOException {
+			AuthVO authVO = bakeryService.joinBakery(memberVO, bakeryVO, image, imageName);
+			return new ResponseToken(jwtService.createToken(authVO));
 	}
 
 	@RequestMapping("/bakery/myShop")

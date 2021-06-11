@@ -48,7 +48,7 @@ public class MemberController {
 
 	@PostMapping("/confirmPassword")
 	public void confirmPassword(@RequestBody MemberVO memberVO) {
-		 memberService.confirmPassword(memberVO);
+		 memberService.changePassword(memberVO);
 	}
 	@PostMapping("/changePassword")
 	public void changePassword(@RequestBody MemberVO memberVO) {
@@ -63,12 +63,12 @@ public class MemberController {
 
 	@PutMapping("/changeMember")
 	public void update(@RequestBody MemberVO memberVO) {
-		memberService.update(memberVO);
+		memberService.changeMember(memberVO);
 	}
 
 	@DeleteMapping("/quit")
 	public void quit(@RequestBody MemberVO memberVO) {
-		memberService.delete(memberVO);
+		memberService.quit(memberVO);
 	}
 
 }
