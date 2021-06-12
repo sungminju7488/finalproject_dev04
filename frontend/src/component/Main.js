@@ -92,6 +92,11 @@ function Main() {
             내 매장정보
           </Link>
         </li>
+        <li className="nav-item">
+          <Link to="/bakery/menulistpage" className="nav-link">
+            메뉴관리
+          </Link>
+        </li>
       </Fragment>
     );
   }
