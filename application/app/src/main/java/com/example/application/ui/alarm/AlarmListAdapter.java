@@ -1,5 +1,7 @@
 package com.example.application.ui.alarm;
 
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,6 +87,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private void bind(FoodVO foodVO){
             this.foodVO = foodVO;
 
+            Log.i("hans", foodVO.getFoodName());
             binding.setVariable(BR.foodVO, foodVO);
             binding.executePendingBindings();
         }

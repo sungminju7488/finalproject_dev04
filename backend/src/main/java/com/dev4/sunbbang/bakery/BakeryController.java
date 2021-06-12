@@ -54,10 +54,10 @@ public class BakeryController {
 			return false;
 		}
 	}
-
+	
 	@RequestMapping("/bakery/menuList")
-	public Object menuList(@RequestBody BakeryVO bakeryVO) {
-		return gson.toJson(bakeryService.menuList(bakeryVO));
+	public Object menuList(@RequestBody MemberVO memberVO) {
+		return gson.toJson(bakeryService.menuList(memberVO));
 	}
 
 	@RequestMapping("/bakery/addMenu")
@@ -108,6 +108,11 @@ public class BakeryController {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	@RequestMapping("/bakery/menuViewList")
+	public Object menuViewList(@RequestBody BakeryVO bakeryVO) {
+		return gson.toJson(bakeryService.menuViewList(bakeryVO));
 	}
 
 	@RequestMapping("/bakery/setAlarm")
