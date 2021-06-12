@@ -9,6 +9,7 @@ import Login from "./component/Login";
 import BakeryMap from "./component/BakeryMap";
 import ChangeGradeConfirm from "./component/ChangeGradeConfirm";
 import JoinBakery from "./component/JoinBakery";
+import MyShop from "./component/MyShop";
 
 class App extends Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class App extends Component {
           />
           {/* 베이커리 */}
           <Route exact path="/bakery/joinbakerypage" component={JoinBakery} />
+          <Route exact path="/bakery/myshoppage" component={MyShop} />
         </Switch>
       </BrowserRouter>
     );

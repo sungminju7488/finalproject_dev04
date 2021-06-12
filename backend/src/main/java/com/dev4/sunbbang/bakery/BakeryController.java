@@ -41,8 +41,8 @@ public class BakeryController {
 	}
 
 	@RequestMapping("/bakery/myShop")
-	public Object myShop(@RequestBody BakeryVO bakeryVO) {
-		return gson.toJson(bakeryService.myShop(bakeryVO));
+	public Object myShop(@RequestBody MemberVO memberVO) {
+		return gson.toJson(bakeryService.myShop(memberVO));
 	}
 	
 	@RequestMapping("/bakery/changeBakery")

@@ -87,6 +87,11 @@ function Main() {
             사업자회원
           </span>
         </li>
+        <li className="nav-item">
+          <Link to="/bakery/myshoppage" className="nav-link">
+            내 매장정보
+          </Link>
+        </li>
       </Fragment>
     );
   }

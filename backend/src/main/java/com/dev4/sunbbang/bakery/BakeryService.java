@@ -54,8 +54,8 @@ public class BakeryService {
 		return new AuthVO(memberVO);
 	}
 
-	public BakeryVO myShop(BakeryVO bakeryVO) {
-		return bakeryRepository.findByMemberVO(bakeryVO.getMemberVO()).get();
+	public BakeryVO myShop(MemberVO memberVO) {
+		return bakeryRepository.findByMemberVO(memberVO).get();
 	}
 
 	public void changeBakery(BakeryVO bakeryVO, MultipartFile image, String imageName) throws IOException {
