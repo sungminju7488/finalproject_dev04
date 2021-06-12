@@ -24,7 +24,7 @@ public class BakeryVO {
 	private String storeName;
 	@Column(name="STOREADDRESS1",nullable=false,length=100)
 	private String storeAddress1;
-	@Column(name="STOREADDRESS2",nullable=false,length=100)
+	@Column(name="STOREADDRESS2",length=100)
 	private String storeAddress2;
 	@Column(name="STORECONTACT",nullable=false,length=11)
 	private String storeContact;
