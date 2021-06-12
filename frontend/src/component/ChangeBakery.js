@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import auth from "../Logic/Auth";
 import AddressModal from "./AddressModal";
 import DaumPostcode from "react-daum-postcode";
@@ -40,6 +40,8 @@ const ChangeBakery = ({ history }) => {
     setEatable(data.eatable);
     setBoardSet(data.boardSet);
     setBakeryPath(data.bakeryPath);
+    setLatitude(data.latitude);
+    setLongitude(data.longitude);
   };
 
   useEffect(() => {
@@ -63,12 +65,18 @@ const ChangeBakery = ({ history }) => {
     formData.append("manager", manager);
     formData.append("storeName", storeName);
     formData.append("storeAddress1", storeAddress1);
-    formData.append("storeAddress2", storeAddress2);
+    formData.append(
+      "storeAddress2",
+      storeAddress2 === undefined ? "" : storeAddress2
+    );
     formData.append("storeContact", storeContact);
     formData.append("bakeryPath", bakeryPath);
     formData.append("businessHour", businessHour);
-    formData.append("holiday", holiday);
-    formData.append("specialHoliday", specialHoliday);
+    formData.append("holiday", holiday === undefined ? "" : holiday);
+    formData.append(
+      "specialHoliday",
+      specialHoliday === undefined ? "" : specialHoliday
+    );
     formData.append("eatable", eatable);
     formData.append("latitude", latitude);
     formData.append("longitude", longitude);
@@ -86,7 +94,7 @@ const ChangeBakery = ({ history }) => {
       .then((res) => {
         if (res.data !== null || res.data !== undefined) {
           alert("매장정보가 변경되었습니다.");
-          history.back();
+          history.goBack();
         } else {
           alert("사업자 회원 등록에 실패했습니다.");
         }
@@ -325,7 +333,7 @@ const ChangeBakery = ({ history }) => {
           <span className="box">
             <select
               id="eatable"
-              defaultValue={eatable}
+              value={eatable}
               onChange={(e) => {
                 setEatable(e.target.value);
               }}
@@ -346,7 +354,7 @@ const ChangeBakery = ({ history }) => {
           <span className="box">
             <select
               id="boardSet"
-              defaultValue={boardSet}
+              value={boardSet}
               onChange={(e) => {
                 setBoardSet(e.target.value);
               }}

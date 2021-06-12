@@ -175,7 +175,7 @@ function MyShop() {
           <input
             id="eatable"
             className="var"
-            value={eatable === "0" ? "불가능" : "가능"}
+            value={eatable === "F" ? "불가능" : "가능"}
             readOnly
           />
         </span>
@@ -190,7 +190,7 @@ function MyShop() {
           <input
             id="boardSet"
             className="var"
-            value={boardSet === "0" ? "없음" : "있음"}
+            value={boardSet === "F" ? "비활성화" : "활성화"}
             readOnly
           />
         </span>
