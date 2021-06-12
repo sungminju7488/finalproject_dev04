@@ -6,6 +6,8 @@ import Main from "./component/Main";
 import Join from "./component/Join";
 import Login from "./component/Login";
 import BakeryMap from "./component/BakeryMap";
+import Mypage from "./component/Mypage"
+import Modify from "./component/Modify";
 
 class App extends Component {
   render() {
@@ -16,6 +18,8 @@ class App extends Component {
           <Route exact path="/service/bakeryMap" component={BakeryMap} />
           <Route exact path="/member/joinpage" component={Join} />
           <Route exact path="/member/loginpage" component={Login} />
+          <Route exact path="/member/mypagepage" component={Mypage}/>
+          <Route exact path="/member/changememberpage" component={Modify}/>
         </Switch>
       </BrowserRouter>
     );
