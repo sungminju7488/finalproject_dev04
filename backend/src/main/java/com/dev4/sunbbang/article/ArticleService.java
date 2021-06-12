@@ -21,7 +21,7 @@ public class ArticleService {
 	public Page<ArticleVO> articleList(Pageable pageVO) {
 		return ar.findAll(pageVO);
 	}
-	public void wrtieArticle(ArticleVO vo) {
+	public void writeArticle(ArticleVO vo) {
 		ar.save(vo);
 	}
 	public Optional<ArticleVO> readArticle(ArticleVO vo) {

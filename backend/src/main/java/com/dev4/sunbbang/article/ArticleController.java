@@ -30,9 +30,9 @@ public class ArticleController {
 		Page<ArticleVO> mvo = articleService.articleList((Pageable) pageVO);
 		return gson.toJson(mvo);
 	}
-	@PostMapping("/article/wrtieArticle")
-	public void wrtieArticle(@RequestBody ArticleVO vo){
-		 articleService.wrtieArticle(vo);
+	@PostMapping("/article/writeArticle")
+	public void writeArticle(@RequestBody ArticleVO vo){
+		 articleService.writeArticle(vo);
 	}
 	@GetMapping("/article/readArticle")
 	public Object readArticle(@RequestBody ArticleVO vo) {
