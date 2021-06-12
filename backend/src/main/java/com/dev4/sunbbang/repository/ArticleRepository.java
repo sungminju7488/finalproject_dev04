@@ -12,8 +12,7 @@ import com.dev4.sunbbang.model.ArticleVO;
 public interface ArticleRepository extends JpaRepository<ArticleVO, String> {
 
 	Optional<ArticleVO> findByArticleSeq(int no);
-	public Optional<Page<ArticleVO>> findAll(ArticleVO vo,Pageable pageVO);
-	
+
 	@Query(value = "UPDATE ARTICLE SET CONTENT=?0",nativeQuery = true)
 	public void reportArticle(ArticleVO vo);
 }
