@@ -58,7 +58,9 @@ public class BakeryService {
 		return bakeryRepository.findByMemberVO(memberVO).get();
 	}
 
-	public void changeBakery(BakeryVO bakeryVO, MultipartFile image, String imageName) throws IOException {
+	public void changeBakery(MemberVO memberVO, BakeryVO bakeryVO, MultipartFile image, String imageName) throws IOException {
+		memberVO = memberRepository.getById(memberVO.getMemberSeq());
+		bakeryVO.setMemberVO(memberVO);
 		if (!image.isEmpty()) {
 			String fileName = bakeryVO.getCopRegNum() + "." + imageName.substring(imageName.lastIndexOf(".")+1);
 			image.transferTo(new File("C://images/bakery/" + fileName));

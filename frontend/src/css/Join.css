@@ -12,6 +12,10 @@
   margin: 0;
   height: 100%;
   font-family: Dotum, "돋움", Helvetica, sans-serif;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  width: 460px;
 }
 
 a:hover {
@@ -21,13 +25,6 @@ a:hover {
   padding-top: 62px;
   padding-bottom: 20px;
   text-align: center;
-}
-
-#content {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-  width: 460px;
 }
 
 h3 {

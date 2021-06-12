@@ -46,11 +46,13 @@ public class BakeryController {
 	}
 	
 	@RequestMapping("/bakery/changeBakery")
-	public boolean changeBakery(BakeryVO bakeryVO, MultipartFile image, String imageName) {
+	public boolean changeBakery(MemberVO memberVO, BakeryVO bakeryVO, MultipartFile image, String imageName) {
 		try {
-			bakeryService.changeBakery(bakeryVO, image, imageName);
+			bakeryService.changeBakery(memberVO, bakeryVO, image, imageName);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
+//			System.out.println("error : " + );
 			return false;
 		}
 	}

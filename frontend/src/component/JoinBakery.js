@@ -305,8 +305,8 @@ const JoinBakery = () => {
                 className="sel"
               >
                 <option>선택</option>
-                <option value="0">불가능</option>
-                <option value="1">가능</option>
+                <option value="F">불가능</option>
+                <option value="T">가능</option>
               </select>
             </span>
           </div>
@@ -325,8 +325,8 @@ const JoinBakery = () => {
                 className="sel"
               >
                 <option>선택</option>
-                <option value="0">비활성화</option>
-                <option value="1">활성화</option>
+                <option value="F">비활성화</option>
+                <option value="T">활성화</option>
               </select>
             </span>
           </div>
