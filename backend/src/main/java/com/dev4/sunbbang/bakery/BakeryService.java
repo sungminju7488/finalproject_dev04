@@ -51,7 +51,9 @@ public class BakeryService {
 		}
 		memberRepository.save(memberVO);
 		bakeryRepository.save(bakeryVO);
-		return new AuthVO(memberVO);
+		AuthVO authVO = new AuthVO(memberVO);
+		authVO.setCopRegNum(bakeryVO.getCopRegNum());
+		return authVO;
 	}
 
 	public BakeryVO myShop(MemberVO memberVO) {

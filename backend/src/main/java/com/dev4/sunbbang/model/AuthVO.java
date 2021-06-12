@@ -25,4 +25,5 @@ public class AuthVO {
 		this.alarmSet = memberVO.getAlarmSet();
 		this.followSet = memberVO.getFollowSet();
 	}
+	
 }

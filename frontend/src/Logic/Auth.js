@@ -14,6 +14,7 @@ export default {
   grade: null,
   alarmSet: null,
   followSet: null,
+  copRegNum: null,
 
   logout() {
     this.loggedIn = false;
@@ -34,6 +35,7 @@ export default {
     this.grade = sessionStorage.getItem("grade");
     this.alarmSet = sessionStorage.getItem("alarmSet");
     this.followSet = sessionStorage.getItem("followSet");
+    this.copRegNum = sessionStorage.getItem("copRegNum");
 
     //API 요청하는 콜마다 헤더에 accessToken을 담아 보내도록 설정
     axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
@@ -56,6 +58,7 @@ export default {
     this.grade = jwtDecode.grade;
     this.alarmSet = jwtDecode.alarmSet;
     this.followSet = jwtDecode.followSet;
+    this.copRegNum = jwtDecode.copRegNum;
 
     //브라우저 저장
     sessionStorage.setItem("memberSeq", jwtDecode.memberSeq);
@@ -65,6 +68,7 @@ export default {
     sessionStorage.setItem("grade", jwtDecode.grade);
     sessionStorage.setItem("alarmSet", jwtDecode.alarmSet);
     sessionStorage.setItem("followSet", jwtDecode.followSet);
+    sessionStorage.setItem("copRegNum", jwtDecode.copRegNum);
     sessionStorage.setItem("accessToken", data.accessToken);
     sessionStorage.setItem("refreshToken", data.refreshToken);
 
