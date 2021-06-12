@@ -4,11 +4,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev4.sunbbang.model.ArticleVO;
-import com.dev4.sunbbang.model.PageVO;
 import com.dev4.sunbbang.repository.ArticleRepository;
 
 @Transactional
@@ -18,9 +18,9 @@ public class ArticleService {
 	@Autowired
 	ArticleRepository ar;
 
-//	public Page<ArticleVO> articleListArticle(PageVO pageVO) {
-//		return ar.findAll(pageVO);
-//	}
+	public Page<ArticleVO> articleList(Pageable pageVO) {
+		return ar.findAll(pageVO);
+	}
 	public void wrtieArticle(ArticleVO vo) {
 		ar.save(vo);
 	}
@@ -41,5 +41,12 @@ public class ArticleService {
 	}
 	public void deleteReply(ArticleVO vo) {
 		ar.delete(vo);
+	}
+	public void reportArticle(ArticleVO vo) {
+		int totalReport=Integer.parseInt(vo.getReport());
+	if(totalReport<5)
+		totalReport=totalReport+1;
+	else 
+		ar.reportArticle(vo);
 	}
 }

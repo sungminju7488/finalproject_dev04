@@ -1,9 +1,10 @@
 package com.dev4.sunbbang.article;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,11 +25,11 @@ public class ArticleController {
 	@Autowired
 	Gson gson;
 	
-//	@PostMapping("/article/articleList")
-//	public Object articleList(@RequestBody PageVO pageVO){
-//		List<ArticleVO> mvo = articleService.articleListArticle(pageVO);
-//		return gson.toJson(mvo);
-//	}
+	@PostMapping("/article/articleList")
+	public Object articleList(@RequestBody PageVO pageVO){
+		Page<ArticleVO> mvo = articleService.articleList((Pageable) pageVO);
+		return gson.toJson(mvo);
+	}
 	@PostMapping("/article/wrtieArticle")
 	public void wrtieArticle(@RequestBody ArticleVO vo){
 		 articleService.wrtieArticle(vo);
@@ -58,5 +59,8 @@ public class ArticleController {
 	public void deleteReply(@RequestBody ArticleVO vo) {
 		 articleService.deleteReply(vo);
 	}
-	
+	@PostMapping("/article/reportArticle")
+	public void reportArticle(@RequestBody ArticleVO vo) {
+		 articleService.reportArticle(vo);
+	}
 }
