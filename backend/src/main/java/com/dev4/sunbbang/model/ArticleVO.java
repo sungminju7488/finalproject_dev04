@@ -17,7 +17,6 @@ import lombok.Data;
 @Entity
 @Table(name="ARTICLE")
 public class ArticleVO {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "article_seq")
 	@Column(name="ARTICLESEQ",nullable=false,length=8)
