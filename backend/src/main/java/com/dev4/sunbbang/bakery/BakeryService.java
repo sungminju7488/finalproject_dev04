@@ -69,8 +69,9 @@ public class BakeryService {
 		}
 		bakeryRepository.save(bakeryVO);
 	}
-
-	public List<FoodVO> menuList(BakeryVO bakeryVO) {
+	
+	public List<FoodVO> menuList(MemberVO memberVO) {
+		BakeryVO bakeryVO = bakeryRepository.findByMemberVO(memberVO).get();
 		return foodRepository.findByBakeryVO(bakeryVO).get();
 	}
 
@@ -110,6 +111,10 @@ public class BakeryService {
 		memberRepository.modifyToFollowSet(followSet, authVO.getMemberSeq());
 	}
 
+	public List<FoodVO> menuViewList(BakeryVO bakeryVO) {
+		return foodRepository.findByBakeryVO(bakeryVO).get();
+	}
+	
 	public void setAlarm(AuthVO authVO, FoodVO foodVO) {
 		String alarmSet = authVO.getAlarmSet() + foodVO.getFoodSeq() + ",";
 		memberRepository.modifyToAlarmSet(alarmSet, authVO.getMemberSeq());

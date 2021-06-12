@@ -35,9 +35,7 @@ public class MemberController {
 	
 	@PostMapping("/member/login")
 	public ResponseToken login(@RequestBody MemberVO memberVO) {
-		MemberVO selectMemberVO = memberService.login(memberVO).get();
-		AuthVO authVO = new AuthVO(selectMemberVO);
-		return new ResponseToken(jwtService.createToken(authVO));
+		return new ResponseToken(jwtService.createToken(memberService.login(memberVO)));
 	}
 
 	@PostMapping("/findId")
