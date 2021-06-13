@@ -127,8 +127,6 @@ const JoinBakery = () => {
       setBakeryImage(event.target.files[0]);
       setBakeryPath(URL.createObjectURL(event.target.files[0]));
       setImageName(event.target.files[0].name);
-
-      console.log(event.target.files[0]);
     }
   };
 
