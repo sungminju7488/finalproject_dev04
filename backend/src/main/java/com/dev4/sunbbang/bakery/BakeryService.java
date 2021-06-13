@@ -75,13 +75,25 @@ public class BakeryService {
 	public List<FoodVO> menuList(BakeryVO bakeryVO) {
 		return foodRepository.findByBakeryVO(bakeryRepository.findById(bakeryVO.getCopRegNum()).get()).get();
 	}
-
-	public void addMenu(BakeryVO bakeryVO, FoodVO foodVO) {
+	
+	public void addMenu(BakeryVO bakeryVO, FoodVO foodVO, MultipartFile image, String imageName) throws IOException {
+		if (!image.isEmpty()) {
+			String fileName = foodVO.getFoodSeq() + "." + imageName.substring(imageName.lastIndexOf(".")+1);
+			image.transferTo(new File("C://images/food/" + fileName));
+			String path = "http://localhost:8080/images/food/" + fileName;
+			foodVO.setFoodPath(path);
+		}
 		foodVO.setBakeryVO(bakeryVO);
 		foodRepository.save(foodVO);
 	}
 
-	public void modifyMenu(FoodVO foodVO) {
+	public void modifyMenu(FoodVO foodVO, MultipartFile image, String imageName) throws IOException {
+		if (image != null && !image.isEmpty()) {
+			String fileName = foodVO.getFoodSeq() + "." + imageName.substring(imageName.lastIndexOf(".")+1);
+			image.transferTo(new File("C://images/food/" + fileName));
+			String path = "http://localhost:8080/images/food/" + fileName;
+			foodVO.setFoodPath(path);
+		}
 		foodRepository.save(foodVO);
 	}
 

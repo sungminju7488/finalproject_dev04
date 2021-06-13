@@ -63,9 +63,9 @@ public class BakeryController {
 	}
 
 	@RequestMapping("/bakery/addMenu")
-	public boolean addMenu(@RequestBody BakeryVO bakeryVO, @RequestBody FoodVO foodVO) {
+	public boolean addMenu(BakeryVO bakeryVO, FoodVO foodVO, MultipartFile image, String imageName) {
 		try {
-			bakeryService.addMenu(bakeryVO, foodVO);
+			bakeryService.addMenu(bakeryVO, foodVO, image, imageName);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -73,9 +73,9 @@ public class BakeryController {
 	}
 
 	@RequestMapping("/bakery/modifyMenu")
-	public boolean modifyMenu(@RequestBody FoodVO foodVO) {
+	public boolean modifyMenu(FoodVO foodVO, MultipartFile image, String imageName) {
 		try {
-			bakeryService.modifyMenu(foodVO);
+			bakeryService.modifyMenu(foodVO, image, imageName);
 			return true;
 		} catch (Exception e) {
 			return false;
