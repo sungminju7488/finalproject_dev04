@@ -1,7 +1,5 @@
 package com.dev4.sunbbang.article;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev4.sunbbang.model.ArticleVO;
+import com.dev4.sunbbang.model.BakeryVO;
 import com.dev4.sunbbang.repository.ArticleRepository;
 
 @Transactional
@@ -18,14 +17,14 @@ public class ArticleService {
 	@Autowired
 	ArticleRepository ar;
 
-	public Page<ArticleVO> articleList(Pageable pageVO) {
-		return ar.findAll(pageVO);
+	public Page<ArticleVO> articleList(BakeryVO bakeryVO,Pageable pageVO) {
+		return ar.findList(bakeryVO, pageVO);
 	}
 	public void writeArticle(ArticleVO vo) {
 		ar.save(vo);
 	}
-	public Optional<ArticleVO> readArticle(ArticleVO vo) {
-		return ar.findByArticleSeq(vo.getArticleSeq());
+	public ArticleVO readArticle(ArticleVO vo) {
+		return ar.findByArticleSeq(vo.getArticleSeq()).get();
 	}
 	public void modifyArticle(ArticleVO vo) {
 		ar.save(vo);
