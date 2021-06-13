@@ -39,12 +39,13 @@ public class BakeryService {
 	@Autowired
 	FoodRepository foodRepository;
 
-	public AuthVO joinBakery(MemberVO memberVO, BakeryVO bakeryVO, MultipartFile image, String imageName) throws IOException {
+	public AuthVO joinBakery(MemberVO memberVO, BakeryVO bakeryVO, MultipartFile image, String imageName)
+			throws IOException {
 		memberVO = memberRepository.getById(memberVO.getMemberSeq());
 		memberVO.setGrade("1");
 		bakeryVO.setMemberVO(memberVO);
 		if (!image.isEmpty()) {
-			String fileName = bakeryVO.getCopRegNum() + "." + imageName.substring(imageName.lastIndexOf(".")+1);
+			String fileName = bakeryVO.getCopRegNum() + "." + imageName.substring(imageName.lastIndexOf(".") + 1);
 			image.transferTo(new File("C://images/bakery/" + fileName));
 			String path = "http://localhost:8080/images/bakery/" + fileName;
 			bakeryVO.setBakeryPath(path);
@@ -60,36 +61,34 @@ public class BakeryService {
 		return bakeryRepository.findByMemberVO(memberVO).get();
 	}
 
-	public void changeBakery(MemberVO memberVO, BakeryVO bakeryVO, MultipartFile image, String imageName) throws IOException {
+	public void changeBakery(MemberVO memberVO, BakeryVO bakeryVO, MultipartFile image, String imageName)
+			throws IOException {
 		memberVO = memberRepository.getById(memberVO.getMemberSeq());
 		bakeryVO.setMemberVO(memberVO);
 		if (image != null && !image.isEmpty()) {
-			String fileName = bakeryVO.getCopRegNum() + "." + imageName.substring(imageName.lastIndexOf(".")+1);
+			String fileName = bakeryVO.getCopRegNum() + "." + imageName.substring(imageName.lastIndexOf(".") + 1);
 			image.transferTo(new File("C://images/bakery/" + fileName));
 			String path = "http://localhost:8080/images/bakery/" + fileName;
 			bakeryVO.setBakeryPath(path);
 		}
 		bakeryRepository.save(bakeryVO);
 	}
-	
+
 	public List<FoodVO> menuList(BakeryVO bakeryVO) {
 		return foodRepository.findByBakeryVO(bakeryRepository.findById(bakeryVO.getCopRegNum()).get()).get();
 	}
-	
+
 	public void addMenu(BakeryVO bakeryVO, FoodVO foodVO, MultipartFile image, String imageName) throws IOException {
-		if (!image.isEmpty()) {
-			int foodSeq;
-			try {
+		int foodSeq;
+		if(foodRepository.findAll().size()==0) {
+			foodSeq = 1;
+		} else {
 			foodSeq = foodRepository.getFoodSeq().get() + 1;
-			}catch (Exception e) {
-				// TODO: handle exception
-				foodSeq = 1;
-			}
-			String fileName = foodSeq + "." + imageName.substring(imageName.lastIndexOf(".")+1);
-			image.transferTo(new File("C://images/food/" + fileName));
-			String path = "http://localhost:8080/images/food/" + fileName;
-			foodVO.setFoodPath(path);
 		}
+		String fileName = foodSeq + "." + imageName.substring(imageName.lastIndexOf(".") + 1);
+		image.transferTo(new File("C://images/food/" + fileName));
+		String path = "http://localhost:8080/images/food/" + fileName;
+		foodVO.setFoodPath(path);
 		bakeryVO = bakeryRepository.findById(bakeryVO.getCopRegNum()).get();
 		foodVO.setBakeryVO(bakeryVO);
 		foodRepository.save(foodVO);
@@ -97,7 +96,7 @@ public class BakeryService {
 
 	public void modifyMenu(FoodVO foodVO, MultipartFile image, String imageName) throws IOException {
 		if (image != null && !image.isEmpty()) {
-			String fileName = foodVO.getFoodSeq() + "." + imageName.substring(imageName.lastIndexOf(".")+1);
+			String fileName = foodVO.getFoodSeq() + "." + imageName.substring(imageName.lastIndexOf(".") + 1);
 			image.transferTo(new File("C://images/food/" + fileName));
 			String path = "http://localhost:8080/images/food/" + fileName;
 			foodVO.setFoodPath(path);
@@ -110,12 +109,12 @@ public class BakeryService {
 	}
 
 	public char boardToggle(BakeryVO bakeryVO) {
-		switch(bakeryRepository.findById(bakeryVO.getCopRegNum()).get().getBoardSet()) {
+		switch (bakeryRepository.findById(bakeryVO.getCopRegNum()).get().getBoardSet()) {
 		case 'T':
 			bakeryVO.setBoardSet('F');
 			bakeryRepository.save(bakeryVO);
 			return 'F';
-			
+
 		default:
 			bakeryVO.setBoardSet('T');
 			bakeryRepository.save(bakeryVO);
@@ -136,7 +135,7 @@ public class BakeryService {
 	public List<FoodVO> menuViewList(BakeryVO bakeryVO) {
 		return foodRepository.findByBakeryVO(bakeryVO).get();
 	}
-	
+
 	public void setAlarm(AuthVO authVO, FoodVO foodVO) {
 		String alarmSet = authVO.getAlarmSet() + foodVO.getFoodSeq() + ",";
 		memberRepository.modifyToAlarmSet(alarmSet, authVO.getMemberSeq());
