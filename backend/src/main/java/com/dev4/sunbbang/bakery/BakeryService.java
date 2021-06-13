@@ -78,7 +78,7 @@ public class BakeryService {
 	
 	public void addMenu(BakeryVO bakeryVO, FoodVO foodVO, MultipartFile image, String imageName) throws IOException {
 		if (!image.isEmpty()) {
-			String fileName = foodVO.getFoodSeq() + "." + imageName.substring(imageName.lastIndexOf(".")+1);
+			String fileName = (foodRepository.getFoodSeq().get()+1) + "." + imageName.substring(imageName.lastIndexOf(".")+1);
 			image.transferTo(new File("C://images/food/" + fileName));
 			String path = "http://localhost:8080/images/food/" + fileName;
 			foodVO.setFoodPath(path);
