@@ -72,9 +72,8 @@ public class BakeryService {
 		bakeryRepository.save(bakeryVO);
 	}
 	
-	public List<FoodVO> menuList(MemberVO memberVO) {
-		BakeryVO bakeryVO = bakeryRepository.findByMemberVO(memberVO).get();
-		return foodRepository.findByBakeryVO(bakeryVO).get();
+	public List<FoodVO> menuList(BakeryVO bakeryVO) {
+		return foodRepository.findByBakeryVO(bakeryRepository.findById(bakeryVO.getCopRegNum()).get()).get();
 	}
 
 	public void addMenu(FoodVO foodVO) {

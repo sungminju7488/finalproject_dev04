@@ -13,6 +13,7 @@ import MyShop from "./component/MyShop";
 import Mypage from "./component/Mypage";
 import Modify from "./component/Modify";
 import ChangeBakery from "./component/ChangeBakery";
+import MenuList from "./component/MenuList";
 
 class App extends Component {
   constructor(props) {
@@ -44,6 +45,7 @@ class App extends Component {
             path="/bakery/changebakerypage"
             component={ChangeBakery}
           />
+          <Route exact path="/bakery/menulistpage" component={MenuList} />
         </Switch>
       </BrowserRouter>
     );

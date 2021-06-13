@@ -58,8 +58,8 @@ public class BakeryController {
 	}
 	
 	@RequestMapping("/bakery/menuList")
-	public Object menuList(@RequestBody MemberVO memberVO) {
-		return gson.toJson(bakeryService.menuList(memberVO));
+	public Object menuList(@RequestBody BakeryVO bakeryVO) {
+		return gson.toJson(bakeryService.menuList(bakeryVO));
 	}
 
 	@RequestMapping("/bakery/addMenu")
