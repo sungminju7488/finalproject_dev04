@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 function AddMenu() {
@@ -34,7 +35,19 @@ function AddMenu() {
     formData.append("imageName", imageName);
     formData.append("foodPath", foodPath);
 
-    console.log("time : " + saletime);
+    console.log("image : " + image);
+    // console.log("time : " + saletime);
+    axios
+      .post("/bakery/addMenu", { formData })
+      .then((res) => {
+        if (res.data === true) {
+          alert(foodName + " 메뉴가 정상 등록되었습니다.");
+          window.location.replace = "http://localhost:3000/bakery/menulistpage";
+        } else {
+          alert("메뉴 등록에 실패 하였습니다.");
+        }
+      })
+      .catch((err) => alert(err.response.data.msg));
   };
 
   return (
