@@ -20,7 +20,7 @@ import lombok.Data;
 
 @Validated
 @Data
-@SequenceGenerator(name="memberSeq",sequenceName="no_seq",initialValue = 1 , allocationSize = 1)
+@SequenceGenerator(name="memberSeq",sequenceName="member_seq",initialValue = 1 , allocationSize = 1)
 @Entity
 @Table(name="MEMBER")
 public class MemberVO {
