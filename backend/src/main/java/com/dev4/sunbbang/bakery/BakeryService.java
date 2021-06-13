@@ -80,8 +80,9 @@ public class BakeryService {
 		if (!image.isEmpty()) {
 			int foodSeq;
 			try {
-				foodSeq = foodRepository.getFoodSeq().get()+1;
-			} catch (Exception e) {
+			foodSeq = foodRepository.getFoodSeq().get() + 1;
+			}catch (Exception e) {
+				// TODO: handle exception
 				foodSeq = 1;
 			}
 			String fileName = foodSeq + "." + imageName.substring(imageName.lastIndexOf(".")+1);
@@ -89,6 +90,7 @@ public class BakeryService {
 			String path = "http://localhost:8080/images/food/" + fileName;
 			foodVO.setFoodPath(path);
 		}
+		bakeryVO = bakeryRepository.findById(bakeryVO.getCopRegNum()).get();
 		foodVO.setBakeryVO(bakeryVO);
 		foodRepository.save(foodVO);
 	}

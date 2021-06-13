@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import auth from "../Logic/Auth";
 
 function AddMenu() {
   const [foodName, setFoodName] = useState("");
@@ -27,6 +28,7 @@ function AddMenu() {
     event.preventDefault();
 
     const formData = new FormData();
+    formData.append("copRegNum", auth.copRegNum);
     formData.append("foodName", foodName);
     formData.append("kind", kind);
     formData.append("foodPath", foodPath);
