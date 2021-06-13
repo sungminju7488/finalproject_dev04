@@ -29,16 +29,20 @@ function AddMenu() {
     const formData = new FormData();
     formData.append("foodName", foodName);
     formData.append("kind", kind);
+    formData.append("foodPath", foodPath);
     formData.append("price", price);
     formData.append("saleTime", saletime);
     formData.append("image", image);
     formData.append("imageName", imageName);
-    formData.append("foodPath", foodPath);
 
-    console.log("image : " + image);
+    const config = {
+      headers: { "Content-Type": "multipart/form-data" },
+    };
+
+    // console.log("image : " + image);
     // console.log("time : " + saletime);
     axios
-      .post("/bakery/addMenu", { formData })
+      .post("/bakery/addMenu", formData, config)
       .then((res) => {
         if (res.data === true) {
           alert(foodName + " 메뉴가 정상 등록되었습니다.");

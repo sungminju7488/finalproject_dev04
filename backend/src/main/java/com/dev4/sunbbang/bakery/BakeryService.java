@@ -81,7 +81,7 @@ public class BakeryService {
 			int foodSeq;
 			try {
 				foodSeq = foodRepository.getFoodSeq().get()+1;
-			} catch (NullPointerException e) {
+			} catch (Exception e) {
 				foodSeq = 1;
 			}
 			String fileName = foodSeq + "." + imageName.substring(imageName.lastIndexOf(".")+1);

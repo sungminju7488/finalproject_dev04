@@ -68,6 +68,7 @@ public class BakeryController {
 			bakeryService.addMenu(bakeryVO, foodVO, image, imageName);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
