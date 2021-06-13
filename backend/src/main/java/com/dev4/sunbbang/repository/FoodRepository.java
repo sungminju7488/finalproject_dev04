@@ -14,7 +14,7 @@ public interface FoodRepository extends JpaRepository<FoodVO, Integer>{
 	public Optional<List<FoodVO>> findByBakeryVO(BakeryVO bakeryVO);
 	public Optional<List<FoodVO>> findByFoodName(String foodName);
 	
-	@Query("SELECT FOOD_SEQ.CURRVAL FROM DUAL")
+	@Query(value="SELECT FOOD_SEQ.CURRVAL FROM DUAL", nativeQuery = true)
 	public Optional<Integer> getFoodSeq();
 
 }
