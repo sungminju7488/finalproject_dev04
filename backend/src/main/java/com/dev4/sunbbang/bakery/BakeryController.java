@@ -63,9 +63,9 @@ public class BakeryController {
 	}
 
 	@RequestMapping("/bakery/addMenu")
-	public boolean addMenu(@RequestBody FoodVO foodVO) {
+	public boolean addMenu(@RequestBody BakeryVO bakeryVO, @RequestBody FoodVO foodVO) {
 		try {
-			bakeryService.addMenu(foodVO);
+			bakeryService.addMenu(bakeryVO, foodVO);
 			return true;
 		} catch (Exception e) {
 			return false;
