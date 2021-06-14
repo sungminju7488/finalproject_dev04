@@ -1,5 +1,6 @@
 package com.example.application.util;
 
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i("hans", "receiver");
+        Toast.makeText(context, intent.getExtras().get("foodName").toString(), Toast.LENGTH_SHORT).show();
+
+
     }
 }
