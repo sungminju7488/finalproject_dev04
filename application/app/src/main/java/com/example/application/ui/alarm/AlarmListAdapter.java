@@ -36,6 +36,7 @@ import retrofit2.Response;
 
 public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int HEADER_POSITION = 0;
+
 //    private AlarmListViewModel viewModel;
 //    private MemberVO memberVO;
     private List<FoodVO> alarmList = new ArrayList<>();
@@ -79,14 +80,10 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra("foodName", foodVO.getFoodName());
+        intent.putExtra("foodSeq", foodVO.getFoodSeq());
         pendingIntent = PendingIntent.getBroadcast(context, foodVO.getFoodSeq(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time.getCalendar().getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, 1000, pendingIntent);
-//        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-//            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time.getCalendar().getTimeInMillis(), pendingIntent);
-//        } else {
-//            alarmManager.setExact(AlarmManager.RTC_WAKEUP, time.getCalendar().getTimeInMillis(), pendingIntent);
-//        }
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time.getCalendar().getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+//        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, 1000, pendingIntent);
 
         if(holder instanceof AlarmViewHolder){
             ((AlarmViewHolder)holder).bind(foodVO);
