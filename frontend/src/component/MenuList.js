@@ -21,7 +21,22 @@ function MenuList({ memberSeq }) {
   }, []);
 
   const addMenuHandler = () => {
-    window.location.href = "http://localhost:3000/bakery/addmanupage";
+    window.location.href = "http://localhost:3000/bakery/addmenupage";
+  };
+
+  const deleteMenuHandler = (Seq) => {
+    let foodSeq = Seq;
+    axios
+      .post("/bakery/deleteMenu", { foodSeq })
+      .then((res) => {
+        if (res.data === true) {
+          alert("해당 메뉴가 삭제되었습니다.");
+          window.location.reload();
+        } else {
+          alert("해당 메뉴 삭제에 실패했습니다.");
+        }
+      })
+      .catch((err) => alert(err.response.data.msg));
   };
 
   return (
@@ -69,9 +84,12 @@ function MenuList({ memberSeq }) {
                         <Button variant="primary">수정</Button>
                       </Link>
                       &emsp;
-                      <Link to="">
-                        <Button variant="danger">삭제</Button>
-                      </Link>
+                      <Button
+                        variant="danger"
+                        onClick={(event) => deleteMenuHandler(obj.foodSeq)}
+                      >
+                        삭제
+                      </Button>
                     </Card.Body>
                   </Card>
                 ))

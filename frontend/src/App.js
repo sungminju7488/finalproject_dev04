@@ -51,7 +51,7 @@ class App extends Component {
             component={ChangeBakery}
           />
           <Route exact path="/bakery/menulistpage" component={MenuList} />
-          <Route exact path="/bakery/addmanupage" component={AddMenu} />
+          <Route exact path="/bakery/addmenupage" component={AddMenu} />
           <Route exact path="/bakery/modifymenupage" component={ModifyMenu} />
         </Switch>
       </BrowserRouter>
