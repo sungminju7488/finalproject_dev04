@@ -97,13 +97,14 @@ public class BakeryService {
 		foodRepository.save(foodVO);
 	}
 
-	public void modifyMenu(FoodVO foodVO, MultipartFile image, String imageName) throws IOException {
+	public void modifyMenu(BakeryVO bakeryVO, FoodVO foodVO, MultipartFile image, String imageName) throws IOException {
 		if (image != null && !image.isEmpty()) {
 			String fileName = foodVO.getFoodSeq() + "." + imageName.substring(imageName.lastIndexOf(".") + 1);
 			String path = "food/" + fileName;
 			image.transferTo(new File(Define.IMAGE_SAVE_PATH + path));
 			foodVO.setFoodPath(path);
 		}
+		foodVO.setBakeryVO(bakeryRepository.findById(bakeryVO.getCopRegNum()).get());
 		foodRepository.save(foodVO);
 	}
 

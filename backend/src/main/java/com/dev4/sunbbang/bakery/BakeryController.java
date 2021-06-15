@@ -74,9 +74,9 @@ public class BakeryController {
 	}
 
 	@RequestMapping("/bakery/modifyMenu")
-	public boolean modifyMenu(FoodVO foodVO, MultipartFile image, String imageName) {
+	public boolean modifyMenu(BakeryVO bakeryVO, FoodVO foodVO, MultipartFile image, String imageName) {
 		try {
-			bakeryService.modifyMenu(foodVO, image, imageName);
+			bakeryService.modifyMenu(bakeryVO, foodVO, image, imageName);
 			return true;
 		} catch (Exception e) {
 			return false;
