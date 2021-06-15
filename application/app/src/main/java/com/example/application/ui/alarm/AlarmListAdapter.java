@@ -70,15 +70,21 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         FoodVO foodVO = alarmList.get(position);
         SimpleDateFormat time = new SimpleDateFormat("HH:mm");
         Date date = new Date();
-        date.setHours(Integer.parseInt(foodVO.getSaleTime().substring(0,2)));
-//        date.setHours(1);
-        date.setMinutes(Integer.parseInt(foodVO.getSaleTime().substring(3,5)));
-//        date.setMinutes(39);
+//        int hour = Integer.parseInt(foodVO.getSaleTime().substring(0,2));
+//        System.out.println(hour);
+//        date.setHours(hour);
+        date.setHours(15);
+//        int minute = Integer.parseInt(foodVO.getSaleTime().substring(3,5));
+//        System.out.println(minute);
+//        date.setMinutes(minute);
+        date.setMinutes(10);
+        System.out.println(date);
         time.format(date);
 
         context = holder.itemView.getContext();
         alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra("storeName", foodVO.getBakeryVO().getStoreName());
         intent.putExtra("foodName", foodVO.getFoodName());
         intent.putExtra("foodSeq", foodVO.getFoodSeq());
         pendingIntent = PendingIntent.getBroadcast(context, foodVO.getFoodSeq(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
