@@ -11,7 +11,7 @@ spring:
     username: DEV4_FINAL
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     show-sql: true
   main:
     allow-bean-definition-overriding: true
