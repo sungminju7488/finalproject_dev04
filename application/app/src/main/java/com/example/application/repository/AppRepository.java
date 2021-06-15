@@ -22,4 +22,11 @@ public class AppRepository {
     public void deleteAlarm(MemberVO memberVO, FoodVO foodVO, Callback<MemberVO> callback){
         appService.deleteAlarm(memberVO, foodVO).enqueue(callback);
     }
+    public void loginMember(AuthVO authVO,MemberVO memberVO, Callback<MemberVO> callback) {
+        appService.loginMember(authVO,memberVO).enqueue(callback);
+    }
+
+    public void loginMember(AuthVO authVO, Callback<MemberVO> callback) {
+        appService.loginMember(authVO).enqueue(callback);
+    }
 }
