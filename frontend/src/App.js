@@ -25,6 +25,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Switch>
+          {/* 루트 */}
           <Route exact path="/" component={Main} />
           {/* 서비스 */}
           <Route exact path="/service/bakerymap" component={BakeryMap} />
