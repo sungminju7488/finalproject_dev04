@@ -29,13 +29,23 @@ public class MemberController {
 	
 	@PostMapping("/member/join")
 	public boolean join(@RequestBody MemberVO memberVO) {
-		memberService.join(memberVO);
-		return true;
+		try {
+			memberService.join(memberVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	@PostMapping("/member/login")
 	public ResponseToken login(@RequestBody MemberVO memberVO) {
 		return new ResponseToken(jwtService.createToken(memberService.login(memberVO)));
+	}
+	
+	@PostMapping("/member/loginApp")
+	public Object loginApp(@RequestBody MemberVO memberVO) {
+		AuthVO authVO = memberService.login(memberVO); 
+		return gson.toJson(authVO);
 	}
 
 	@PostMapping("/findId")
@@ -44,13 +54,19 @@ public class MemberController {
 		return gson.toJson(mvo);
 	}
 
-	@PostMapping("/confirmPassword")
-	public void confirmPassword(@RequestBody MemberVO memberVO) {
-		 memberService.changePassword(memberVO);
+	@PostMapping("/findPassword")
+	public boolean findPassword(@RequestBody MemberVO memberVO) {
+		return memberService.findPassword(memberVO);
 	}
 	@PostMapping("/changePassword")
-	public void changePassword(@RequestBody MemberVO memberVO) {
-		memberService.changePassword(memberVO);
+	public boolean changePassword(@RequestBody MemberVO memberVO) {
+		try {
+			memberService.changePassword(memberVO);
+			return true;
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	@PostMapping("/myPage")
@@ -60,13 +76,22 @@ public class MemberController {
 	}
 
 	@PutMapping("/changeMember")
-	public void update(@RequestBody MemberVO memberVO) {
-		memberService.changeMember(memberVO);
+	public boolean update(@RequestBody MemberVO memberVO) {
+		try {
+			memberService.changeMember(memberVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@DeleteMapping("/quit")
-	public void quit(@RequestBody MemberVO memberVO) {
-		memberService.quit(memberVO);
+	public boolean quit(@RequestBody MemberVO memberVO) {
+		try {
+			memberService.quit(memberVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
-
 }

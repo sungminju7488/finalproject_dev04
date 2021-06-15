@@ -35,9 +35,9 @@ public class BakeryController {
 
 	@RequestMapping("/bakery/joinBakery")
 	public ResponseToken joinBakery(MemberVO memberVO, BakeryVO bakeryVO, 
-			MultipartFile image, String imageName) throws IOException {
-			AuthVO authVO = bakeryService.joinBakery(memberVO, bakeryVO, image, imageName);
-			return new ResponseToken(jwtService.createToken(authVO));
+		MultipartFile image, String imageName) throws IOException {
+		AuthVO authVO = bakeryService.joinBakery(memberVO, bakeryVO, image, imageName);
+		return new ResponseToken(jwtService.createToken(authVO));
 	}
 
 	@RequestMapping("/bakery/myShop")
@@ -141,8 +141,8 @@ public class BakeryController {
 	}
 
 	@RequestMapping("/bakery/searchFood")
-	public Object searchFood(@RequestBody FoodVO foodVO) {
-		return gson.toJson(bakeryService.searchFood(foodVO));
+	public Object searchFood(@RequestBody PageVO pageVO) {
+		return gson.toJson(bakeryService.searchFood(pageVO));
 	}
 
 }
