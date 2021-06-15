@@ -67,7 +67,12 @@ public class BakeryService {
 		memberVO = memberRepository.getById(memberVO.getMemberSeq());
 		bakeryVO.setMemberVO(memberVO);
 		if (image != null && !image.isEmpty()) {
-			image.transferTo(new File(bakeryVO.getBakerySavePath()));
+			String fileName = bakeryVO.getCopRegNum() + "." + imageName.substring(imageName.lastIndexOf(".") + 1);
+			String path = Define.IMAGE_LOAD_PATH + "bakery/" + fileName;
+			String savePath = Define.IMAGE_SAVE_PATH + "bakery/" + fileName;
+			image.transferTo(new File(savePath));
+			bakeryVO.setBakeryPath(path);
+			bakeryVO.setBakerySavePath(savePath);
 		}
 		bakeryRepository.save(bakeryVO);
 	}
@@ -96,7 +101,12 @@ public class BakeryService {
 
 	public void modifyMenu(BakeryVO bakeryVO, FoodVO foodVO, MultipartFile image, String imageName) throws IOException {
 		if (image != null && !image.isEmpty()) {
-			image.transferTo(new File(foodVO.getFoodSavePath()));
+			String fileName = foodVO.getFoodSeq() + "." + imageName.substring(imageName.lastIndexOf(".") + 1);
+			String path = Define.IMAGE_LOAD_PATH + "food/" + fileName;
+			String savePath = Define.IMAGE_SAVE_PATH + "food/" + fileName;
+			image.transferTo(new File(savePath));
+			foodVO.setFoodPath(path);
+			foodVO.setFoodSavePath(savePath);
 		}
 		foodVO.setBakeryVO(bakeryRepository.findById(bakeryVO.getCopRegNum()).get());
 		foodRepository.save(foodVO);
