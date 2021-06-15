@@ -37,9 +37,9 @@ function Join() {
       return alert("입력하신 비밀번호와 재확인 비밀번호가 맞지않습니다.");
     } else if (!yearRegex.test(year)) {
       return alert("년도엔 숫자만 입력이 가능합니다.");
-    } else if (!dayRegex.test(year)) {
+    } else if (!dayRegex.test(day)) {
       return alert("일에는 숫자만 입력이 가능합니다.");
-    } else if (!phoneNumberRegex.test(year)) {
+    } else if (!phoneNumberRegex.test(phoneNumber)) {
       return alert("전화번호에는 숫자만 입력이 가능합니다.");
     }
 

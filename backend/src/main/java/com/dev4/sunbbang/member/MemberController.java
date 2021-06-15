@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev4.sunbbang.model.AuthVO;
@@ -27,44 +28,50 @@ public class MemberController {
 	@Autowired
 	Gson gson;
 	
-	@PostMapping("/member/join")
+	@RequestMapping("/member/join")
 	public boolean join(@RequestBody MemberVO memberVO) {
 		memberService.join(memberVO);
 		return true;
 	}
 	
-	@PostMapping("/member/login")
+	@RequestMapping("/member/login")
 	public ResponseToken login(@RequestBody MemberVO memberVO) {
 		return new ResponseToken(jwtService.createToken(memberService.login(memberVO)));
 	}
 
-	@PostMapping("/findId")
+	@RequestMapping("/findId")
 	public Object findId(@RequestBody MemberVO memberVO) {
 		String mvo = memberService.findId(memberVO);
 		return gson.toJson(mvo);
 	}
 
-	@PostMapping("/confirmPassword")
+	@RequestMapping("/confirmPassword")
 	public void confirmPassword(@RequestBody MemberVO memberVO) {
 		 memberService.changePassword(memberVO);
 	}
-	@PostMapping("/changePassword")
+	@RequestMapping("/changePassword")
 	public void changePassword(@RequestBody MemberVO memberVO) {
 		memberService.changePassword(memberVO);
 	}
 
-	@PostMapping("/myPage")
+	@RequestMapping("/myPage")
 	public Object myPage(@RequestBody MemberVO memberVO) {
 		MemberVO mvo = memberService.myPage(memberVO).get();
 		return gson.toJson(mvo);
 	}
 
-	@PutMapping("/changeMember")
-	public void update(@RequestBody MemberVO memberVO) {
+	@RequestMapping("/changeMember")
+	public Boolean update(@RequestBody MemberVO memberVO) {
+		try {
 		memberService.changeMember(memberVO);
+		return true;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
-	@DeleteMapping("/quit")
+	@RequestMapping("/quit")
 	public void quit(@RequestBody MemberVO memberVO) {
 		memberService.quit(memberVO);
 	}
