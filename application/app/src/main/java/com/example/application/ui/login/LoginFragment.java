@@ -70,18 +70,15 @@ public class LoginFragment extends Fragment {
                         // 로그인된 회원 정보 저장
                         AuthVO.getInstance().setMemberVO(memberVO);
 
-             //           if (requireActivity() != null) {
-               //            Toast.makeText(requireActivity().getApplicationContext().getApplicationContext(), String.format("%s 회원님, 환영합니다.", memberVO.getName()), Toast.LENGTH_SHORT).show();
-              //            Intent intent = new Intent();
-             //              (LoginFragment,AlarmListFragment)
-             //               (intent.setClass(LoginFragment.this, AlarmListFragment.class);
-             //              startActivity(intent);}
-
-
-
-                        // 팝업 메세지
                         if (requireActivity() != null) {
-                            Toast.makeText(requireActivity().getApplicationContext().getApplicationContext(), String.format("%s 회원님, 환영합니다.", memberVO.getName()), Toast.LENGTH_SHORT).show();
+                           Toast.makeText(requireActivity().getApplicationContext().getApplicationContext(),
+                                   String.format("%s 회원님, 환영합니다.", memberVO.getName()), Toast.LENGTH_SHORT).show();
+
+                          //  Intent intent = new Intent( LoginFragment.this,AlarmListFragment.getClass());
+
+                         //   startActivity(AlarmListFragment);
+
+
                         }
 
                     } else if (requireActivity() != null) {
