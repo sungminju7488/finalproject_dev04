@@ -14,9 +14,8 @@ function MenuList() {
     axios
       .post("/bakery/menuList", { copRegNum })
       .then((res) => {
-        console.log(res.data[0].foodName);
+        if (res.data.length === 0) return;
         setMenuData(res.data);
-        //setMenuTile(SettingMenu(res.data));
       })
       .catch((err) => alert(err.response.data.msg));
   }, []);
@@ -24,29 +23,6 @@ function MenuList() {
   const addMenuHandler = () => {
     window.location.href = "http://localhost:3000/bakery/addmanupage";
   };
-
-  // const SettingMenu = (data) => {
-  //   console.log("SettindMenu 진입");
-  //   if (data === null) return "";
-  //   console.log("data null 아님");
-  //   console.log("data length : " + data[0].foodName);
-
-  //   const content = ``;
-  //   for (let i = 0; i < data.length; i++) {
-  //     content += '<div className="card" style="width: 18rem;">';
-  //     console.log("for문 반복 : " + data[i].kind);
-  //     content += `<img src="${data[i].foodPath}" className="card-img-top" alt="빵 이미지">`;
-  //     content += `<div className="card-body">`;
-  //     content += `<h5 className="card-title">${data[i].foodName}</h5>`;
-  //     content += `<p class="card-text">종류: ${data[i].kind}</p>`;
-  //     content += `<a href="" className="btn btn-primary">수정</a><a href="" className="btn btn-danger">삭제</a>`;
-  //     content += `</div>`;
-  //     content += `</div>`;
-  //     console.log("for문 종료");
-  //   }
-  //   console.log("for문 나옴");
-  //   return content;
-  // };
 
   return (
     <div id="content">
@@ -62,23 +38,47 @@ function MenuList() {
           <span>메뉴추가</span>
         </button>
       </div>
-      <Table className="menuBox">
+      <div className="menuBox">
         <Col>
           <Row>
-            {menuData.map((obj, index) => (
-              <Card key={index} className="breadCard">
-                <Card.Img variant="top" src={obj.foodPath} />
-                <Card.Body>
-                  <Card.Title>{obj.foodName}</Card.Title>
-                  <Card.Text>종류: {obj.kind}</Card.Text>
-                  <Button variant="primary">수정</Button>
-                  <Button variant="danger">삭제</Button>
-                </Card.Body>
-              </Card>
-            ))}
+            {menuData !== null && menuData !== undefined
+              ? menuData.map((obj, index) => (
+                  <Card key={index} className="breadCard">
+                    <Card.Img variant="top" src={obj.foodPath} />
+                    <Card.Body>
+                      <Card.Title>{obj.foodName}</Card.Title>
+                      <Card.Text>
+                        종류: {obj.kind} <br />
+                        시간: {obj.saleTime}
+                        <br />
+                        가격: {obj.price}
+                      </Card.Text>
+                      <Link
+                        to={{
+                          pathname: `/bakery/modifymenupage/${obj.foodSeq}`,
+                          state: {
+                            foodSeq_s: obj.foodSeq,
+                            foodName: obj.foodName,
+                            kind: obj.kind,
+                            foodPath: obj.foodPath,
+                            price: obj.price,
+                            saleTime: obj.saleTime,
+                          },
+                        }}
+                      >
+                        <Button variant="primary">수정</Button>
+                      </Link>
+                      &emsp;
+                      <Link to="">
+                        <Button variant="danger">삭제</Button>
+                      </Link>
+                    </Card.Body>
+                  </Card>
+                ))
+              : ""}
           </Row>
         </Col>
-      </Table>
+      </div>
     </div>
   );
 }

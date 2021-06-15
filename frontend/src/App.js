@@ -15,6 +15,7 @@ import Modify from "./component/Modify";
 import ChangeBakery from "./component/ChangeBakery";
 import MenuList from "./component/MenuList";
 import AddMenu from "./component/AddMenu";
+import ModifyMenu from "./component/ModifyMenu";
 
 class App extends Component {
   constructor(props) {
@@ -49,6 +50,11 @@ class App extends Component {
           />
           <Route exact path="/bakery/menulistpage" component={MenuList} />
           <Route exact path="/bakery/addmanupage" component={AddMenu} />
+          <Route
+            exact
+            path="/makery/modifymenupage/:id"
+            component={ModifyMenu}
+          />
         </Switch>
       </BrowserRouter>
     );
