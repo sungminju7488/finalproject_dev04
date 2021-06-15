@@ -79,8 +79,9 @@ public class BakeryService {
 				.get();
 		List<FoodVO> returnList = new ArrayList<FoodVO>();
 		for (FoodVO vo : list) {
-			vo.setFoodPath(Define.IMAGE_LOAD_PATH + vo.getFoodPath());
-			returnList.add(vo);
+			FoodVO fvo = new FoodVO(vo);
+			fvo.setFoodPath(Define.IMAGE_LOAD_PATH + vo.getFoodPath());
+			returnList.add(fvo);
 		}
 		return returnList;
 	}
@@ -104,6 +105,7 @@ public class BakeryService {
 			image.transferTo(new File(Define.IMAGE_SAVE_PATH + path));
 			foodVO.setFoodPath(path);
 		}
+		System.out.println(bakeryVO.getCopRegNum());
 		foodVO.setBakeryVO(bakeryRepository.findById(bakeryVO.getCopRegNum()).get());
 		foodRepository.save(foodVO);
 	}

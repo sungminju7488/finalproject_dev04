@@ -1,10 +1,17 @@
 .breadCard {
   text-align: center;
-  width: 10rem;
+  width: 200px;
+  height: 390px;
   display: inline-block;
+  margin: 10px 5px 10px 5px;
 }
 
 .menuBox {
   border: 1px solid #000;
-  padding: 3px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.row {
+  margin: 0px !important;
 }
