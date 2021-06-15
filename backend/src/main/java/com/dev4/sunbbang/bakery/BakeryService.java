@@ -135,8 +135,9 @@ public class BakeryService {
 				PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize())).get();
 		List<BakeryVO> list = new ArrayList<BakeryVO>();
 		for (BakeryVO vo : page) {
-			vo.setBakeryPath(Define.IMAGE_LOAD_PATH + vo.getBakeryPath());
-			list.add(vo);
+			BakeryVO bvo = new BakeryVO(vo);
+			bvo.setBakeryPath(Define.IMAGE_LOAD_PATH + vo.getBakeryPath());
+			list.add(bvo);
 		}
 		Page<BakeryVO> returnPage = new PageImpl<BakeryVO>(list);
 		return returnPage;
@@ -151,8 +152,9 @@ public class BakeryService {
 		List<FoodVO> list = foodRepository.findByBakeryVO(bakeryVO).get();
 		List<FoodVO> returnList = new ArrayList<FoodVO>();
 		for (FoodVO vo : list) {
-			vo.setFoodPath(Define.IMAGE_LOAD_PATH + vo.getFoodPath());
-			returnList.add(vo);
+			FoodVO fvo = new FoodVO(vo);
+			fvo.setFoodPath(Define.IMAGE_LOAD_PATH + vo.getFoodPath());
+			returnList.add(fvo);
 		}
 		return returnList;
 	}
@@ -171,7 +173,7 @@ public class BakeryService {
 			list.add(new FoodVO(token));
 		}
 		for (FoodVO foodVO : list) {
-			FoodVO vo = foodRepository.findById(foodVO.getFoodSeq()).get();
+			FoodVO vo = new FoodVO(foodRepository.findById(foodVO.getFoodSeq()).get());
 			vo.setFoodPath(Define.IMAGE_LOAD_PATH + vo.getFoodPath());
 			returnList.add(vo);
 		}
@@ -195,8 +197,9 @@ public class BakeryService {
 				PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize())).get();
 		List<FoodVO> list = new ArrayList<FoodVO>();
 		for (FoodVO vo : page) {
-			vo.setFoodPath(Define.IMAGE_LOAD_PATH + vo.getFoodPath());
-			list.add(vo);
+			FoodVO fvo = new FoodVO(vo);
+			fvo.setFoodPath(Define.IMAGE_LOAD_PATH + vo.getFoodPath());
+			list.add(fvo);
 		}
 		Page<FoodVO> returnPage = new PageImpl<FoodVO>(list);
 		return returnPage;

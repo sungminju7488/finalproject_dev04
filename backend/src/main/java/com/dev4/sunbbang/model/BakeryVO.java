@@ -15,6 +15,28 @@ import lombok.Data;
 @Entity
 @Table(name="BAKERY")
 public class BakeryVO {
+	
+	public BakeryVO() {
+	}
+	
+	public BakeryVO(BakeryVO vo) {
+		this.copRegNum = vo.getCopRegNum();
+		this.manager = vo.getManager();
+		this.storeName = vo.getStoreName();
+		this.storeAddress1 = vo.getStoreAddress1();
+		this.storeAddress2 = vo.getStoreAddress2();
+		this.storeContact = vo.getStoreContact();
+		this.bakeryPath = vo.getBakeryPath();
+		this.businessHour = vo.getBusinessHour();
+		this.holiday = vo.getHoliday();
+		this.specialHoliday = vo.getSpecialHoliday();
+		this.eatable = vo.getEatable();
+		this.latitude = vo.getLatitude();
+		this.longitude = vo.getLongitude();
+		this.boardSet = vo.getBoardSet();
+		this.memberVO = vo.getMemberVO();
+	}
+
 	@Id
 	@Column(name="COPREGNUM",nullable=false,length=10)
 	private String copRegNum;
