@@ -16,6 +16,7 @@ import com.example.application.R;
 import com.example.application.model.AuthVO;
 import com.example.application.model.MemberVO;
 import com.example.application.ui.alarm.AlarmListFragment;
+import com.example.application.ui.login.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,15 +27,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MemberVO memberVO = new MemberVO();
-        memberVO.setMemberId("hans");
-        memberVO.setAlarmSet("6,2,3,4,5,");
-        memberVO.setMemberSeq(1);
-
-        AuthVO.getInstance().setMemberVO(memberVO);
+//        MemberVO memberVO = new MemberVO();
+//        memberVO.setMemberId("hans");
+//        memberVO.setAlarmSet("6,2,3,4,5,");
+//        memberVO.setMemberSeq(1);
+//
+//        AuthVO.getInstance().setMemberVO(memberVO);
 
         createNotificationChannel();
-        navigateTo(new AlarmListFragment(), false);
+        navigateTo(new LoginFragment(), false);
     }
 
     public void navigateTo(Fragment fragment, boolean addToBackStack){

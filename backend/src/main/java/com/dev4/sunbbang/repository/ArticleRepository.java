@@ -9,8 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.dev4.sunbbang.model.ArticleVO;
 import com.dev4.sunbbang.model.BakeryVO;
+import com.dev4.sunbbang.model.FoodVO;
 
 public interface ArticleRepository extends JpaRepository<ArticleVO, String> {
+	
+	public Optional<Page<ArticleVO>> findByBakeryVO(BakeryVO bakeryVO, Pageable pagealbe);
 
 	Optional<ArticleVO> findByArticleSeq(int no);
 

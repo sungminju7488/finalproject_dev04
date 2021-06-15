@@ -27,6 +27,7 @@ public class ArticleService {
 	BakeryRepository bakeryRepository;
 
 	public Page<ArticleVO> articleList(BakeryVO bakeryVO,PageVO pageVO) {
+		
 		return articleRepository.findList(pageVO.getKeyword(),bakeryVO, PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize()));
 	}
 	

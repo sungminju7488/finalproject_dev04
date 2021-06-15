@@ -75,7 +75,7 @@ public class MemberController {
 		return gson.toJson(mvo);
 	}
 
-	@PutMapping("/changeMember")
+	@PostMapping("/changeMember")
 	public boolean update(@RequestBody MemberVO memberVO) {
 		try {
 			memberService.changeMember(memberVO);
@@ -85,7 +85,7 @@ public class MemberController {
 		}
 	}
 
-	@DeleteMapping("/quit")
+	@PostMapping("/quit")
 	public boolean quit(@RequestBody MemberVO memberVO) {
 		try {
 			memberService.quit(memberVO);
