@@ -2,15 +2,16 @@ package com.dev4.sunbbang.article;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dev4.sunbbang.model.ArticleVO;
 import com.dev4.sunbbang.model.BakeryVO;
+import com.dev4.sunbbang.model.MemberVO;
 import com.dev4.sunbbang.model.PageVO;
 import com.google.gson.Gson;
 @Async
@@ -24,15 +25,15 @@ public class ArticleController {
 	Gson gson;
 	
 	@PostMapping("/article/articleList")
-	public Object articleList(@RequestBody BakeryVO bakeryVO,PageVO pageVO){
+	public Object articleList(@RequestBody BakeryVO bakeryVO,@RequestBody PageVO pageVO){
 		pageVO.setPageSize(10);
-		Page<ArticleVO> mvo = articleService.articleList(bakeryVO,(Pageable) pageVO);
+		Page<ArticleVO> mvo = articleService.articleList(bakeryVO,pageVO);
 		return gson.toJson(mvo);
 	}
 	@PostMapping("/article/writeArticle")
-	public Boolean writeArticle(@RequestBody ArticleVO vo){
+	public Boolean writeArticle(@RequestBody MemberVO memberVO,ArticleVO articleVO,BakeryVO bakeryVO, MultipartFile image,String imageName){
 		try {
-		 articleService.writeArticle(vo);
+		 articleService.writeArticle(memberVO, articleVO,bakeryVO, image, imageName);
 		 return true;
 		}catch (Exception e) {
 			return false;

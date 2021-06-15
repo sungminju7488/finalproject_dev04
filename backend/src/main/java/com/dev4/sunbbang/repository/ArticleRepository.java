@@ -18,5 +18,8 @@ public interface ArticleRepository extends JpaRepository<ArticleVO, String> {
 	public void reportArticle(ArticleVO vo);
 	
 	@Query(value = "SELECT * FROM ARTICLE",nativeQuery = true)
-	public Page<ArticleVO> findList(BakeryVO bakeryVO,Pageable pageVO);
+	public Page<ArticleVO> findList(String keyword,BakeryVO bakeryVO,Pageable pageVO);
+	
+	@Query(value="SELECT ARTICLESEQ.CURRVAL FROM ARTICLE", nativeQuery = true)
+	public Optional<Integer> getArticleSeq();
 }
