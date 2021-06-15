@@ -107,6 +107,11 @@ public class JwtManager {
 		return validTokenAndReturnBody(token).get("followSet", String.class);
 	}
 	
+	//사업자 번호 조회
+	public String getCopRegNum(String token) {
+		return validTokenAndReturnBody(token).get("copRegNum", String.class);
+	}
+	
 	//Auth 반환
 	public AuthVO getAuthVO(String token) {
 		AuthVO authVO = new AuthVO();
@@ -117,6 +122,7 @@ public class JwtManager {
 		authVO.setGrade(getGrade(token));
 		authVO.setAlarmSet(getAlarmSet(token));
 		authVO.setFollowSet(getFollowSet(token));
+		authVO.setCopRegNum(getCopRegNum(token));
 		return authVO;
 	}
 	
@@ -152,6 +158,7 @@ public class JwtManager {
 		claims.put("grade", authVO.getGrade());
 		claims.put("alarmSet", authVO.getAlarmSet());
 		claims.put("followSet", authVO.getFollowSet());
+		claims.put("copRegNum", authVO.getCopRegNum());
 		
 		return Jwts.builder()
 				.setClaims(claims)

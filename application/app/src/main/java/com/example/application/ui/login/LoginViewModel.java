@@ -25,7 +25,7 @@ public class LoginViewModel extends ViewModel {
      * @param callback 요청에 대한 응답 콜백
      */
     void login(Callback<MemberVO> callback) {
-        repository.loginMember(new AuthVO(id.getValue(),password.getValue()), callback);
+        repository.loginMember(new MemberVO(id.getValue(), password.getValue()), callback);
     }
 
     /**

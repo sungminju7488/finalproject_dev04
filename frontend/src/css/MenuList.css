@@ -1,0 +1,10 @@
+.breadCard {
+  text-align: center;
+  width: 10rem;
+  display: inline-block;
+}
+
+.menuBox {
+  border: 1px solid #000;
+  padding: 3px;
+}

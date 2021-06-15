@@ -29,15 +29,23 @@ public class MemberController {
 	
 	@PostMapping("/member/join")
 	public boolean join(@RequestBody MemberVO memberVO) {
-		memberService.join(memberVO);
-		return true;
+		try {
+			memberService.join(memberVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	@PostMapping("/member/login")
 	public ResponseToken login(@RequestBody MemberVO memberVO) {
-		MemberVO selectMemberVO = memberService.login(memberVO).get();
-		AuthVO authVO = new AuthVO(selectMemberVO);
-		return new ResponseToken(jwtService.createToken(authVO));
+		return new ResponseToken(jwtService.createToken(memberService.login(memberVO)));
+	}
+	
+	@PostMapping("/member/loginApp")
+	public Object loginApp(@RequestBody MemberVO memberVO) {
+		AuthVO authVO = memberService.login(memberVO); 
+		return gson.toJson(authVO);
 	}
 
 	@PostMapping("/findId")
@@ -46,13 +54,19 @@ public class MemberController {
 		return gson.toJson(mvo);
 	}
 
-	@PostMapping("/confirmPassword")
-	public void confirmPassword(@RequestBody MemberVO memberVO) {
-		 memberService.changePassword(memberVO);
+	@PostMapping("/findPassword")
+	public boolean findPassword(@RequestBody MemberVO memberVO) {
+		return memberService.findPassword(memberVO);
 	}
 	@PostMapping("/changePassword")
-	public void changePassword(@RequestBody MemberVO memberVO) {
-		memberService.changePassword(memberVO);
+	public boolean changePassword(@RequestBody MemberVO memberVO) {
+		try {
+			memberService.changePassword(memberVO);
+			return true;
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	@PostMapping("/myPage")
@@ -61,14 +75,23 @@ public class MemberController {
 		return gson.toJson(mvo);
 	}
 
-	@PutMapping("/changeMember")
-	public void update(@RequestBody MemberVO memberVO) {
-		memberService.changeMember(memberVO);
+	@PostMapping("/changeMember")
+	public boolean update(@RequestBody MemberVO memberVO) {
+		try {
+			memberService.changeMember(memberVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
-	@DeleteMapping("/quit")
-	public void quit(@RequestBody MemberVO memberVO) {
-		memberService.quit(memberVO);
+	@PostMapping("/quit")
+	public boolean quit(@RequestBody MemberVO memberVO) {
+		try {
+			memberService.quit(memberVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
-
 }

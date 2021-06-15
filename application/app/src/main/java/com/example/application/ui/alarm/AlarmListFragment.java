@@ -16,10 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.application.R;
+import com.example.application.ui.base.MainActivity;
 import com.example.application.ui.base.ViewModelFactory;
 import com.example.application.databinding.FragmentAlarmListBinding;
 import com.example.application.model.AuthVO;
 import com.example.application.model.FoodVO;
+import com.example.application.ui.login.LoginFragment;
 
 import java.util.List;
 
@@ -62,7 +64,7 @@ public class AlarmListFragment extends Fragment {
         });
         logoutButton.setOnClickListener(v -> {
             AuthVO.getInstance().setMemberVO(null);
-//            ((MainActivity) requireActivity()).navigateTo(new LoginFragment(), true);
+            ((MainActivity) requireActivity()).navigateTo(new LoginFragment(), false);
         });
     }
 

@@ -26,7 +26,7 @@ public class FoodVO {
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "foodSeq")
 	@Column(name="FOODSEQ",nullable=false,length=8)
 	private int foodSeq;
 	@Column(name="FOODNAME",nullable=false,length=50)

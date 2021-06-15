@@ -13,4 +13,5 @@ public interface BakeryRepository extends JpaRepository<BakeryVO, String>{
 	
 	public Optional<BakeryVO> findByMemberVO(MemberVO memberVO);
 	public Optional<Page<BakeryVO>> findByStoreNameContaining(String keyword, Pageable pagealbe);
+	public void deleteByMemberVO(MemberVO memberVO);
 }

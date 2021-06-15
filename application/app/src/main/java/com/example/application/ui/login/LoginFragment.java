@@ -6,13 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.application.R;
@@ -20,8 +18,8 @@ import com.example.application.databinding.FragmentLoginBinding;
 import com.example.application.model.AuthVO;
 import com.example.application.model.MemberVO;
 import com.example.application.ui.alarm.AlarmListFragment;
+import com.example.application.ui.base.MainActivity;
 import com.example.application.ui.base.ViewModelFactory;
-import com.example.application.MainActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,8 +56,6 @@ public class LoginFragment extends Fragment {
             }
 
             loginViewModel.login(new Callback<MemberVO>() {
-                private Object AlarmListFragment;
-
                 /**
                  * 로그인 성공
                  */
@@ -70,22 +66,18 @@ public class LoginFragment extends Fragment {
                         // 로그인된 회원 정보 저장
                         AuthVO.getInstance().setMemberVO(memberVO);
 
+                        // 팝업 메세지
                         if (requireActivity() != null) {
-                           Toast.makeText(requireActivity().getApplicationContext().getApplicationContext(),
-                                   String.format("%s 회원님, 환영합니다.", memberVO.getName()), Toast.LENGTH_SHORT).show();
-
-                          //  Intent intent = new Intent( LoginFragment.this,AlarmListFragment.getClass());
-
-                         //   startActivity(AlarmListFragment);
-
-
+                            Toast.makeText(requireActivity().getApplicationContext().getApplicationContext(), String.format("%s 회원님, 환영합니다.", memberVO.getName()), Toast.LENGTH_SHORT).show();
                         }
 
+                        // 로그인시 화면 전환
+                        ((MainActivity) requireActivity()).navigateTo(new AlarmListFragment(), false);
+
                     } else if (requireActivity() != null) {
-                        Toast.makeText(requireActivity().getApplicationContext(), "회원가입을 해주세요.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireActivity().getApplicationContext(), "선빵 홈페이지에서 회원가입을 해주세요.", Toast.LENGTH_SHORT).show();
                     }
                 }
-
 
                 /**
                  * 로그인 실패
@@ -98,7 +90,5 @@ public class LoginFragment extends Fragment {
                 }
             });
         });
-
-
     }
 }

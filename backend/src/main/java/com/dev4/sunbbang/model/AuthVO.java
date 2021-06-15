@@ -1,10 +1,8 @@
 package com.dev4.sunbbang.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class AuthVO {
 
 	private int memberSeq;
@@ -14,6 +12,7 @@ public class AuthVO {
 	private String grade;
 	private String alarmSet;
 	private String followSet;
+	private String CopRegNum;
 	
 	public AuthVO() {}
 	
@@ -26,4 +25,5 @@ public class AuthVO {
 		this.alarmSet = memberVO.getAlarmSet();
 		this.followSet = memberVO.getFollowSet();
 	}
+	
 }

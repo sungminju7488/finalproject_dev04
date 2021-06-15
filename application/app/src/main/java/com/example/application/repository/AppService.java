@@ -12,14 +12,12 @@ import retrofit2.http.POST;
 
 public interface AppService {
 
-    @POST("member/login")
-    Call<MemberVO> loginMember(@Body AuthVO authVO,@Body MemberVO memberVO);
+    @POST("/member/loginApp")
+    Call<MemberVO> login(@Body MemberVO memberVO);
 
-    @POST("bakery/useAlarm")
+    @POST("/bakery/useAlarm")
     Call<List<FoodVO>> useAlarm(@Body MemberVO memberVO);
 
-    @POST("bakeyr/deleteAlarm")
+    @POST("/bakeyr/deleteAlarm")
     Call<MemberVO> deleteAlarm(@Body MemberVO memberVO, @Body FoodVO foodVO);
-
-    Call<MemberVO> loginMember(@Body AuthVO authVO);
 }
