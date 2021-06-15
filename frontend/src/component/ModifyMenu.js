@@ -2,14 +2,23 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import auth from "../Logic/Auth";
 
-function ModifyMenu() {
+function ModifyMenu(props) {
   const [foodName, setFoodName] = useState();
   const [kind, setKind] = useState("");
   const [foodPath, setFoodPath] = useState("");
   const [price, setPrice] = useState("");
-  const [saletime, setSaleTime] = useState("");
+  const [saleTime, setSaleTime] = useState("");
   const [image, setImage] = useState("");
   const [imageName, setImageName] = useState("");
+
+  useEffect(() => {
+    const allData = props.location.state;
+    setFoodName(allData.foodName);
+    setKind(allData.kind);
+    setFoodPath(allData.foodPath);
+    setPrice(allData.price);
+    setSaleTime(allData.saleTime);
+  }, []);
 
   //이미지 변경
   const changeImageHandler = (event) => {
@@ -31,7 +40,8 @@ function ModifyMenu() {
     formData.append("kind", kind);
     formData.append("foodPath", foodPath);
     formData.append("price", price);
-    formData.append("saleTime", saletime);
+    formData.append("saleTime", saleTime);
+    // formData.append("copRegNum", auth.copRegNum);
     formData.append("image", image);
     formData.append("imageName", imageName);
 
@@ -40,7 +50,7 @@ function ModifyMenu() {
     };
 
     axios
-      .post("/bakery/addMenu", formData, config)
+      .post("/bakery/modifyMenu", formData, config)
       .then((res) => {
         if (res.data === true) {
           alert(foodName + " 메뉴가 정상 등록되었습니다.");
@@ -70,6 +80,7 @@ function ModifyMenu() {
             id="foodName"
             className="var"
             maxLength="50"
+            value={foodName || ""}
             onChange={(e) => {
               setFoodName(e.target.value);
             }}
@@ -83,6 +94,7 @@ function ModifyMenu() {
           <select
             id="kind"
             className="sel"
+            value={kind || ""}
             onChange={(e) => {
               setKind(e.target.value);
             }}
@@ -105,6 +117,7 @@ function ModifyMenu() {
             type="time"
             id="saleTime"
             className="var"
+            value={saleTime || ""}
             onChange={(e) => {
               setSaleTime(e.target.value);
             }}
@@ -119,6 +132,7 @@ function ModifyMenu() {
             type="number"
             id="price"
             className="var"
+            value={price || ""}
             onChange={(e) => {
               setPrice(e.target.value);
             }}
@@ -133,6 +147,7 @@ function ModifyMenu() {
             <input
               type="file"
               id="image"
+              value={image || ""}
               onChange={changeImageHandler}
               className="var"
             />
@@ -161,7 +176,7 @@ function ModifyMenu() {
         </div>
         <div id="btn_area">
           <button type="submit" id="login_btn">
-            <span>메뉴등록</span>
+            <span>메뉴수정</span>
           </button>
         </div>
       </form>

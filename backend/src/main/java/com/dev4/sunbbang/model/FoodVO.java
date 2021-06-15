@@ -25,6 +25,16 @@ public class FoodVO {
 		this.foodSeq = foodSeq;
 	}
 	
+	public FoodVO(FoodVO vo) {
+		this.foodSeq = vo.foodSeq;
+		this.foodName = vo.foodName;
+		this.kind = vo.kind;
+		this.foodPath = vo.foodPath;
+		this.price = vo.price;
+		this.saleTime = vo.saleTime;
+		this.bakeryVO = vo.bakeryVO;
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "foodSeq")
 	@Column(name="FOODSEQ",nullable=false,length=8)

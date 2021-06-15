@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import auth from "../Logic/Auth";
 import "../css/MenuList.css";
 
-function MenuList() {
+function MenuList({ memberSeq }) {
   const [menuTile, setMenuTile] = useState("");
   const [menuData, setMenuData] = useState([]);
 
@@ -55,9 +55,9 @@ function MenuList() {
                       </Card.Text>
                       <Link
                         to={{
-                          pathname: `/bakery/modifymenupage/${obj.foodSeq}`,
+                          pathname: `/bakery/modifymenupage`,
                           state: {
-                            foodSeq_s: obj.foodSeq,
+                            foodSeq: obj.foodSeq,
                             foodName: obj.foodName,
                             kind: obj.kind,
                             foodPath: obj.foodPath,
@@ -82,5 +82,14 @@ function MenuList() {
     </div>
   );
 }
+
+// MenuList.propTypes = {
+//   foodSeq: propTypes.number.isRequired,
+//   foodName: propTypes.string.isRequired,
+//   kind: propTypes.string.isRequired,
+//   foodPath: propTypes.string.isRequired,
+//   price: propTypes.number.isRequired,
+//   saleTime: propTypes.string.isRequired,
+// };
 
 export default MenuList;

@@ -52,11 +52,7 @@ class App extends Component {
           />
           <Route exact path="/bakery/menulistpage" component={MenuList} />
           <Route exact path="/bakery/addmanupage" component={AddMenu} />
-          <Route
-            exact
-            path="/makery/modifymenupage/:id"
-            component={ModifyMenu}
-          />
+          <Route exact path="/bakery/modifymenupage" component={ModifyMenu} />
         </Switch>
       </BrowserRouter>
     );
