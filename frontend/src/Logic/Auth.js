@@ -14,6 +14,13 @@ export default {
   grade: null,
   alarmSet: null,
   followSet: null,
+  sex: null,
+  birthDay: null,
+  email: null,
+  phoneNumber: null,
+  address1: null,
+  address2: null,
+  grade: null,
 
   logout() {
     this.loggedIn = false;
@@ -34,6 +41,14 @@ export default {
     this.grade = sessionStorage.getItem("grade");
     this.alarmSet = sessionStorage.getItem("alarmSet");
     this.followSet = sessionStorage.getItem("followSet");
+    this.sex = sessionStorage.getItem("sex");
+    this.birthDay = sessionStorage.getItem("birthDay");
+    this.email = sessionStorage.getItem("email");
+    this.phoneNumber = sessionStorage.getItem("phoneNumber");
+    this.address1 = sessionStorage.getItem("address1");
+    this.address2 = sessionStorage.getItem("address2");
+    this.grade = sessionStorage.getItem("grade");
+
 
     //API 요청하는 콜마다 헤더에 accessToken을 담아 보내도록 설정
     axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
@@ -56,6 +71,14 @@ export default {
     this.grade = jwtDecode.grade;
     this.alarmSet = jwtDecode.alarmSet;
     this.followSet = jwtDecode.followSet;
+    this.sex = jwtDecode.sex;
+    this.birthDay = jwtDecode.birthDay;
+    this.email = jwtDecode.email;
+    this.phoneNumber = jwtDecode.phoneNumber;
+    this.address1 = jwtDecode.address1;
+    this.address2 = jwtDecode.address2;
+    this.grade = jwtDecode.grade;
+
 
     //브라우저 저장
     sessionStorage.setItem("memberSeq", jwtDecode.memberSeq);
@@ -65,8 +88,19 @@ export default {
     sessionStorage.setItem("grade", jwtDecode.grade);
     sessionStorage.setItem("alarmSet", jwtDecode.alarmSet);
     sessionStorage.setItem("followSet", jwtDecode.followSet);
+    sessionStorage.setItem("sex", jwtDecode.sex);
+    sessionStorage.setItem("birthDay", jwtDecode.birthDay);
+    sessionStorage.setItem("email", jwtDecode.email);
+    sessionStorage.setItem("phoneNumber", jwtDecode.phoneNumber);
+    sessionStorage.setItem("address1", jwtDecode.address1);
+    sessionStorage.setItem("address2", jwtDecode.address2);
+    sessionStorage.setItem("grade", jwtDecode.grade);
+
     sessionStorage.setItem("accessToken", data.accessToken);
     sessionStorage.setItem("refreshToken", data.refreshToken);
+
+
+
 
     //API 요청하는 콜마다 헤더에 accessToken을 담아 보내도록 설정
     axios.defaults.headers.common[

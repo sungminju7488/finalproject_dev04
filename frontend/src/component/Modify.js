@@ -84,7 +84,7 @@ function Modify(){
         <div id="content">
             <div id="header">
                 <a href="/" target="_self" title="선빵 메인 페이지 보러가기">
-                    <span id="sunbbang">선 빵</span>
+                    <span id="sunbbang">정보수정</span>
                 </a>
             </div>
             <h3 className="join_title">

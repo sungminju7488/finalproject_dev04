@@ -36,12 +36,12 @@ class App extends Component {
             path="/member/changegradeconfirmpage"
             component={ChangeGradeConfirm}
           />
+          <Route exact path="/member/mypagepage" component={Mypage}/>
+          <Route exact path="/member/changememberpage" component={Modify}/>
           {/* 베이커리 */}
           <Route exact path="/bakery/joinbakerypage" component={JoinBakery} />
           <Route exact path="/bakery/myshoppage" component={MyShop} />
 
-          <Route exact path="/member/mypagepage" component={Mypage}/>
-          <Route exact path="/member/changememberpage" component={Modify}/>
 
         </Switch>
       </BrowserRouter>
