@@ -19,6 +19,13 @@ public class MemberVO {
     private String followSet;
     private String flatForm;
 
+    public MemberVO(){}
+
+    public MemberVO(String memberId, String password) {
+        this.memberId = memberId;
+        this.password = password;
+    }
+
     public int getMemberSeq() {
         return memberSeq;
     }

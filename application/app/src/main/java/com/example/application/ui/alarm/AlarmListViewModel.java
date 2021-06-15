@@ -26,6 +26,7 @@ public class AlarmListViewModel extends ViewModel {
     }
 
     public void useAlarm(MemberVO memberVO, Callback<List<FoodVO>> callback){
+        System.out.println(memberVO.getAlarmSet());
         appRepository.useAlarm(memberVO, callback);
     }
 

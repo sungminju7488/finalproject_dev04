@@ -68,18 +68,28 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         FoodVO foodVO = alarmList.get(position);
+
         SimpleDateFormat time = new SimpleDateFormat("HH:mm");
         Date date = new Date();
-        date.setHours(Integer.parseInt(foodVO.getSaleTime().substring(0,2)));
-//        date.setHours(1);
-        date.setMinutes(Integer.parseInt(foodVO.getSaleTime().substring(3,5)));
-//        date.setMinutes(39);
+
+        int hour = Integer.parseInt(foodVO.getSaleTime().substring(0,2));
+        date.setHours(hour);
+
+        int minute = Integer.parseInt(foodVO.getSaleTime().substring(3,5));
+        date.setMinutes(minute);
+
+        if(date.getTime() <= new Date().getTime()){
+            date.setDate(date.getDate()+1);
+        }
+
         time.format(date);
 
         context = holder.itemView.getContext();
         alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra("storeName", foodVO.getBakeryVO().getStoreName());
         intent.putExtra("foodName", foodVO.getFoodName());
+        intent.putExtra("saleTime", foodVO.getSaleTime());
         intent.putExtra("foodSeq", foodVO.getFoodSeq());
         pendingIntent = PendingIntent.getBroadcast(context, foodVO.getFoodSeq(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time.getCalendar().getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
