@@ -22,6 +22,7 @@ const ChangeBakery = ({ history }) => {
   const [longitude, setLongitude] = useState("");
   const [boardSet, setBoardSet] = useState("");
   const [bakeryPath, setBakeryPath] = useState("");
+  const [bakerySavePath, setBakerySavePath] = useState("");
   const [image, setBakeryImage] = useState(null);
   const [imageName, setImageName] = useState("");
   //주소 Modal
@@ -42,6 +43,7 @@ const ChangeBakery = ({ history }) => {
     setBakeryPath(data.bakeryPath);
     setLatitude(data.latitude);
     setLongitude(data.longitude);
+    setBakerySavePath(data.bakerySavePath);
   };
 
   useEffect(() => {
@@ -70,7 +72,7 @@ const ChangeBakery = ({ history }) => {
       storeAddress2 === undefined ? "" : storeAddress2
     );
     formData.append("storeContact", storeContact);
-    formData.append("bakeryPath", bakeryPath);
+    formData.append("bakerySavePath", bakerySavePath);
     formData.append("businessHour", businessHour);
     formData.append("holiday", holiday === undefined ? "" : holiday);
     formData.append(

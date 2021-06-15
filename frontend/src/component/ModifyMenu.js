@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import auth from "../Logic/Auth";
 
 function ModifyMenu(props) {
-  const [foodName, setFoodName] = useState();
+  const [foodSeq, setFoodSeq] = useState(null);
+  const [foodName, setFoodName] = useState("");
   const [kind, setKind] = useState("");
   const [foodPath, setFoodPath] = useState("");
+  const [foodSavePath, setFoodSavePath] = useState("");
   const [price, setPrice] = useState("");
   const [saleTime, setSaleTime] = useState("");
   const [image, setImage] = useState("");
@@ -13,20 +15,27 @@ function ModifyMenu(props) {
 
   useEffect(() => {
     const allData = props.location.state;
+    setFoodSeq(allData.foodSeq);
     setFoodName(allData.foodName);
     setKind(allData.kind);
     setFoodPath(allData.foodPath);
+    setFoodSavePath(allData.foodSavePath);
     setPrice(allData.price);
     setSaleTime(allData.saleTime);
   }, []);
 
   //이미지 변경
   const changeImageHandler = (event) => {
+    console.log("changeImageHandler");
     let reader = new FileReader();
+    console.log("reader");
     if (event.target.files[0]) {
+      console.log("event");
       reader.readAsDataURL(event.target.files[0]); //1.파일을 읽어 버퍼에 저장
       setImage(event.target.files[0]);
       setFoodPath(URL.createObjectURL(event.target.files[0]));
+
+      console.log("file name : " + event.target.files[0].name);
       setImageName(event.target.files[0].name);
     }
   };
@@ -36,12 +45,12 @@ function ModifyMenu(props) {
 
     const formData = new FormData();
     formData.append("copRegNum", auth.copRegNum);
+    formData.append("foodSeq", foodSeq);
     formData.append("foodName", foodName);
     formData.append("kind", kind);
-    formData.append("foodPath", foodPath);
+    formData.append("foodSavePath", foodSavePath);
     formData.append("price", price);
     formData.append("saleTime", saleTime);
-    // formData.append("copRegNum", auth.copRegNum);
     formData.append("image", image);
     formData.append("imageName", imageName);
 
@@ -147,7 +156,7 @@ function ModifyMenu(props) {
             <input
               type="file"
               id="image"
-              value={image || ""}
+              defaultValue={image || ""}
               onChange={changeImageHandler}
               className="var"
             />

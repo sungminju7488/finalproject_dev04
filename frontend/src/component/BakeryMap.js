@@ -8,6 +8,8 @@ const { kakao } = window;
 
 //메서드 컴포넌트의 경우 맨 앞글자가 대문자여야함
 const BakeryMap = () => {
+  // var [modalOpen, setModalOpen] = useState(false);
+  // var [modalOpen, setModalOpen] = useState(false);
   var [modalOpen, setModalOpen] = useState(false);
   var [bakeryData, setBakeryData] = useState(null);
   var [breadData, setBreadData] = useState(null);
@@ -47,17 +49,18 @@ const BakeryMap = () => {
     axios
       .post("/bakery/searchBakery", { pageNo })
       .then((res) => {
-        init(res.data.content);
+        setMapAndBakery(res.data.content);
       })
       .catch((err) => alert(err.response.data.msg));
   };
+
   const handleSecondPage = async () => {
     const pageNo = 1;
 
     axios
       .post("/bakery/searchBakery", { pageNo })
       .then((res) => {
-        init(res.data.content);
+        setMapAndBakery(res.data.content);
       })
       .catch((err) => alert(err.response.data.msg));
   };
@@ -74,7 +77,8 @@ const BakeryMap = () => {
       .post("/bakery/searchBakery", {})
       .then(
         (res) => {
-          init(res.data.content);
+          console.log(res.data);
+          setMapAndBakery(res.data.content);
         }
         // alert(data[1].storeName);
       )
@@ -86,7 +90,8 @@ const BakeryMap = () => {
     };
   }, []);
 
-  function init(listData) {
+  function setMapAndBakery(listData) {
+    console.log(listData);
     //GPS지원 여부 검사
     if (navigator.geolocation) {
       //GPS로 현재 위치의 경고와 위도를 받아옵니다.
@@ -185,10 +190,10 @@ const BakeryMap = () => {
         //베이커리 마커에 click이벤트를 등록(팝업 생성)
         kakao.maps.event.addListener(BakeryMarker, "click", function () {
           //베이커리 SEQ
-          const memberSeq = listData[i].memberSeq;
-          console.log("memberSeq : " + memberSeq);
+          const copRegNum = listData[i].copRegNum;
+          console.log("copRegNum : " + copRegNum);
           //통신
-          axios.post("/bakery/menuViewList", { memberSeq }).then((res) => {
+          axios.post("/bakery/menuViewList", { copRegNum }).then((res) => {
             openBreadTimeModal(listData[i], res.data);
           });
         });

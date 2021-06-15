@@ -76,6 +76,7 @@ function MenuList({ memberSeq }) {
                             foodName: obj.foodName,
                             kind: obj.kind,
                             foodPath: obj.foodPath,
+                            foodSavePath: obj.foodSavePath,
                             price: obj.price,
                             saleTime: obj.saleTime,
                           },
