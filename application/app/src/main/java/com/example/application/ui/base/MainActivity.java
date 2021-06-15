@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             transaction.commit();
         }
     }
+
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             moveTaskToBack(false);
