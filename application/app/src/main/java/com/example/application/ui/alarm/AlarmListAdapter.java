@@ -1,7 +1,10 @@
 package com.example.application.ui.alarm;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +20,14 @@ import com.example.application.BR;
 import com.example.application.R;
 import com.example.application.model.FoodVO;
 import com.example.application.model.MemberVO;
+import com.example.application.util.AlarmReceiver;
 
 import org.w3c.dom.Text;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -29,9 +36,15 @@ import retrofit2.Response;
 
 public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int HEADER_POSITION = 0;
+
 //    private AlarmListViewModel viewModel;
 //    private MemberVO memberVO;
     private List<FoodVO> alarmList = new ArrayList<>();
+
+    private Context context;
+    private AlarmManager alarmManager;
+    private Intent intent;
+    private PendingIntent pendingIntent;
 
 //    public AlarmListAdapter(AlarmListViewModel viewModel, MemberVO memberVO) {
 //        this.viewModel = viewModel;
@@ -53,8 +66,27 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
+        FoodVO foodVO = alarmList.get(position);
+        SimpleDateFormat time = new SimpleDateFormat("HH:mm");
+        Date date = new Date();
+        date.setHours(Integer.parseInt(foodVO.getSaleTime().substring(0,2)));
+//        date.setHours(1);
+        date.setMinutes(Integer.parseInt(foodVO.getSaleTime().substring(3,5)));
+//        date.setMinutes(39);
+        time.format(date);
+
+        context = holder.itemView.getContext();
+        alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra("foodName", foodVO.getFoodName());
+        intent.putExtra("foodSeq", foodVO.getFoodSeq());
+        pendingIntent = PendingIntent.getBroadcast(context, foodVO.getFoodSeq(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time.getCalendar().getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+//        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, 1000, pendingIntent);
+
         if(holder instanceof AlarmViewHolder){
-            ((AlarmViewHolder)holder).bind(alarmList.get(position));
+            ((AlarmViewHolder)holder).bind(foodVO);
         }
     }
 
