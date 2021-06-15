@@ -79,18 +79,14 @@ public class BakeryService {
 	}
 
 	public void addMenu(BakeryVO bakeryVO, FoodVO foodVO, MultipartFile image, String imageName) throws IOException {
-		int foodSeq;
-		if(foodRepository.findAll().size()==0) {
-			foodSeq = 1;
-		} else {
-			foodSeq = foodRepository.getFoodSeq().get() + 1;
-		}
+		bakeryVO = bakeryRepository.findById(bakeryVO.getCopRegNum()).get();
+		foodVO.setBakeryVO(bakeryVO);
+		foodRepository.save(foodVO);
+		int foodSeq = foodRepository.getFoodSeq().get();
 		String fileName = foodSeq + "." + imageName.substring(imageName.lastIndexOf(".") + 1);
 		image.transferTo(new File("C://images/food/" + fileName));
 		String path = "http://localhost:8080/images/food/" + fileName;
 		foodVO.setFoodPath(path);
-		bakeryVO = bakeryRepository.findById(bakeryVO.getCopRegNum()).get();
-		foodVO.setBakeryVO(bakeryVO);
 		foodRepository.save(foodVO);
 	}
 
