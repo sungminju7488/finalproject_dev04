@@ -15,6 +15,7 @@ import Modify from "./component/Modify";
 import ChangeBakery from "./component/ChangeBakery";
 import MenuList from "./component/MenuList";
 import AddMenu from "./component/AddMenu";
+import ModifyMenu from "./component/ModifyMenu";
 
 class App extends Component {
   constructor(props) {
@@ -39,6 +40,8 @@ class App extends Component {
             path="/member/changegradeconfirmpage"
             component={ChangeGradeConfirm}
           />
+          <Route exact path="/member/mypagepage" component={Mypage} />
+          <Route exact path="/member/changememberpage" component={Modify} />
           {/* 베이커리 */}
           <Route exact path="/bakery/joinbakerypage" component={JoinBakery} />
           <Route exact path="/bakery/myshoppage" component={MyShop} />
@@ -48,7 +51,8 @@ class App extends Component {
             component={ChangeBakery}
           />
           <Route exact path="/bakery/menulistpage" component={MenuList} />
-          <Route exact path="/bakery/addmanupage" component={AddMenu} />
+          <Route exact path="/bakery/addmenupage" component={AddMenu} />
+          <Route exact path="/bakery/modifymenupage" component={ModifyMenu} />
         </Switch>
       </BrowserRouter>
     );

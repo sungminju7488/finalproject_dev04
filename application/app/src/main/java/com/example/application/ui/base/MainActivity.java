@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -47,14 +46,10 @@ public class MainActivity extends AppCompatActivity {
             transaction.commit();
         }
     }
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent home = new Intent(Intent.ACTION_MAIN);
-            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            home.addCategory(Intent.CATEGORY_HOME);
-            startActivity(home);
+            moveTaskToBack(false);
             return true;
         }
         return super.onKeyDown(keyCode, event);
