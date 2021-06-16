@@ -56,8 +56,9 @@ const BakeryMap = () => {
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (pos) {
-        const myLatitude = pos.coords.latitude;
-        const myLongitude = pos.coords.longitude;
+        const myLatitude = pos.coords.latitude.toFixed(5);
+        const myLongitude = pos.coords.longitude.toFixed(5);
+
         axios
           .post("/bakery/searchBakery", {
             keyword,
@@ -347,15 +348,15 @@ const BakeryMap = () => {
   }
 
   //사이드에 빵집을 누르면 해당 정보로 이동
-  function sideBakeryBtnHandler(bakeryData) {
-    const copRegNum = bakeryData.copRegNum;
+  function sideBakeryBtnHandler(BakeryData) {
+    const copRegNum = BakeryData.copRegNum;
 
     //TODO: 중앙잡기
 
     //통신
     axios.post("/bakery/menuViewList", { copRegNum }).then((res) => {
-      console.log(bakeryData);
-      openBreadTimeModal(bakeryData, res.data);
+      console.log(BakeryData);
+      openBreadTimeModal(BakeryData, res.data);
     });
   }
 

@@ -16,6 +16,7 @@ import ChangeBakery from "./component/ChangeBakery";
 import MenuList from "./component/MenuList";
 import AddMenu from "./component/AddMenu";
 import ModifyMenu from "./component/ModifyMenu";
+import BakeryArticleList from "./component/BakeryArticleList";
 
 class App extends Component {
   constructor(props) {
@@ -53,6 +54,11 @@ class App extends Component {
           <Route exact path="/bakery/menulistpage" component={MenuList} />
           <Route exact path="/bakery/addmenupage" component={AddMenu} />
           <Route exact path="/bakery/modifymenupage" component={ModifyMenu} />
+          <Route
+            exact
+            path="/bakery/bakeryarticlelistpage"
+            component={BakeryArticleList}
+          />
         </Switch>
       </BrowserRouter>
     );

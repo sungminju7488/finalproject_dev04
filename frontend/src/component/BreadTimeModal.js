@@ -62,6 +62,8 @@ const BreadTimeModal = (props) => {
               <br />
               <br />
             </div>
+            {/* 게시판 버튼 */}
+            {bakeryData.boardSet === "T" ? <button>리뷰 게시판</button> : null}
             {/* 빵나오는 시간 */}
             <Table striped bordered size="sm">
               {viewBreadTimeTable()}
