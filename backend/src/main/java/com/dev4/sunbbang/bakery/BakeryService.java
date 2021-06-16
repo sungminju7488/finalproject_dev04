@@ -133,9 +133,6 @@ public class BakeryService {
 	}
 
 	public Page<BakeryVO> searchBakery(PageVO pageVO) {
-		if (pageVO.getPageNo() > 0) {
-			pageVO.setPageNo(pageVO.getPageNo() - 1);
-		}
 		Page<BakeryVO> page = bakeryRepository.findByStoreNameContaining(pageVO.getKeyword(),
 				PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize())).get();
 		return page;
@@ -184,9 +181,6 @@ public class BakeryService {
 	}
 
 	public Page<FoodVO> searchFood(PageVO pageVO) {
-		if (pageVO.getPageNo() > 0) {
-			pageVO.setPageNo(pageVO.getPageNo() - 1);
-		}
 		Page<FoodVO> page = foodRepository
 				.findByFoodNameContaining(pageVO.getKeyword(), PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize()))
 				.get();

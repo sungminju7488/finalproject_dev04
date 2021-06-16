@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -117,7 +119,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         private ViewDataBinding binding;
 
-        private TextView delete_btn;
+        private CheckBox checkView;
 
         private FoodVO foodVO;
 
@@ -126,34 +128,20 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             this.binding = binding;
 
             View itemView = binding.getRoot();
-            delete_btn = itemView.findViewById(R.id.delete_btn);
+            checkView = itemView.findViewById(R.id.check_image_view);
 
+            checkView.setOnClickListener(v -> {
+                if(foodVO.isChecked()){
+                    foodVO.setChecked(false);
+                } else {
+                    foodVO.setChecked(true);
+                }
+                notifyDataSetChanged();
+            });
         }
 
         private void bind(FoodVO foodVO){
             this.foodVO = foodVO;
-
-            delete_btn.setOnClickListener(v -> {
-                context = itemView.getContext();
-                alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-                intent = new Intent(context, AlarmReceiver.class);
-                pendingIntent = PendingIntent.getBroadcast(context, foodVO.getFoodSeq(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                alarmManager.cancel(pendingIntent);
-
-                viewModel.deleteAlarm(AuthVO.getInstance().getMemberVO(), foodVO, new Callback<MemberVO>() {
-                    @Override
-                    public void onResponse(Call<MemberVO> call, Response<MemberVO> response) {
-                        MemberVO memberVO = response.body();
-                        AuthVO.getInstance().setMemberVO(memberVO);
-                        notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onFailure(Call<MemberVO> call, Throwable t) {
-                        Toast.makeText(context, "알람삭제: 통신 실패", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            });
 
             Log.i("hans", foodVO.getFoodName());
             binding.setVariable(BR.foodVO, foodVO);
