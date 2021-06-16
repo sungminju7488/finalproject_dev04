@@ -10,6 +10,8 @@ public class FoodVO {
     private String saleTime;
     private BakeryVO bakeryVO;
 
+    private boolean isChecked = false;
+
     public int getFoodSeq() {
         return foodSeq;
     }
@@ -64,5 +66,13 @@ public class FoodVO {
 
     public void setBakeryVO(BakeryVO bakeryVO) {
         this.bakeryVO = bakeryVO;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }

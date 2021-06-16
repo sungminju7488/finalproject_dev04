@@ -47,7 +47,7 @@ public class AlarmListFragment extends Fragment {
     private Intent intent;
     private PendingIntent pendingIntent;
 
-    private Button reloadButton;
+    private Button deleteButton;
     private Button logoutButton;
 
     @Nullable
@@ -62,7 +62,7 @@ public class AlarmListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this, new ViewModelFactory()).get(AlarmListViewModel.class);
 
-        reloadButton = view.findViewById(R.id.reload_btn);
+        deleteButton = view.findViewById(R.id.delete_btn);
         logoutButton = view.findViewById(R.id.logout_btn);
 
         adapter = new AlarmListAdapter();
@@ -71,7 +71,7 @@ public class AlarmListFragment extends Fragment {
 
         updateAlarmList();
 
-        reloadButton.setOnClickListener(v -> {
+        deleteButton.setOnClickListener(v -> {
            updateAlarmList();
         });
         logoutButton.setOnClickListener(v -> {
