@@ -14,89 +14,89 @@ import com.dev4.sunbbang.model.BakeryVO;
 import com.dev4.sunbbang.model.MemberVO;
 import com.dev4.sunbbang.model.PageVO;
 import com.google.gson.Gson;
+
 @Async
 @RestController
 @RequestMapping("/article")
 public class ArticleController {
 	@Autowired
 	ArticleService articleService;
-	
+
 	@Autowired
 	Gson gson;
-	
+
 	@PostMapping("/article/articleList")
-	public Object articleList(@RequestBody BakeryVO bakeryVO,@RequestBody PageVO pageVO){
+	public Object articleList(@RequestBody BakeryVO bakeryVO, @RequestBody PageVO pageVO) {
 		pageVO.setPageSize(10);
-		Page<ArticleVO> mvo = articleService.articleList(bakeryVO,pageVO);
+		Page<ArticleVO> mvo = articleService.articleList(bakeryVO, pageVO);
 		return gson.toJson(mvo);
 	}
+
 	@PostMapping("/article/writeArticle")
-	public Boolean writeArticle(@RequestBody MemberVO memberVO,ArticleVO articleVO,BakeryVO bakeryVO, MultipartFile image,String imageName){
+	public Boolean writeArticle(MemberVO memberVO, ArticleVO articleVO, BakeryVO bakeryVO, MultipartFile image,
+			String imageName) {
 		try {
-		 articleService.writeArticle(memberVO, articleVO,bakeryVO, image, imageName);
-		 return true;
-		}catch (Exception e) {
+			articleService.writeArticle(memberVO, articleVO, bakeryVO, image, imageName);
+			return true;
+		} catch (Exception e) {
 			return false;
 		}
 	}
+
 	@PostMapping("/article/readArticle")
-	public Object readArticle(@RequestBody ArticleVO vo) {
-		ArticleVO mvo= articleService.readArticle(vo);
+	public Object readArticle(@RequestBody ArticleVO articleVO) {
+		ArticleVO mvo = articleService.readArticle(articleVO);
 		return gson.toJson(mvo);
 	}
+
 	@PostMapping("/article/modifyArticle")
-	public Boolean modifyArticle(@RequestBody ArticleVO vo) {
+	public Boolean modifyArticle(ArticleVO articelVO, BakeryVO bakeryVO, MultipartFile image, String imageName) {
 		try {
-			articleService.modifyArticle(vo);
-			 return true;
-			}catch (Exception e) {
-				return false;
-			}
-		 
+			articleService.modifyArticle(articelVO, bakeryVO, image, imageName);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
 	}
+
 	@PostMapping("/article/deleteArticle")
-	public Boolean deleteArticle(@RequestBody ArticleVO vo) {
+	public Boolean deleteArticle(@RequestBody ArticleVO articleVO) {
 		try {
-			articleService.deleteArticle(vo);
-			 return true;
-			}catch (Exception e) {
-				return false;
-			}
+			articleService.deleteArticle(articleVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
+
 	@PostMapping("/article/writeReply")
 	public Boolean writeReply(@RequestBody ArticleVO vo) {
 		try {
-			 articleService.writeReply(vo);
-			 return true;
-			}catch (Exception e) {
-				return false;
-			}
+			articleService.writeReply(vo);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
-	@PostMapping("/article/modifyReply")
-	public Boolean modifyReply(@RequestBody ArticleVO vo) {
-		try {
-			 articleService.modifyReply(vo);
-			 return true;
-			}catch (Exception e) {
-				return false;
-			}
-	}
+
 	@PostMapping("/article/deleteReply")
 	public Boolean deleteReply(@RequestBody ArticleVO vo) {
 		try {
-			 articleService.deleteReply(vo);
-			 return true;
-			}catch (Exception e) {
-				return false;
-			}
+			articleService.deleteReply(vo);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
-	@PostMapping("/article/reportArticle")
-	public Boolean reportArticle(@RequestBody ArticleVO vo) {
-		try {
-			articleService.reportArticle(vo);
-			 return true;
-			}catch (Exception e) {
-				return false;
-			}
-	}
+
+//	@PostMapping("/article/reportArticle")
+//	public Boolean reportArticle(@RequestBody ArticleVO vo) {
+//		try {
+//			articleService.reportArticle(vo);
+//			return true;
+//		} catch (Exception e) {
+//			return false;
+//		}
+//	}
 }
