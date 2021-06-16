@@ -146,6 +146,7 @@ public class BakeryController {
 
 	@PostMapping("/bakery/searchFood")
 	public Object searchFood(@RequestBody PageVO pageVO) {
+		pageVO.setPageSize(12);
 		return gson.toJson(bakeryService.searchFood(pageVO));
 	}
 
