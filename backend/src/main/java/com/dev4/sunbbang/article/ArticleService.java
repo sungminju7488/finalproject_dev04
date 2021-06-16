@@ -29,6 +29,9 @@ public class ArticleService {
 	BakeryRepository bakeryRepository;
 
 	public Page<ArticleVO> articleList(BakeryVO bakeryVO, PageVO pageVO) {
+		if (pageVO.getPageNo() > 0) {
+			pageVO.setPageNo(pageVO.getPageNo() - 1);
+		}
 		return articleRepository.findByBakeryVO(bakeryVO, PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize()))
 				.get();
 	}
