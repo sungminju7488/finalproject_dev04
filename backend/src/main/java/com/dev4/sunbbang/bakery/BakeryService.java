@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -133,8 +134,19 @@ public class BakeryService {
 	}
 
 	public Page<BakeryVO> searchBakery(PageVO pageVO) {
-		Page<BakeryVO> page = bakeryRepository.findByStoreNameContaining(pageVO.getKeyword(),
-				PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize())).get();
+		List<BakeryVO> list = bakeryRepository
+				.searchBakery(pageVO.getMyLatitude(), pageVO.getMyLongitude(), pageVO.getKeyword()).get();
+		List<BakeryVO> pagingList = new ArrayList<BakeryVO>();
+		int start = pageVO.getPageNo() * pageVO.getPageSize();
+		int end = ((pageVO.getPageNo() + 1) * pageVO.getPageSize()) - 1;
+		if (end > list.size() - 1) {
+			end = list.size() - 1;
+		}
+		for (int i = start; i <= end; i++) {
+			pagingList.add(list.get(i));
+		}
+		Page<BakeryVO> page = new PageImpl<BakeryVO>(pagingList,
+				PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize()), list.size());
 		return page;
 	}
 
