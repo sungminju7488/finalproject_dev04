@@ -138,10 +138,10 @@ public class BakeryService {
 		return page;
 	}
 
-	public void setFollow(AuthVO authVO, BakeryVO bakeryVO) {
-		String followSet = authVO.getFollowSet() + bakeryVO.getCopRegNum() + ",";
-		memberRepository.modifyToFollowSet(followSet, authVO.getMemberSeq());
-	}
+//	public void setFollow(AuthVO authVO, BakeryVO bakeryVO) {
+//		String followSet = authVO.getFollowSet() + bakeryVO.getCopRegNum() + ",";
+//		memberRepository.modifyToFollowSet(followSet, authVO.getMemberSeq());
+//	}
 
 	public List<FoodVO> menuViewList(BakeryVO bakeryVO) {
 		List<FoodVO> list = foodRepository.findByBakeryVO(bakeryVO).get();
@@ -149,8 +149,8 @@ public class BakeryService {
 	}
 
 	public void setAlarm(AuthVO authVO, FoodVO foodVO) {
-		String alarmSet = authVO.getAlarmSet() + foodVO.getFoodSeq() + ",";
-		memberRepository.modifyToAlarmSet(alarmSet, authVO.getMemberSeq());
+		MemberVO memberVO = memberRepository.findById(authVO.getMemberSeq()).get();
+		memberVO.setAlarmSet(memberVO.getAlarmSet() + foodVO.getFoodSeq() + ",");
 	}
 
 	public List<FoodVO> useAlarm(AuthVO authVO) {
@@ -174,17 +174,17 @@ public class BakeryService {
 		return mvo;
 	}
 
-	public MemberVO deleteAlarm(AuthVO authVO, FoodVO foodVO) {
-		StringTokenizer st = new StringTokenizer(authVO.getAlarmSet());
-		String alarmSet = "";
-		while (st.hasMoreTokens()) {
-			int token = Integer.parseInt(st.nextToken(","));
-			if (foodVO.getFoodSeq() != token)
-				alarmSet += token + ",";
-		}
-		memberRepository.modifyToAlarmSet(alarmSet, authVO.getMemberSeq());
-		return memberRepository.findById(authVO.getMemberSeq()).get();
-	}
+//	public MemberVO deleteAlarm(AuthVO authVO, FoodVO foodVO) {
+//		StringTokenizer st = new StringTokenizer(authVO.getAlarmSet());
+//		String alarmSet = "";
+//		while (st.hasMoreTokens()) {
+//			int token = Integer.parseInt(st.nextToken(","));
+//			if (foodVO.getFoodSeq() != token)
+//				alarmSet += token + ",";
+//		}
+//		memberRepository.modifyToAlarmSet(alarmSet, authVO.getMemberSeq());
+//		return memberRepository.findById(authVO.getMemberSeq()).get();
+//	}
 
 	public Page<FoodVO> searchFood(PageVO pageVO) {
 		Page<FoodVO> page = foodRepository
