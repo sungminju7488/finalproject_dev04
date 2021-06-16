@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Table } from "react-bootstrap";
+import { Form, Table } from "react-bootstrap";
 import "../css/BreadTimeModal.css";
 
 const BreadTimeModal = (props) => {
@@ -10,15 +10,21 @@ const BreadTimeModal = (props) => {
 
     const result = [];
     result.push(
-      <tr>
-        <th>빵 이름</th>
-        <th>나오는 시간</th>
-        <th>가격</th>
-      </tr>
+      <thead>
+        <tr>
+          <th>알림등록</th>
+          <th>빵 이름</th>
+          <th>나오는 시간</th>
+          <th>가격</th>
+        </tr>
+      </thead>
     );
     for (let i = 0; i < breadData.length; i++) {
       result.push(
         <tr>
+          <td>
+            <input inline type="checkbox" />
+          </td>
           <td>{breadData[i].foodName}</td>
           <td>{breadData[i].saleTime}</td>
           <td>{breadData[i].price}</td>
@@ -40,6 +46,23 @@ const BreadTimeModal = (props) => {
             </button>
           </header>
           <main>
+            {/* 회사정보 */}
+            <div>
+              전화번호: {bakeryData.storeContact}
+              <br />
+              주소:{" "}
+              {bakeryData.storeAddress2 !== null ||
+              bakeryData.storeAddress2 !== undefined
+                ? bakeryData.storeAddress1 + " " + bakeryData.storeAddress2
+                : bakeryData.storeAddress1}
+              <br />
+              영업시간: {bakeryData.businessHour}
+              <br />
+              정기휴무: {bakeryData.holiday}
+              <br />
+              <br />
+            </div>
+            {/* 빵나오는 시간 */}
             <Table striped bordered size="sm">
               {viewBreadTimeTable()}
             </Table>

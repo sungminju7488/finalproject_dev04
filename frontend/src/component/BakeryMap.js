@@ -1,29 +1,38 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "../css/Map.css";
 import Sidebar from "../subcomponent/Sidebar";
 import BreadTimeModal from "./BreadTimeModal";
+import ReactPaginate from "react-js-pagination";
+import auth from "../Logic/Auth";
+import { Link } from "react-router-dom";
 
 const { kakao } = window;
 
 //메서드 컴포넌트의 경우 맨 앞글자가 대문자여야함
 const BakeryMap = () => {
+  var [minusHeight, setMinusHeight] = useState(37);
+  var [page, setPage] = useState(0);
+  var [count, setCount] = useState(0);
+  var [perPage, setPerPage] = useState(0);
   var [modalOpen, setModalOpen] = useState(false);
-  var [bakeryData, setBakeryData] = useState(null);
+  var [bakeryData, setBakeryData] = useState([]);
+  const [bakeryListData, setBakeryListData] = useState([]);
   var [breadData, setBreadData] = useState(null);
   var [viewMap, setViewMap] = useState(null);
-  var [viewOverlay, setViewOverlay] = useState(null);
+  // 검색용 변수
+  var [keyword, setKeyword] = useState("");
   //브라우저 크기에 맞게 지도 크기를 변경할 수 있도록 변수설정
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
-    height: window.innerHeight,
+    height: window.innerHeight - minusHeight,
   });
 
   //브라우저 크기가 변경되면 windowSize변수 값도 변경하는 함수
   const handleResize = () => {
     setWindowSize({
       width: window.innerWidth,
-      height: window.innerHeight,
+      height: window.innerHeight - minusHeight,
     });
   };
 
@@ -31,7 +40,7 @@ const BakeryMap = () => {
   const openBreadTimeModal = (bakeryInfoData, breadInfoData) => {
     setBakeryData(bakeryInfoData);
     setBreadData(breadInfoData);
-    //console.log("Data storeName : " + data.storeName);
+    console.log("Data storeName : " + bakeryInfoData);
     setModalOpen(true);
   };
 
@@ -41,44 +50,44 @@ const BakeryMap = () => {
     setBakeryData(null);
   };
 
-  const handleFirstPage = async () => {
-    const pageNo = 0;
+  function handlePage(num) {
+    //보낼땐 0부터 시작하므로 -1;
+    const pageNo = num - 1;
 
-    axios
-      .post("/bakery/searchBakery", { pageNo })
-      .then((res) => {
-        init(res.data.content);
-      })
-      .catch((err) => alert(err.response.data.msg));
-  };
-  const handleSecondPage = async () => {
-    const pageNo = 1;
-
-    axios
-      .post("/bakery/searchBakery", { pageNo })
-      .then((res) => {
-        init(res.data.content);
-      })
-      .catch((err) => alert(err.response.data.msg));
-  };
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        const myLatitude = pos.coords.latitude;
+        const myLongitude = pos.coords.longitude;
+        axios
+          .post("/bakery/searchBakery", {
+            keyword,
+            pageNo,
+            myLatitude,
+            myLongitude,
+          })
+          .then((res) => {
+            console.log(res.data);
+            setPageData(
+              res.data.pageable.page,
+              res.data.total,
+              res.data.pageable.size
+            );
+            setBakeryListData(res.data.content);
+            setMapAndBakery(res.data.content);
+          })
+          .catch((err) => alert(err.response.data.msg));
+      });
+    }
+  }
 
   //class 컴포넌트 함수중 componentDidMount
   useEffect(() => {
     //브라우저 크기 리사이징 이벤트 등록
     window.addEventListener("resize", handleResize);
 
-    const pageNo = 0;
     //통신을 통해 빵집 데이터를 가져온다.
     //GET, DELETE | POST, PUT
-    axios
-      .post("/bakery/searchBakery", {})
-      .then(
-        (res) => {
-          init(res.data.content);
-        }
-        // alert(data[1].storeName);
-      )
-      .catch((err) => alert(err.response.data.msg));
+    handlePage(1);
 
     //마운트 종료시 이벤트 삭제
     return () => {
@@ -86,7 +95,14 @@ const BakeryMap = () => {
     };
   }, []);
 
-  function init(listData) {
+  function setPageData(_page, _count, _perPage) {
+    //받을땐 0부터 시작이므로 최소1이되도록 변경
+    setPage(_page + 1);
+    setCount(_count);
+    setPerPage(_perPage);
+  }
+
+  function setMapAndBakery(listData) {
     //GPS지원 여부 검사
     if (navigator.geolocation) {
       //GPS로 현재 위치의 경고와 위도를 받아옵니다.
@@ -105,7 +121,7 @@ const BakeryMap = () => {
           };
           //지도를 그립니다.
           const map = new kakao.maps.Map(container, options);
-          saveMap(map);
+          setViewMap(map);
 
           //마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다.
           const userLocPosition = new kakao.maps.LatLng(
@@ -185,24 +201,16 @@ const BakeryMap = () => {
         //베이커리 마커에 click이벤트를 등록(팝업 생성)
         kakao.maps.event.addListener(BakeryMarker, "click", function () {
           //베이커리 SEQ
-          const memberSeq = listData[i].memberSeq;
-          console.log("memberSeq : " + memberSeq);
+          const copRegNum = listData[i].copRegNum;
           //통신
-          axios.post("/bakery/menuViewList", { memberSeq }).then((res) => {
+          axios.post("/bakery/menuViewList", { copRegNum }).then((res) => {
+            console.log(listData[i]);
             openBreadTimeModal(listData[i], res.data);
           });
         });
       })(bakeryMarker, overlay);
     }
   }
-
-  const saveOverlay = (data) => {
-    setViewOverlay(data);
-  };
-
-  const saveMap = (data) => {
-    setViewMap(data);
-  };
 
   //임시 빵집 더미데이터
   function bakeryDummyData(listData) {
@@ -242,19 +250,223 @@ const BakeryMap = () => {
     return testData;
   }
 
-  //jQuery 처리
+  //로그인 상태에 따른 태그 구분
+  function ViewLogFunc(props) {
+    const isloggedIn = props.isloggedIn;
+    if (isloggedIn) return <LoginFunc />;
+    else return <NotLoginFunc />;
+  }
+
+  //로그인 상태일때 사용되는 태그 함수
+  function LoginFunc() {
+    const handleLogout = () => {
+      alert("로그아웃되셨습니다.");
+      auth.logout();
+      window.location.reload();
+    };
+
+    return (
+      <Fragment>
+        <GradeFunc grade={auth.grade} />
+        <li className="nav-item">
+          <Link to="/member/mypagepage" className="nav-link">
+            마이페이지
+          </Link>
+        </li>
+        <li className="nav-item">
+          <button className="nav-link logoutBtn" onClick={handleLogout}>
+            로그아웃
+          </button>
+        </li>
+      </Fragment>
+    );
+  }
+
+  //로그인이 아닐 때 사용되는 태그 함수
+  function NotLoginFunc() {
+    return (
+      <Fragment>
+        <li className="nav-item">
+          <Link to="/member/joinpage" className="nav-link">
+            회원가입
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/member/loginpage" className="nav-link">
+            로그인
+          </Link>
+        </li>
+      </Fragment>
+    );
+  }
+
+  //사용자 등급에 따른 태그 구분
+  function GradeFunc(props) {
+    const userGrade = props.grade;
+    if (userGrade === "0") return <MemberFunc />;
+    else if (userGrade === "1") return <IdentificationFunc />;
+  }
+
+  //일반 회원 태그
+  function MemberFunc() {
+    return (
+      <Fragment>
+        <li className="nav-item">
+          <span className="grade grade-member nav-link">일반회원</span>
+        </li>
+        <li className="nav-item">
+          <Link to="/member/changegradeconfirmpage" className="nav-link">
+            사업자전환
+          </Link>
+        </li>
+      </Fragment>
+    );
+  }
+
+  //일반 회원 태그
+  function IdentificationFunc() {
+    return (
+      <Fragment>
+        <li className="nav-item">
+          <span className="grade grade-identification nav-link">
+            사업자회원
+          </span>
+        </li>
+        <li className="nav-item">
+          <Link to="/bakery/myshoppage" className="nav-link">
+            내 매장정보
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/bakery/menulistpage" className="nav-link">
+            메뉴관리
+          </Link>
+        </li>
+      </Fragment>
+    );
+  }
+
+  //사이드에 빵집을 누르면 해당 정보로 이동
+  function sideBakeryBtnHandler(bakeryData) {
+    const copRegNum = bakeryData.copRegNum;
+
+    //TODO: 중앙잡기
+
+    //통신
+    axios.post("/bakery/menuViewList", { copRegNum }).then((res) => {
+      console.log(bakeryData);
+      openBreadTimeModal(bakeryData, res.data);
+    });
+  }
 
   return (
     <div>
-      <Sidebar width={300} height={"100vh"}>
-        <h1>테스트용</h1>
-        <h1>슬라이드바</h1>
-        <button type="button" onClick={() => handleFirstPage()}>
-          1
+      {/* 네비게이션 바 */}
+      <nav className="navbar navbar-expand-lg navbar-light bg-#f0e8d9">
+        <Link to="/" className="navbar-brand" id="BrandName">
+          선 빵
+        </Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <button type="button" onClick={() => handleSecondPage()}>
-          2
-        </button>
+
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item">
+              <Link to="/service/bakerymap" className="nav-link">
+                빵 집 찾기
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="#" className="nav-link">
+                빵 찾기
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="#" className="nav-link">
+                빵 종류
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="#" className="nav-link">
+                빵 집 추천
+              </Link>
+            </li>
+          </ul>
+
+          <ul className="navbar-nav">
+            <ViewLogFunc isloggedIn={auth.loggedIn} />
+          </ul>
+        </div>
+      </nav>
+      {/* 슬라이드바 */}
+      <Sidebar width={300} height={"70vh"}>
+        <span className="addressbox input-group mb-3">
+          <input
+            type="text"
+            id="search"
+            className="var"
+            onChange={(e) => {
+              setKeyword(e.target.value);
+            }}
+          />
+          <button
+            type="button"
+            id="post"
+            onClick={() => {
+              handlePage(1);
+            }}
+            style={{ margin: "1px", fontSize: "15px" }}
+          >
+            <span>검색</span>
+          </button>
+        </span>
+        {/* 베이커리 리스트 */}
+        {bakeryListData.map((obj, index) => (
+          <div key={index}>
+            <button
+              className="sliderBakeryBtn"
+              onClick={() => {
+                sideBakeryBtnHandler(obj);
+              }}
+            >
+              <div className="card" style={{ textAlign: "left" }}>
+                <h5 className="card-header">{obj.storeName}</h5>
+                <p className="card-text">
+                  주소:&nbsp;
+                  {obj.storeAddress2 === null || obj.storeAddress2 === undefined
+                    ? obj.storeAddress1
+                    : obj.storeAddress1 + " " + obj.storeAddress2}
+                  <br />
+                  전화번호:&nbsp;{obj.storeContact}
+                </p>
+              </div>
+            </button>
+          </div>
+        ))}
+        {/* 페이징 처리(react-js-pagination 라이브러리 사용) */}
+        <div style={{ width: "250px", margin: "0px auto" }}>
+          <ReactPaginate
+            activePage={page}
+            totalItemsCount={count}
+            itemsCountPerPage={perPage}
+            onChange={(event) => handlePage(event)}
+            innerClass="pagination"
+            itemClass="page-item"
+            activeClass="active"
+            nextPageText="다음"
+            prevPageText="이전"
+            className="d-flex justify-content-center"
+          />
+        </div>
       </Sidebar>
       <BreadTimeModal
         open={modalOpen}
@@ -267,7 +479,7 @@ const BakeryMap = () => {
         id="myMap"
         style={{
           width: windowSize.width,
-          height: windowSize.height,
+          height: windowSize.height - minusHeight,
         }}
       ></div>
     </div>

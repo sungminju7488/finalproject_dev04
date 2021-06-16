@@ -59,7 +59,10 @@ function MenuList({ memberSeq }) {
             {menuData !== null && menuData !== undefined
               ? menuData.map((obj, index) => (
                   <Card key={index} className="breadCard">
-                    <Card.Img variant="top" src={obj.foodPath} />
+                    <Card.Img
+                      variant="top"
+                      src={obj.foodPath + "?" + new Date().getTime()}
+                    />
                     <Card.Body>
                       <Card.Title>{obj.foodName}</Card.Title>
                       <Card.Text>
@@ -76,6 +79,7 @@ function MenuList({ memberSeq }) {
                             foodName: obj.foodName,
                             kind: obj.kind,
                             foodPath: obj.foodPath,
+                            foodSavePath: obj.foodSavePath,
                             price: obj.price,
                             saleTime: obj.saleTime,
                           },

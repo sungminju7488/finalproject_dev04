@@ -54,7 +54,10 @@ function MyShop() {
         </a>
       </div>
       {/* 매장 이미지 */}
-      <img src={bakeryPath} style={{ width: "100%", height: "460px" }} />
+      <img
+        src={bakeryPath + "?" + new Date().getTime()}
+        style={{ width: "100%", height: "460px" }}
+      />
       {/* copRegNum 부분*/}
       <h3 className="join_title">
         <label>사업자번호</label>

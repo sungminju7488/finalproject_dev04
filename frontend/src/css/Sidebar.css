@@ -1,6 +1,6 @@
 .side-bar {
   position: absolute;
-  height: 98% !important;
+  height: 92% !important;
   display: flex;
   flex: none;
   flex-direction: column;
@@ -23,4 +23,9 @@
   background-color: rgba(64, 194, 133, 0.693);
   border-color: rgba(64, 194, 133, 0.693);
   border-left: 0;
+}
+
+.sliderBakeryBtn {
+  border: 0;
+  outline: 0;
 }

@@ -30,6 +30,7 @@ function AddMenu() {
     formData.append("foodName", foodName);
     formData.append("kind", kind);
     formData.append("foodPath", foodPath);
+    formData.append("foodSavePath", foodPath);
     formData.append("price", price);
     formData.append("saleTime", saletime);
     formData.append("image", image);
