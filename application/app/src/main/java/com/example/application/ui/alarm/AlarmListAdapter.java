@@ -120,6 +120,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private ViewDataBinding binding;
 
         private CheckBox checkView;
+        private ImageView imageView;
 
         private FoodVO foodVO;
 
@@ -136,6 +137,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 } else {
                     foodVO.setChecked(true);
                 }
+
                 notifyDataSetChanged();
             });
         }
@@ -143,7 +145,6 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private void bind(FoodVO foodVO){
             this.foodVO = foodVO;
 
-            Log.i("hans", foodVO.getFoodName());
             binding.setVariable(BR.foodVO, foodVO);
             binding.executePendingBindings();
         }

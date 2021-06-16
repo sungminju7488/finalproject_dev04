@@ -24,6 +24,6 @@ public interface MemberRepository extends JpaRepository<MemberVO, Integer>{
 	public void modifyToFollowSet(String followSet, int MemberSeq);
 	
 	@Query(value = "UPDATE MEMBER SET ALARMSET=?1 WHERE MEMBERSEQ=?2", nativeQuery = true)
-	public void modifyToAlarmSet(String followSet, int MemberSeq);
+	public void modifyToAlarmSet(String alarmSet, int MemberSeq);
 
 }

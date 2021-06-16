@@ -168,6 +168,12 @@ public class BakeryService {
 		return returnList;
 	}
 
+	public MemberVO deleteAlarmApp(MemberVO memberVO) {
+		MemberVO mvo = memberRepository.findById(memberVO.getMemberSeq()).get();
+		mvo.setAlarmSet(memberVO.getAlarmSet());
+		return mvo;
+	}
+
 	public MemberVO deleteAlarm(AuthVO authVO, FoodVO foodVO) {
 		StringTokenizer st = new StringTokenizer(authVO.getAlarmSet());
 		String alarmSet = "";

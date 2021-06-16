@@ -27,11 +27,18 @@ public class AlarmListViewModel extends ViewModel {
     }
 
     public void useAlarm(MemberVO memberVO, Callback<List<FoodVO>> callback){
-        System.out.println(memberVO.getAlarmSet());
         appRepository.useAlarm(memberVO, callback);
     }
 
-    public void deleteAlarm(MemberVO memberVO, FoodVO foodVO, Callback<MemberVO> callback){
-        appRepository.deleteAlarm(memberVO, foodVO, callback);
+    public void deleteAlarm(MemberVO memberVO, Callback<MemberVO> callback){
+        List<FoodVO> list = alarmList.getValue();
+        String alarmSet = "";
+        for(FoodVO foodVO: list){
+            if(!foodVO.isChecked()){
+                alarmSet += foodVO.getFoodSeq()+",";
+            }
+        }
+        memberVO.setAlarmSet(alarmSet);
+        appRepository.deleteAlarm(memberVO, callback);
     }
 }

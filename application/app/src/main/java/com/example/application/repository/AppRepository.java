@@ -23,8 +23,8 @@ public class AppRepository {
         appService.useAlarm(memberVO).enqueue(callback);
     }
 
-    public void deleteAlarm(MemberVO memberVO, FoodVO foodVO, Callback<MemberVO> callback){
-        appService.deleteAlarm(memberVO, foodVO).enqueue(callback);
+    public void deleteAlarm(MemberVO memberVO, Callback<MemberVO> callback){
+        appService.deleteAlarm(memberVO).enqueue(callback);
     }
 
 
