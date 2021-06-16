@@ -64,9 +64,9 @@ public class AlarmListFragment extends Fragment {
 
         deleteButton = view.findViewById(R.id.delete_btn);
         logoutButton = view.findViewById(R.id.logout_btn);
+        RecyclerView recyclerView = view.findViewById(R.id.alarm_list);
 
         adapter = new AlarmListAdapter();
-        RecyclerView recyclerView = view.findViewById(R.id.alarm_list);
         recyclerView.setAdapter(adapter);
 
         updateAlarmList();
