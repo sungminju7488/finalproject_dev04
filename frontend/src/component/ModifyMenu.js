@@ -6,6 +6,7 @@ function ModifyMenu(props) {
   const [foodSeq, setFoodSeq] = useState(null);
   const [foodName, setFoodName] = useState("");
   const [kind, setKind] = useState("");
+  const [imagePath, setImagePath] = useState(null);
   const [foodPath, setFoodPath] = useState("");
   const [foodSavePath, setFoodSavePath] = useState("");
   const [price, setPrice] = useState("");
@@ -26,16 +27,11 @@ function ModifyMenu(props) {
 
   //이미지 변경
   const changeImageHandler = (event) => {
-    console.log("changeImageHandler");
     let reader = new FileReader();
-    console.log("reader");
     if (event.target.files[0]) {
-      console.log("event");
       reader.readAsDataURL(event.target.files[0]); //1.파일을 읽어 버퍼에 저장
       setImage(event.target.files[0]);
-      setFoodPath(URL.createObjectURL(event.target.files[0]));
-
-      console.log("file name : " + event.target.files[0].name);
+      setImagePath(URL.createObjectURL(event.target.files[0]));
       setImageName(event.target.files[0].name);
     }
   };
@@ -48,6 +44,7 @@ function ModifyMenu(props) {
     formData.append("foodSeq", foodSeq);
     formData.append("foodName", foodName);
     formData.append("kind", kind);
+    formData.append("foodPath", foodPath);
     formData.append("foodSavePath", foodSavePath);
     formData.append("price", price);
     formData.append("saleTime", saleTime);
@@ -171,7 +168,11 @@ function ModifyMenu(props) {
               }}
             >
               <img
-                src={foodPath}
+                src={
+                  imagePath === null
+                    ? foodPath + "?" + new Date().getTime()
+                    : imagePath
+                }
                 style={{
                   backgroundColor: "#efefef",
                   width: "300px",

@@ -103,6 +103,7 @@ function Main() {
 
   return (
     <div>
+      {/* 네비게이션 바 */}
       <nav className="navbar navbar-expand-lg navbar-light bg-#f0e8d9">
         <Link to="/" className="navbar-brand" id="BrandName">
           선 빵
