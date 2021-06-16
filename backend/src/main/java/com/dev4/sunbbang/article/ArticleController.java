@@ -17,7 +17,6 @@ import com.google.gson.Gson;
 
 @Async
 @RestController
-@RequestMapping("/article")
 public class ArticleController {
 	@Autowired
 	ArticleService articleService;
