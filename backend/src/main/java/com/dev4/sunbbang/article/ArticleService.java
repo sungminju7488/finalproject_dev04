@@ -41,7 +41,7 @@ public class ArticleService {
 		articleVO.setBakeryVO(bakeryVO);
 		articleVO.setWriterSeq(memberVO.getMemberSeq());
 		articleVO.setWriterNickname(memberVO.getNickName());
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		articleVO.setRegDate(format.format(new Date()));
 		articleRepository.save(articleVO);
 		if (!image.isEmpty()) {

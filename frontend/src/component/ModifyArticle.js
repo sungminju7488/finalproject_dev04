@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import auth from "../Logic/Auth";
 
-function ModifyArticle() {
+function ModifyArticle({ history }) {
   const [title, setTitle] = useState("");
   const [score, setScore] = useState(0);
   const [writerNickname, setWriterNickname] = useState("");
@@ -14,6 +14,7 @@ function ModifyArticle() {
   const [articleSavePath, setArticleSavePath] = useState("");
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState("");
+  const [regDate, setRegDate] = useState("");
 
   useEffect(() => {
     const articleSeq = sessionStorage.getItem("articleSeq");
@@ -33,6 +34,8 @@ function ModifyArticle() {
     setScore(articleData.score);
     setContent(articleData.content);
     setArticlePath(articleData.articlePath);
+    setArticleSavePath(articleData.articleSavePath);
+    setRegDate(articleData.regDate);
   }
 
   //로그인 상태에 따른 태그 구분
@@ -146,7 +149,8 @@ function ModifyArticle() {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append("copRegNum", sessionStorage.getItem("articleCopRegNum"));
+    formData.append("articleSeq", sessionStorage.getItem("articleSeq"));
+    formData.append("copRegNum", sessionStorage.getItem("ArticleCopRegNum"));
     formData.append("title", title);
     formData.append("score", score);
     formData.append("report", "0");
@@ -155,8 +159,9 @@ function ModifyArticle() {
     formData.append("articleSavePath", articleSavePath);
     formData.append("image", image);
     formData.append("imageName", imageName);
-    formData.append("nickName", auth.nickName);
+    formData.append("writerNickname", writerNickname);
     formData.append("memberSeq", auth.memberSeq);
+    formData.append("regDate", regDate);
 
     const config = {
       headers: { "Content-Type": "multipart/form-data" },
@@ -165,7 +170,12 @@ function ModifyArticle() {
     axios
       .post("/article/modifyArticle", formData, config)
       .then((res) => {
-        console.log(res.data);
+        if (res.data === true) {
+          alert("게시글을 수정하였습니다.");
+          history.goBack();
+        } else {
+          alert("게시글 수정에 실패하엿습니다.");
+        }
       })
       .catch((err) => alert(err.response.data.msg));
   };

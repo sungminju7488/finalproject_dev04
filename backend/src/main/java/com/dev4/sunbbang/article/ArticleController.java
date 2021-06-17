@@ -55,6 +55,7 @@ public class ArticleController {
 			articleService.modifyArticle(articelVO, bakeryVO, image, imageName);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 
@@ -66,6 +67,7 @@ public class ArticleController {
 			articleService.deleteArticle(articleVO);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

@@ -253,7 +253,7 @@ function ReadArticle() {
                 }}
               >
                 <img
-                  src={articlePath}
+                  src={articlePath + "?" + new Date().getTime()}
                   style={{
                     backgroundColor: "#efefef",
                     width: "300px",
