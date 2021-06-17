@@ -162,7 +162,11 @@ public class BakeryService {
 
 	public AuthVO setAlarm(AuthVO authVO, FoodVO foodVO) {
 		MemberVO memberVO = memberRepository.findById(authVO.getMemberSeq()).get();
-		memberVO.setAlarmSet(memberVO.getAlarmSet() + foodVO.getFoodSeq() + ",");
+		if(memberVO.getAlarmSet()!=null) {
+			memberVO.setAlarmSet(memberVO.getAlarmSet() + foodVO.getFoodSeq() + ",");
+		} else {
+			memberVO.setAlarmSet(foodVO.getFoodSeq() + ",");
+		}
 		return new AuthVO(memberVO);
 	}
 
