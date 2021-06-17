@@ -352,6 +352,9 @@ const BakeryMap = () => {
     const copRegNum = BakeryData.copRegNum;
 
     //TODO: 중앙잡기
+    viewMap.setCenter(
+      new kakao.maps.LatLng(BakeryData.latitude, BakeryData.longitude)
+    );
 
     //통신
     axios.post("/bakery/menuViewList", { copRegNum }).then((res) => {
