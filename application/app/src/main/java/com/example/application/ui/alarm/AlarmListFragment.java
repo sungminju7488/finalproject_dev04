@@ -16,10 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.application.R;
+import com.example.application.model.MemberVO;
 import com.example.application.ui.base.MainActivity;
 import com.example.application.ui.base.ViewModelFactory;
 import com.example.application.databinding.FragmentAlarmListBinding;
@@ -64,16 +64,38 @@ public class AlarmListFragment extends Fragment {
 
         deleteButton = view.findViewById(R.id.delete_btn);
         logoutButton = view.findViewById(R.id.logout_btn);
+        RecyclerView recyclerView = view.findViewById(R.id.alarm_list);
 
         adapter = new AlarmListAdapter();
-        RecyclerView recyclerView = view.findViewById(R.id.alarm_list);
         recyclerView.setAdapter(adapter);
 
         updateAlarmList();
 
         deleteButton.setOnClickListener(v -> {
-           updateAlarmList();
+
+            context = requireContext();
+            alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            intent = new Intent(context, AlarmReceiver.class);
+            for(FoodVO foodVO : list){
+            pendingIntent = PendingIntent.getBroadcast(context, foodVO.getFoodSeq(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmManager.cancel(pendingIntent);
+            }
+
+            viewModel.deleteAlarm(AuthVO.getInstance().getMemberVO(), new Callback<MemberVO>() {
+               @Override
+               public void onResponse(Call<MemberVO> call, Response<MemberVO> response) {
+                   MemberVO memberVO = response.body();
+                   AuthVO.getInstance().setMemberVO(memberVO);
+                   ((MainActivity) requireActivity()).navigateTo(new AlarmListFragment(), false);
+               }
+
+               @Override
+               public void onFailure(Call<MemberVO> call, Throwable t) {
+                   Toast.makeText(requireActivity().getApplicationContext(), "알람삭제: 통신 실패", Toast.LENGTH_SHORT).show();
+               }
+            });
         });
+
         logoutButton.setOnClickListener(v -> {
             AuthVO.getInstance().setMemberVO(null);
 

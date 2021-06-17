@@ -2,6 +2,8 @@ package com.dev4.sunbbang.article;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,7 +31,7 @@ public class ArticleService {
 	BakeryRepository bakeryRepository;
 
 	public Page<ArticleVO> articleList(BakeryVO bakeryVO, PageVO pageVO) {
-		return articleRepository.findByBakeryVO(bakeryVO, PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize()))
+		return articleRepository.findByBakeryVOOrderByArticleSeqDesc(bakeryVO, PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize()))
 				.get();
 	}
 
@@ -39,6 +41,8 @@ public class ArticleService {
 		articleVO.setBakeryVO(bakeryVO);
 		articleVO.setWriterSeq(memberVO.getMemberSeq());
 		articleVO.setWriterNickname(memberVO.getNickName());
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		articleVO.setRegDate(format.format(new Date()));
 		articleRepository.save(articleVO);
 		if (!image.isEmpty()) {
 			int articleSeq = articleRepository.getArticleSeq().get();

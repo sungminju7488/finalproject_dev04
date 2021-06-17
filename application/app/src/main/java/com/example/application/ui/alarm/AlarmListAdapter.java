@@ -74,12 +74,9 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         FoodVO foodVO = alarmList.get(position);
 
-        SimpleDateFormat time = new SimpleDateFormat("HH:mm");
         Date date = new Date();
-
         int hour = Integer.parseInt(foodVO.getSaleTime().substring(0,2));
         date.setHours(hour);
-
         int minute = Integer.parseInt(foodVO.getSaleTime().substring(3,5));
         date.setMinutes(minute);
 
@@ -87,6 +84,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             date.setDate(date.getDate()+1);
         }
 
+        SimpleDateFormat time = new SimpleDateFormat("HH:mm");
         time.format(date);
 
         context = holder.itemView.getContext();
@@ -120,6 +118,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private ViewDataBinding binding;
 
         private CheckBox checkView;
+        private ImageView imageView;
 
         private FoodVO foodVO;
 
@@ -136,6 +135,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 } else {
                     foodVO.setChecked(true);
                 }
+
                 notifyDataSetChanged();
             });
         }
@@ -143,7 +143,6 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private void bind(FoodVO foodVO){
             this.foodVO = foodVO;
 
-            Log.i("hans", foodVO.getFoodName());
             binding.setVariable(BR.foodVO, foodVO);
             binding.executePendingBindings();
         }

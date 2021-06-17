@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -133,15 +134,26 @@ public class BakeryService {
 	}
 
 	public Page<BakeryVO> searchBakery(PageVO pageVO) {
-		Page<BakeryVO> page = bakeryRepository.findByStoreNameContaining(pageVO.getKeyword(),
-				PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize())).get();
+		List<BakeryVO> list = bakeryRepository
+				.searchBakery(pageVO.getMyLatitude(), pageVO.getMyLongitude(), pageVO.getKeyword()).get();
+		List<BakeryVO> pagingList = new ArrayList<BakeryVO>();
+		int start = pageVO.getPageNo() * pageVO.getPageSize();
+		int end = ((pageVO.getPageNo() + 1) * pageVO.getPageSize()) - 1;
+		if (end > list.size() - 1) {
+			end = list.size() - 1;
+		}
+		for (int i = start; i <= end; i++) {
+			pagingList.add(list.get(i));
+		}
+		Page<BakeryVO> page = new PageImpl<BakeryVO>(pagingList,
+				PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize()), list.size());
 		return page;
 	}
 
-	public void setFollow(AuthVO authVO, BakeryVO bakeryVO) {
-		String followSet = authVO.getFollowSet() + bakeryVO.getCopRegNum() + ",";
-		memberRepository.modifyToFollowSet(followSet, authVO.getMemberSeq());
-	}
+//	public void setFollow(AuthVO authVO, BakeryVO bakeryVO) {
+//		String followSet = authVO.getFollowSet() + bakeryVO.getCopRegNum() + ",";
+//		memberRepository.modifyToFollowSet(followSet, authVO.getMemberSeq());
+//	}
 
 	public List<FoodVO> menuViewList(BakeryVO bakeryVO) {
 		List<FoodVO> list = foodRepository.findByBakeryVO(bakeryVO).get();
@@ -149,8 +161,8 @@ public class BakeryService {
 	}
 
 	public void setAlarm(AuthVO authVO, FoodVO foodVO) {
-		String alarmSet = authVO.getAlarmSet() + foodVO.getFoodSeq() + ",";
-		memberRepository.modifyToAlarmSet(alarmSet, authVO.getMemberSeq());
+		MemberVO memberVO = memberRepository.findById(authVO.getMemberSeq()).get();
+		memberVO.setAlarmSet(memberVO.getAlarmSet() + foodVO.getFoodSeq() + ",");
 	}
 
 	public List<FoodVO> useAlarm(AuthVO authVO) {
@@ -168,17 +180,23 @@ public class BakeryService {
 		return returnList;
 	}
 
-	public MemberVO deleteAlarm(AuthVO authVO, FoodVO foodVO) {
-		StringTokenizer st = new StringTokenizer(authVO.getAlarmSet());
-		String alarmSet = "";
-		while (st.hasMoreTokens()) {
-			int token = Integer.parseInt(st.nextToken(","));
-			if (foodVO.getFoodSeq() != token)
-				alarmSet += token + ",";
-		}
-		memberRepository.modifyToAlarmSet(alarmSet, authVO.getMemberSeq());
-		return memberRepository.findById(authVO.getMemberSeq()).get();
+	public MemberVO deleteAlarmApp(MemberVO memberVO) {
+		MemberVO mvo = memberRepository.findById(memberVO.getMemberSeq()).get();
+		mvo.setAlarmSet(memberVO.getAlarmSet());
+		return mvo;
 	}
+
+//	public MemberVO deleteAlarm(AuthVO authVO, FoodVO foodVO) {
+//		StringTokenizer st = new StringTokenizer(authVO.getAlarmSet());
+//		String alarmSet = "";
+//		while (st.hasMoreTokens()) {
+//			int token = Integer.parseInt(st.nextToken(","));
+//			if (foodVO.getFoodSeq() != token)
+//				alarmSet += token + ",";
+//		}
+//		memberRepository.modifyToAlarmSet(alarmSet, authVO.getMemberSeq());
+//		return memberRepository.findById(authVO.getMemberSeq()).get();
+//	}
 
 	public Page<FoodVO> searchFood(PageVO pageVO) {
 		Page<FoodVO> page = foodRepository
