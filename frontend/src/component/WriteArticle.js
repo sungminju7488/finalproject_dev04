@@ -193,7 +193,7 @@ function WriteArticle(props) {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="#" className="nav-link">
+                <Link to="/bakery/searchfoodpage" className="nav-link">
                   빵 찾기
                 </Link>
               </li>

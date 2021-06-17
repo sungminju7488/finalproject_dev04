@@ -20,6 +20,7 @@ import BakeryArticleList from "./component/BakeryArticleList";
 import WriteArticle from "./component/WriteArticle";
 import ReadArticle from "./component/ReadArticle";
 import ModifyArticle from "./component/ModifyArticle";
+import SearchFood from "./component/SearchFood";
 
 class App extends Component {
   constructor(props) {
@@ -57,6 +58,7 @@ class App extends Component {
           <Route exact path="/bakery/menulistpage" component={MenuList} />
           <Route exact path="/bakery/addmenupage" component={AddMenu} />
           <Route exact path="/bakery/modifymenupage" component={ModifyMenu} />
+          <Route exact path="/bakery/searchfoodpage" component={SearchFood} />
           {/* 게시판 */}
           <Route
             exact

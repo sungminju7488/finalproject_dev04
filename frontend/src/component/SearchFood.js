@@ -1,49 +1,69 @@
-import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import auth from "../Logic/Auth";
+import "../css/SearchFood.css";
+import { Table } from "react-bootstrap";
+import axios from "axios";
 import ReactPaginate from "react-js-pagination";
-import "../css/BakeryArticleList.css";
 
-function BakeryArticleList(props) {
-  const [articleStoreName, setArticleStoreName] = useState("");
-  var [page, setPage] = useState(0);
-  var [count, setCount] = useState(0);
-  var [perPage, setPerPage] = useState(0);
-  const [articleData, setArticleData] = useState([]);
+function SearchFood() {
+  const [keyword, setKeyword] = useState("");
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [perPage, setPerPage] = useState(0);
+  const [breadList, setBreadList] = useState([]);
+  const [alarmList, setAlarmList] = useState([]);
 
   useEffect(() => {
-    setArticleStoreName(sessionStorage.getItem("ArticleStoreName"));
+    updateAlarmList();
     handlePage(1);
   }, []);
 
+  function updateAlarmList() {
+    if (auth.alarmSet === null || auth.alarmSet === undefined) return;
+    let str = auth.alarmSet;
+    let tempAlarmList = [];
+    let strList = str.split(",");
+    for (let i = 0; i < strList.length; i++) {
+      if (
+        strList[i] !== null ||
+        strList[i] !== undefined ||
+        strList[i] !== ""
+      ) {
+        tempAlarmList.push(parseInt(strList[i]));
+      }
+    }
+    setAlarmList(tempAlarmList);
+  }
+
   function handlePage(No) {
     const formData = new FormData();
-    formData.append("copRegNum", sessionStorage.getItem("ArticleCopRegNum"));
+    formData.append("keyword", keyword);
     formData.append("pageNo", No - 1);
 
     axios
-      .post("/article/articleList", formData)
+      .post("/bakery/searchFood", formData)
       .then((res) => {
-        setArticleData(res.data.content);
-        settingPage(
+        console.log(res.data);
+        SettingPage(
           res.data.pageable.page,
           res.data.total,
           res.data.pageable.size
         );
+        setBreadList(res.data.content);
       })
       .catch((err) => alert(err.response.data.msg));
   }
 
-  function settingPage(_page, _total, _perPage) {
-    setPage(_page + 1);
-    setCount(_total);
+  function SettingPage(_page, _total, _perPage) {
+    setPage(_page);
+    setTotal(_total);
     setPerPage(_perPage);
   }
 
   //로그인 상태에 따른 태그 구분
-  function ViewLogFunc(props) {
-    const isloggedIn = props.isloggedIn;
+  function ViewLogFunc(Props) {
+    const isloggedIn = Props.isloggedIn;
     if (isloggedIn) return <LoginFunc />;
     else return <NotLoginFunc />;
   }
@@ -137,10 +157,39 @@ function BakeryArticleList(props) {
     );
   }
 
-  function readArticleHandler(Seq) {
-    sessionStorage.setItem("articleSeq", Seq);
-    window.location.href = "/article/readarticlepage";
-  }
+  const equalsNumber = (arr, value) => {
+    if (arr.length === 0) return false;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] === value) return true;
+    }
+    return false;
+  };
+
+  const handleOnChange = (event, Seq) => {
+    event.preventDefault();
+
+    console.log(alarmList);
+    console.log(Seq);
+    console.log(equalsNumber(alarmList, Seq));
+    if (equalsNumber(alarmList, Seq)) return alert("이미 등록되어있습니다.");
+
+    const formData = new FormData();
+    formData.append("foodSeq", Seq);
+    formData.append("memberSeq", auth.memberSeq);
+
+    axios
+      .post("/bakery/setAlarm", formData)
+      .then((res) => {
+        if (res.data !== null) {
+          auth.setAuth(res.data);
+          alert("해당 빵이 알람등록되었습니다.");
+          updateAlarmList();
+        } else {
+          alert("알람 등록에 실패하였습니다.");
+        }
+      })
+      .catch((err) => alert(err.response.data.msg));
+  };
 
   return (
     <div>
@@ -190,45 +239,71 @@ function BakeryArticleList(props) {
           </ul>
         </div>
       </nav>
-      <div id="content">
-        {/* header부분 */}
-        <div id="header">
-          <a href="/" target="_self" title="선빵 회원가입 페이지 보러가기">
-            <span id="sunbbang">{articleStoreName}</span>
-          </a>
-        </div>
-        {/* 게시판 구현 */}
-        <table className="table table-hover" style={{ textAlign: "center" }}>
+      {/* header부분 */}
+      <div id="header">
+        <a href="/" target="_self" title="선빵 회원가입 페이지 보러가기">
+          <span id="sunbbang">빵 검색</span>
+        </a>
+      </div>
+      <div id="SearchFoodContent">
+        {/* 검색 */}
+        <span className="addressbox input-group mb-3">
+          <input
+            type="text"
+            id="search"
+            className="var"
+            onChange={(e) => {
+              setKeyword(e.target.value);
+            }}
+          />
+          <button
+            type="button"
+            id="post"
+            onClick={() => {
+              handlePage(1);
+            }}
+          >
+            <span>검색</span>
+          </button>
+        </span>
+        {/* content */}
+        <Table style={{ textAlign: "center" }}>
           <thead>
             <tr>
-              <th style={{ textAlign: "center" }}>제목</th>
-              <th style={{ textAlign: "center" }}>작성자</th>
-              <th style={{ textAlign: "center" }}>작성일자</th>
-              <th style={{ textAlign: "center" }}>평점</th>
+              <th style={{ textAlign: "center" }}>이미지</th>
+              <th style={{ textAlign: "center" }}>제품명</th>
+              <th style={{ textAlign: "center" }}>판매처</th>
+              <th style={{ textAlign: "center" }}>판매 시작 시각</th>
+              <th style={{ textAlign: "center" }}>가격</th>
+              <th style={{ textAlign: "center" }}>알람등록</th>
             </tr>
           </thead>
           <tbody>
-            {articleData.map((obj, index) => (
+            {breadList.map((obj, index) => (
               <tr key={index}>
                 <td>
-                  <button
-                    className="ArticleListTitle"
-                    onClick={() => readArticleHandler(obj.articleSeq)}
-                  >
-                    {obj.title}
+                  <img
+                    src={obj.foodPath}
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </td>
+                <td>{obj.foodName}</td>
+                <td>{obj.bakeryVO.storeName}</td>
+                <td>{obj.saleTime}</td>
+                <td>{obj.price}</td>
+                <td>
+                  <button onClick={(e) => handleOnChange(e, obj.foodSeq)}>
+                    등록
                   </button>
                 </td>
-                <td>{obj.writerNickname}</td>
-                <td>{obj.regDate}</td>
-                <td>{obj.score}</td>
               </tr>
             ))}
           </tbody>
-        </table>
-        <div style={{ margin: "0 auto", width: "230px" }}>
+        </Table>
+        <div style={{ width: "250px", margin: "0 auto" }}>
           <ReactPaginate
             activePage={page}
-            totalItemsCount={count}
+            totalItemsCount={total}
             itemsCountPerPage={perPage}
             onChange={(event) => handlePage(event)}
             innerClass="pagination"
@@ -236,20 +311,12 @@ function BakeryArticleList(props) {
             activeClass="active"
             nextPageText="다음"
             prevPageText="이전"
-            // className="d-flex justify-content-center"
+            className="d-flex justify-content-center"
           />
-        </div>
-        {/* 리뷰작성 */}
-        <div className="btn_area">
-          <Link to="/article/writearticlepage">
-            <button id="btnJoin">
-              <span>리뷰작성</span>
-            </button>
-          </Link>
         </div>
       </div>
     </div>
   );
 }
 
-export default BakeryArticleList;
+export default SearchFood;

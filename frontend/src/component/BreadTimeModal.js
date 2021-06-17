@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Form, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../css/BreadTimeModal.css";
@@ -7,19 +7,45 @@ import auth from "../Logic/Auth";
 
 const BreadTimeModal = (props) => {
   const { open, close, bakeryData, breadData } = props;
-  const { alarmArr, setAlarmArr } = useState("");
+  const [alarmList, setAlarmList] = useState([]);
 
   useEffect(() => {
-    //접속시에 alarmSet을 가져온다.
-    // setAlarmArr(auth.alarmSet);
+    updateAlarmList();
   }, []);
+
+  function updateAlarmList() {
+    if (auth.alarmSet === null || auth.alarmSet === undefined) return;
+    let str = auth.alarmSet;
+    let tempAlarmList = [];
+    let strList = str.split(",");
+    for (let i = 0; i < strList.length; i++) {
+      if (
+        strList[i] !== null ||
+        strList[i] !== undefined ||
+        strList[i] !== ""
+      ) {
+        tempAlarmList.push(parseInt(strList[i]));
+      }
+    }
+    setAlarmList(tempAlarmList);
+  }
+
+  const equalsNumber = (arr, value) => {
+    if (arr.length === 0) return false;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] == value) return true;
+    }
+    return false;
+  };
 
   const handleOnChange = (event, Seq) => {
     event.preventDefault();
 
-    // let foodSeq = Seq;
-    // console.log("Seq : " + foodSeq);
-    // let memberSeq = auth.memberSeq;
+    console.log("alarmList : " + alarmList);
+    console.log("Seq : " + Seq);
+    console.log(equalsNumber(alarmList, Seq));
+
+    if (equalsNumber(alarmList, Seq)) return alert("이미 등록되어있습니다.");
 
     const formData = new FormData();
     formData.append("foodSeq", Seq);
@@ -30,7 +56,7 @@ const BreadTimeModal = (props) => {
       .then((res) => {
         if (res.data !== null) {
           auth.setAuth(res.data);
-          //window.location.reload();
+          updateAlarmList();
           alert("해당 빵이 알람등록되었습니다.");
         } else {
           alert("알람 등록에 실패하였습니다.");
@@ -57,12 +83,13 @@ const BreadTimeModal = (props) => {
       result.push(
         <tr>
           <td>
-            <input
-              inline
-              type="checkbox"
-              id={breadData[i].foodSeq}
-              onClick={(e) => handleOnChange(e, breadData[i].foodSeq)}
-            />
+            <button
+              onClick={(e) => {
+                handleOnChange(e, breadData[i].foodSeq);
+              }}
+            >
+              등록
+            </button>
           </td>
           <td>{breadData[i].foodName}</td>
           <td>{breadData[i].saleTime}</td>
@@ -77,6 +104,20 @@ const BreadTimeModal = (props) => {
     sessionStorage.setItem("ArticleCopRegNum", BakeryData.copRegNum);
     sessionStorage.setItem("ArticleStoreName", BakeryData.storeName);
     window.location.href = "/article/bakeryarticlelistpage";
+  }
+
+  function ViewBoardBtn(props) {
+    if (props.BoardSet === "T") {
+      return (
+        <Fragment>
+          <button onClick={() => MoveArticleListHandler(bakeryData)}>
+            리뷰 게시판
+          </button>
+        </Fragment>
+      );
+    } else {
+      return "";
+    }
   }
 
   return (
@@ -108,11 +149,7 @@ const BreadTimeModal = (props) => {
               <br />
             </div>
             {/* 게시판 버튼 */}
-            {bakeryData.boardSet === "T" ? (
-              <button onClick={() => MoveArticleListHandler(bakeryData)}>
-                리뷰 게시판
-              </button>
-            ) : null}
+            <ViewBoardBtn BoardSet={bakeryData.boardSet} />
             {/* 빵나오는 시간 */}
             <Table striped bordered size="sm">
               {viewBreadTimeTable()}
