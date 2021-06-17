@@ -15,11 +15,17 @@ public class AppRepository {
         this.appService = appService;
     }
 
+    public void loginMember(MemberVO memberVO, Callback<MemberVO> callback) {
+        appService.login(memberVO).enqueue(callback);
+    }
+
     public void useAlarm(MemberVO memberVO, Callback<List<FoodVO>> callback){
         appService.useAlarm(memberVO).enqueue(callback);
     }
 
-    public void deleteAlarm(MemberVO memberVO, FoodVO foodVO, Callback<MemberVO> callback){
-        appService.deleteAlarm(memberVO, foodVO).enqueue(callback);
+    public void deleteAlarm(MemberVO memberVO, Callback<MemberVO> callback){
+        appService.deleteAlarm(memberVO).enqueue(callback);
     }
+
+
 }

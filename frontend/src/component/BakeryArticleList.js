@@ -1,10 +1,46 @@
+import axios from "axios";
+import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import auth from "../Logic/Auth";
-import "../css/Navbar.css";
-import "../css/carousel.css";
-import { Fragment } from "react";
+import ReactPaginate from "react-js-pagination";
+import "../css/BakeryArticleList.css";
 
-function Main() {
+function BakeryArticleList(props) {
+  const [articleStoreName, setArticleStoreName] = useState("");
+  var [page, setPage] = useState(0);
+  var [count, setCount] = useState(0);
+  var [perPage, setPerPage] = useState(0);
+  const [articleData, setArticleData] = useState([]);
+
+  useEffect(() => {
+    setArticleStoreName(sessionStorage.getItem("ArticleStoreName"));
+    handlePage(1);
+  }, []);
+
+  function handlePage(No) {
+    const formData = new FormData();
+    formData.append("copRegNum", sessionStorage.getItem("ArticleCopRegNum"));
+    formData.append("pageNo", No - 1);
+
+    axios
+      .post("/article/articleList", formData)
+      .then((res) => {
+        setArticleData(res.data.content);
+        settingPage(
+          res.data.pageable.page,
+          res.data.total,
+          res.data.pageable.size
+        );
+      })
+      .catch((err) => alert(err.response.data.msg));
+  }
+
+  function settingPage(_page, _total, _perPage) {
+    setPage(_page + 1);
+    setCount(_total);
+    setPerPage(_perPage);
+  }
+
   //로그인 상태에 따른 태그 구분
   function ViewLogFunc(props) {
     const isloggedIn = props.isloggedIn;
@@ -56,8 +92,8 @@ function Main() {
   }
 
   //사용자 등급에 따른 태그 구분
-  function GradeFunc(props) {
-    const userGrade = props.grade;
+  function GradeFunc(Props) {
+    const userGrade = Props.grade;
     if (userGrade === "0") return <MemberFunc />;
     else if (userGrade === "1") return <IdentificationFunc />;
   }
@@ -99,6 +135,11 @@ function Main() {
         </li>
       </Fragment>
     );
+  }
+
+  function readArticleHandler(Seq) {
+    sessionStorage.setItem("articleSeq", Seq);
+    window.location.href = "/article/readarticlepage";
   }
 
   return (
@@ -149,79 +190,66 @@ function Main() {
           </ul>
         </div>
       </nav>
-      <div
-        id="carouselExampleIndicators"
-        className="carousel slide"
-        data-ride="carousel"
-      >
-        <ol className="carousel-indicators">
-          <li
-            data-target="#carouselExampleIndicators"
-            data-slide-to="0"
-            className="active"
-          ></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div className="carousel-inner">
-          <div className="carousel-item item1 active">
-            <div className="helper"></div>
-            <div className="intro">
-              <h2>근처 빵 집을 찾아보세요.</h2>
-              <h3>따끈따끈한 빵들이 기다리고 있습니다.</h3>
-              <a href="#" id="carouselLink">
-                빵 집 찾기
-              </a>
-            </div>
-          </div>
-          <div className="carousel-item item2">
-            <div className="helper"></div>
-            <div className="intro">
-              <h2>어떤 빵을 드시고 싶으신가요??</h2>
-              <h3>고객님이 원하시는 빵을 한눈에!</h3>
-              <a href="#" id="carouselLink">
-                빵 찾기
-              </a>
-            </div>
-          </div>
-          <div className="carousel-item item3">
-            <div className="helper"></div>
-            <div className="intro">
-              <h2>혹시 선택하기 힘드신가요??</h2>
-              <h3>고객님께 빵 집을 추천해드립니다.</h3>
-              <a href="#" id="carouselLink">
-                빵 집 추천
-              </a>
-            </div>
-          </div>
+      <div id="content">
+        {/* header부분 */}
+        <div id="header">
+          <a href="/" target="_self" title="선빵 회원가입 페이지 보러가기">
+            <span id="sunbbang">{articleStoreName}</span>
+          </a>
         </div>
-        <a
-          className="carousel-control-prev"
-          href="#carouselExampleIndicators"
-          role="button"
-          data-slide="prev"
-        >
-          <span
-            className="carousel-control-prev-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="sr-only">Previous</span>
-        </a>
-        <a
-          className="carousel-control-next"
-          href="#carouselExampleIndicators"
-          role="button"
-          data-slide="next"
-        >
-          <span
-            className="carousel-control-next-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="sr-only">Next</span>
-        </a>
+        {/* 게시판 구현 */}
+        <table className="table table-hover" style={{ textAlign: "center" }}>
+          <thead>
+            <tr>
+              <th style={{ textAlign: "center" }}>제목</th>
+              <th style={{ textAlign: "center" }}>작성자</th>
+              <th style={{ textAlign: "center" }}>작성일자</th>
+              <th style={{ textAlign: "center" }}>평점</th>
+            </tr>
+          </thead>
+          <tbody>
+            {articleData.map((obj, index) => (
+              <tr key={index}>
+                <td>
+                  <button
+                    className="ArticleListTitle"
+                    onClick={() => readArticleHandler(obj.articleSeq)}
+                  >
+                    {obj.title}
+                  </button>
+                </td>
+                <td>{obj.writerNickname}</td>
+                <td>{obj.regDate}</td>
+                <td>{obj.score}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div style={{ margin: "0 auto", width: "230px" }}>
+          <ReactPaginate
+            activePage={page}
+            totalItemsCount={count}
+            itemsCountPerPage={perPage}
+            onChange={(event) => handlePage(event)}
+            innerClass="pagination"
+            itemClass="page-item"
+            activeClass="active"
+            nextPageText="다음"
+            prevPageText="이전"
+            // className="d-flex justify-content-center"
+          />
+        </div>
+        {/* 리뷰작성 */}
+        <div className="btn_area">
+          <Link to="/article/writearticlepage">
+            <button id="btnJoin">
+              <span>리뷰작성</span>
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Main;
+export default BakeryArticleList;

@@ -22,8 +22,10 @@ const ChangeBakery = ({ history }) => {
   const [longitude, setLongitude] = useState("");
   const [boardSet, setBoardSet] = useState("");
   const [bakeryPath, setBakeryPath] = useState("");
+  const [bakerySavePath, setBakerySavePath] = useState("");
   const [image, setBakeryImage] = useState(null);
   const [imageName, setImageName] = useState("");
+  const [imagePath, setImagePath] = useState(null);
   //주소 Modal
   const [ModalOpen, setModalOpen] = useState(false);
 
@@ -42,6 +44,7 @@ const ChangeBakery = ({ history }) => {
     setBakeryPath(data.bakeryPath);
     setLatitude(data.latitude);
     setLongitude(data.longitude);
+    setBakerySavePath(data.bakerySavePath);
   };
 
   useEffect(() => {
@@ -71,6 +74,7 @@ const ChangeBakery = ({ history }) => {
     );
     formData.append("storeContact", storeContact);
     formData.append("bakeryPath", bakeryPath);
+    formData.append("bakerySavePath", bakerySavePath);
     formData.append("businessHour", businessHour);
     formData.append("holiday", holiday === undefined ? "" : holiday);
     formData.append(
@@ -154,7 +158,7 @@ const ChangeBakery = ({ history }) => {
     if (event.target.files[0]) {
       reader.readAsDataURL(event.target.files[0]); //1.파일을 읽어 버퍼에 저장
       setBakeryImage(event.target.files[0]);
-      setBakeryPath(URL.createObjectURL(event.target.files[0]));
+      setImagePath(URL.createObjectURL(event.target.files[0]));
       setImageName(event.target.files[0].name);
 
       console.log(event.target.files[0]);
@@ -388,7 +392,11 @@ const ChangeBakery = ({ history }) => {
               }}
             >
               <img
-                src={bakeryPath}
+                src={
+                  imagePath === null
+                    ? bakeryPath + "?" + new Date().getTime()
+                    : imagePath
+                }
                 style={{
                   backgroundColor: "#efefef",
                   width: "300px",

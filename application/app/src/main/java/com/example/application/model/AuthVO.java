@@ -4,6 +4,7 @@ public class AuthVO {
 
     private AuthVO() { }
     private static AuthVO instance;
+
     public static AuthVO getInstance() {
         if (instance == null) {
             instance = new AuthVO();

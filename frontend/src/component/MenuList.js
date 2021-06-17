@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import auth from "../Logic/Auth";
 import "../css/MenuList.css";
 
-function MenuList() {
+function MenuList({ memberSeq }) {
   const [menuTile, setMenuTile] = useState("");
   const [menuData, setMenuData] = useState([]);
 
@@ -21,7 +21,22 @@ function MenuList() {
   }, []);
 
   const addMenuHandler = () => {
-    window.location.href = "http://localhost:3000/bakery/addmanupage";
+    window.location.href = "http://localhost:3000/bakery/addmenupage";
+  };
+
+  const deleteMenuHandler = (Seq) => {
+    let foodSeq = Seq;
+    axios
+      .post("/bakery/deleteMenu", { foodSeq })
+      .then((res) => {
+        if (res.data === true) {
+          alert("해당 메뉴가 삭제되었습니다.");
+          window.location.reload();
+        } else {
+          alert("해당 메뉴 삭제에 실패했습니다.");
+        }
+      })
+      .catch((err) => alert(err.response.data.msg));
   };
 
   return (
@@ -44,7 +59,10 @@ function MenuList() {
             {menuData !== null && menuData !== undefined
               ? menuData.map((obj, index) => (
                   <Card key={index} className="breadCard">
-                    <Card.Img variant="top" src={obj.foodPath} />
+                    <Card.Img
+                      variant="top"
+                      src={obj.foodPath + "?" + new Date().getTime()}
+                    />
                     <Card.Body>
                       <Card.Title>{obj.foodName}</Card.Title>
                       <Card.Text>
@@ -55,12 +73,13 @@ function MenuList() {
                       </Card.Text>
                       <Link
                         to={{
-                          pathname: `/bakery/modifymenupage/${obj.foodSeq}`,
+                          pathname: `/bakery/modifymenupage`,
                           state: {
-                            foodSeq_s: obj.foodSeq,
+                            foodSeq: obj.foodSeq,
                             foodName: obj.foodName,
                             kind: obj.kind,
                             foodPath: obj.foodPath,
+                            foodSavePath: obj.foodSavePath,
                             price: obj.price,
                             saleTime: obj.saleTime,
                           },
@@ -69,9 +88,12 @@ function MenuList() {
                         <Button variant="primary">수정</Button>
                       </Link>
                       &emsp;
-                      <Link to="">
-                        <Button variant="danger">삭제</Button>
-                      </Link>
+                      <Button
+                        variant="danger"
+                        onClick={(event) => deleteMenuHandler(obj.foodSeq)}
+                      >
+                        삭제
+                      </Button>
                     </Card.Body>
                   </Card>
                 ))
@@ -82,5 +104,14 @@ function MenuList() {
     </div>
   );
 }
+
+// MenuList.propTypes = {
+//   foodSeq: propTypes.number.isRequired,
+//   foodName: propTypes.string.isRequired,
+//   kind: propTypes.string.isRequired,
+//   foodPath: propTypes.string.isRequired,
+//   price: propTypes.number.isRequired,
+//   saleTime: propTypes.string.isRequired,
+// };
 
 export default MenuList;

@@ -9,7 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -18,8 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.application.BR;
 import com.example.application.R;
+import com.example.application.model.AuthVO;
 import com.example.application.model.FoodVO;
 import com.example.application.model.MemberVO;
+import com.example.application.ui.base.MainActivity;
 import com.example.application.util.AlarmReceiver;
 
 import org.w3c.dom.Text;
@@ -37,8 +42,7 @@ import retrofit2.Response;
 public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int HEADER_POSITION = 0;
 
-//    private AlarmListViewModel viewModel;
-//    private MemberVO memberVO;
+    private AlarmListViewModel viewModel;
     private List<FoodVO> alarmList = new ArrayList<>();
 
     private Context context;
@@ -46,10 +50,11 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private Intent intent;
     private PendingIntent pendingIntent;
 
-//    public AlarmListAdapter(AlarmListViewModel viewModel, MemberVO memberVO) {
-//        this.viewModel = viewModel;
-//        this.memberVO = memberVO;
-//    }
+    public AlarmListAdapter() {}
+
+    public AlarmListAdapter(AlarmListViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
 
     public void setAlarmList(List<FoodVO> alarmList) {
         this.alarmList = alarmList;
@@ -68,18 +73,26 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         FoodVO foodVO = alarmList.get(position);
-        SimpleDateFormat time = new SimpleDateFormat("HH:mm");
+
         Date date = new Date();
-        date.setHours(Integer.parseInt(foodVO.getSaleTime().substring(0,2)));
-//        date.setHours(1);
-        date.setMinutes(Integer.parseInt(foodVO.getSaleTime().substring(3,5)));
-//        date.setMinutes(39);
+        int hour = Integer.parseInt(foodVO.getSaleTime().substring(0,2));
+        date.setHours(hour);
+        int minute = Integer.parseInt(foodVO.getSaleTime().substring(3,5));
+        date.setMinutes(minute);
+
+        if(date.getTime() <= new Date().getTime()){
+            date.setDate(date.getDate()+1);
+        }
+
+        SimpleDateFormat time = new SimpleDateFormat("HH:mm");
         time.format(date);
 
         context = holder.itemView.getContext();
         alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra("storeName", foodVO.getBakeryVO().getStoreName());
         intent.putExtra("foodName", foodVO.getFoodName());
+        intent.putExtra("saleTime", foodVO.getSaleTime());
         intent.putExtra("foodSeq", foodVO.getFoodSeq());
         pendingIntent = PendingIntent.getBroadcast(context, foodVO.getFoodSeq(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time.getCalendar().getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
@@ -104,7 +117,8 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         private ViewDataBinding binding;
 
-        private TextView delete_btn;
+        private CheckBox checkView;
+        private ImageView imageView;
 
         private FoodVO foodVO;
 
@@ -113,13 +127,22 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             this.binding = binding;
 
             View itemView = binding.getRoot();
-            delete_btn = itemView.findViewById(R.id.delete_btn);
+            checkView = itemView.findViewById(R.id.check_image_view);
+
+            checkView.setOnClickListener(v -> {
+                if(foodVO.isChecked()){
+                    foodVO.setChecked(false);
+                } else {
+                    foodVO.setChecked(true);
+                }
+
+                notifyDataSetChanged();
+            });
         }
 
         private void bind(FoodVO foodVO){
             this.foodVO = foodVO;
 
-            Log.i("hans", foodVO.getFoodName());
             binding.setVariable(BR.foodVO, foodVO);
             binding.executePendingBindings();
         }

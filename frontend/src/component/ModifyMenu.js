@@ -2,14 +2,28 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import auth from "../Logic/Auth";
 
-function ModifyMenu() {
-  const [foodName, setFoodName] = useState();
+function ModifyMenu(props) {
+  const [foodSeq, setFoodSeq] = useState(null);
+  const [foodName, setFoodName] = useState("");
   const [kind, setKind] = useState("");
+  const [imagePath, setImagePath] = useState(null);
   const [foodPath, setFoodPath] = useState("");
+  const [foodSavePath, setFoodSavePath] = useState("");
   const [price, setPrice] = useState("");
-  const [saletime, setSaleTime] = useState("");
+  const [saleTime, setSaleTime] = useState("");
   const [image, setImage] = useState("");
   const [imageName, setImageName] = useState("");
+
+  useEffect(() => {
+    const allData = props.location.state;
+    setFoodSeq(allData.foodSeq);
+    setFoodName(allData.foodName);
+    setKind(allData.kind);
+    setFoodPath(allData.foodPath);
+    setFoodSavePath(allData.foodSavePath);
+    setPrice(allData.price);
+    setSaleTime(allData.saleTime);
+  }, []);
 
   //이미지 변경
   const changeImageHandler = (event) => {
@@ -17,7 +31,7 @@ function ModifyMenu() {
     if (event.target.files[0]) {
       reader.readAsDataURL(event.target.files[0]); //1.파일을 읽어 버퍼에 저장
       setImage(event.target.files[0]);
-      setFoodPath(URL.createObjectURL(event.target.files[0]));
+      setImagePath(URL.createObjectURL(event.target.files[0]));
       setImageName(event.target.files[0].name);
     }
   };
@@ -27,11 +41,13 @@ function ModifyMenu() {
 
     const formData = new FormData();
     formData.append("copRegNum", auth.copRegNum);
+    formData.append("foodSeq", foodSeq);
     formData.append("foodName", foodName);
     formData.append("kind", kind);
     formData.append("foodPath", foodPath);
+    formData.append("foodSavePath", foodSavePath);
     formData.append("price", price);
-    formData.append("saleTime", saletime);
+    formData.append("saleTime", saleTime);
     formData.append("image", image);
     formData.append("imageName", imageName);
 
@@ -40,7 +56,7 @@ function ModifyMenu() {
     };
 
     axios
-      .post("/bakery/addMenu", formData, config)
+      .post("/bakery/modifyMenu", formData, config)
       .then((res) => {
         if (res.data === true) {
           alert(foodName + " 메뉴가 정상 등록되었습니다.");
@@ -70,6 +86,7 @@ function ModifyMenu() {
             id="foodName"
             className="var"
             maxLength="50"
+            value={foodName || ""}
             onChange={(e) => {
               setFoodName(e.target.value);
             }}
@@ -83,6 +100,7 @@ function ModifyMenu() {
           <select
             id="kind"
             className="sel"
+            value={kind || ""}
             onChange={(e) => {
               setKind(e.target.value);
             }}
@@ -105,6 +123,7 @@ function ModifyMenu() {
             type="time"
             id="saleTime"
             className="var"
+            value={saleTime || ""}
             onChange={(e) => {
               setSaleTime(e.target.value);
             }}
@@ -119,6 +138,7 @@ function ModifyMenu() {
             type="number"
             id="price"
             className="var"
+            value={price || ""}
             onChange={(e) => {
               setPrice(e.target.value);
             }}
@@ -133,6 +153,7 @@ function ModifyMenu() {
             <input
               type="file"
               id="image"
+              defaultValue={image || ""}
               onChange={changeImageHandler}
               className="var"
             />
@@ -147,7 +168,11 @@ function ModifyMenu() {
               }}
             >
               <img
-                src={foodPath}
+                src={
+                  imagePath === null
+                    ? foodPath + "?" + new Date().getTime()
+                    : imagePath
+                }
                 style={{
                   backgroundColor: "#efefef",
                   width: "300px",
@@ -161,7 +186,7 @@ function ModifyMenu() {
         </div>
         <div id="btn_area">
           <button type="submit" id="login_btn">
-            <span>메뉴등록</span>
+            <span>메뉴수정</span>
           </button>
         </div>
       </form>

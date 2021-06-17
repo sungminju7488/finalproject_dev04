@@ -12,11 +12,13 @@ import com.dev4.sunbbang.model.BakeryVO;
 
 public interface ArticleRepository extends JpaRepository<ArticleVO, String> {
 
-	Optional<ArticleVO> findByArticleSeq(int no);
+	public Optional<Page<ArticleVO>> findByBakeryVOOrderByArticleSeqDesc(BakeryVO bakeryVO, Pageable pagealbe);
 
-	@Query(value = "UPDATE ARTICLE SET CONTENT=?0",nativeQuery = true)
-	public void reportArticle(ArticleVO vo);
-	
-	@Query(value = "SELECT * FROM ARTICLE",nativeQuery = true)
-	public Page<ArticleVO> findList(BakeryVO bakeryVO,Pageable pageVO);
+	@Query(value = "SELECT ARTICLE_SEQ.CURRVAL FROM DUAL", nativeQuery = true)
+	public Optional<Integer> getArticleSeq();
+
+	Optional<ArticleVO> findByArticleSeq(int articleSeq);
+
+//	@Query(value = "UPDATE ARTICLE SET CONTENT=?0", nativeQuery = true)
+//	public void reportArticle(ArticleVO vo);
 }

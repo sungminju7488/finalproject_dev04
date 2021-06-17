@@ -1,0 +1,6 @@
+.ArticleListTitle,
+.ArticleListTitle:focus {
+  border: none;
+  background: none;
+  outline: none;
+}

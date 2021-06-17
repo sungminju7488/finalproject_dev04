@@ -1,5 +1,6 @@
 package com.dev4.sunbbang.member;
 
+import java.io.File;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.dev4.sunbbang.model.AuthVO;
 import com.dev4.sunbbang.model.MemberVO;
 import com.dev4.sunbbang.repository.BakeryRepository;
 import com.dev4.sunbbang.repository.MemberRepository;
+import com.dev4.sunbbang.util.Define;
 
 @Transactional
 @Service
@@ -58,6 +60,12 @@ public class MemberService {
 	}
 	
 	public void quit(MemberVO memberVO){
+		if(memberVO.getGrade().equals("1")) {
+			File file = new File(Define.IMAGE_SAVE_PATH
+					+ bakeryRepository.findByMemberVO(memberVO).get().getBakeryPath());
+			bakeryRepository.deleteByMemberVO(memberVO);
+			file.delete();
+		}
 		memberRepository.deleteByMemberIdAndPassword(memberVO.getMemberId(), memberVO.getPassword());
 	}
 }

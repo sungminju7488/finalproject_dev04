@@ -1,5 +1,9 @@
 package com.example.application.ui.alarm;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +16,17 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.application.R;
+import com.example.application.model.MemberVO;
+import com.example.application.ui.base.MainActivity;
 import com.example.application.ui.base.ViewModelFactory;
 import com.example.application.databinding.FragmentAlarmListBinding;
 import com.example.application.model.AuthVO;
 import com.example.application.model.FoodVO;
+import com.example.application.ui.login.LoginFragment;
+import com.example.application.util.AlarmReceiver;
 
 import java.util.List;
 
@@ -33,7 +40,14 @@ public class AlarmListFragment extends Fragment {
     private AlarmListViewModel viewModel;
     private AlarmListAdapter adapter;
 
-    private Button reloadButton;
+    private List<FoodVO> list;
+
+    private Context context;
+    private AlarmManager alarmManager;
+    private Intent intent;
+    private PendingIntent pendingIntent;
+
+    private Button deleteButton;
     private Button logoutButton;
 
     @Nullable
@@ -48,21 +62,52 @@ public class AlarmListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this, new ViewModelFactory()).get(AlarmListViewModel.class);
 
-        reloadButton = view.findViewById(R.id.reload_btn);
+        deleteButton = view.findViewById(R.id.delete_btn);
         logoutButton = view.findViewById(R.id.logout_btn);
+        RecyclerView recyclerView = view.findViewById(R.id.alarm_list);
 
         adapter = new AlarmListAdapter();
-        RecyclerView recyclerView = view.findViewById(R.id.alarm_list);
         recyclerView.setAdapter(adapter);
 
         updateAlarmList();
 
-        reloadButton.setOnClickListener(v -> {
-           updateAlarmList();
+        deleteButton.setOnClickListener(v -> {
+
+            context = requireContext();
+            alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            intent = new Intent(context, AlarmReceiver.class);
+            for(FoodVO foodVO : list){
+            pendingIntent = PendingIntent.getBroadcast(context, foodVO.getFoodSeq(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmManager.cancel(pendingIntent);
+            }
+
+            viewModel.deleteAlarm(AuthVO.getInstance().getMemberVO(), new Callback<MemberVO>() {
+               @Override
+               public void onResponse(Call<MemberVO> call, Response<MemberVO> response) {
+                   MemberVO memberVO = response.body();
+                   AuthVO.getInstance().setMemberVO(memberVO);
+                   ((MainActivity) requireActivity()).navigateTo(new AlarmListFragment(), false);
+               }
+
+               @Override
+               public void onFailure(Call<MemberVO> call, Throwable t) {
+                   Toast.makeText(requireActivity().getApplicationContext(), "알람삭제: 통신 실패", Toast.LENGTH_SHORT).show();
+               }
+            });
         });
+
         logoutButton.setOnClickListener(v -> {
             AuthVO.getInstance().setMemberVO(null);
-//            ((MainActivity) requireActivity()).navigateTo(new LoginFragment(), true);
+
+            context = requireContext();
+            alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            intent = new Intent(context, AlarmReceiver.class);
+            for(FoodVO foodVO : list){
+                pendingIntent = PendingIntent.getBroadcast(context, foodVO.getFoodSeq(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                alarmManager.cancel(pendingIntent);
+            }
+
+            ((MainActivity) requireActivity()).navigateTo(new LoginFragment(), false);
         });
     }
 
@@ -71,7 +116,8 @@ public class AlarmListFragment extends Fragment {
             @Override
             public void onResponse(Call<List<FoodVO>> call, Response<List<FoodVO>> response) {
                 if(response.isSuccessful()){
-                    viewModel.getAlarmList().setValue(response.body());
+                    list = response.body();
+                    viewModel.getAlarmList().setValue(list);
                     adapter.setAlarmList(viewModel.getAlarmList().getValue());
                 } else if (requireActivity() != null){
                     Toast.makeText(requireActivity().getApplicationContext(), "알람리스트: 불러오기 실패", Toast.LENGTH_SHORT).show();

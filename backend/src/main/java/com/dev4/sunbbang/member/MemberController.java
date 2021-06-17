@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev4.sunbbang.model.AuthVO;
@@ -28,52 +27,71 @@ public class MemberController {
 	@Autowired
 	Gson gson;
 	
-	@RequestMapping("/member/join")
+	@PostMapping("/member/join")
 	public boolean join(@RequestBody MemberVO memberVO) {
-		memberService.join(memberVO);
-		return true;
+		try {
+			memberService.join(memberVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
-	@RequestMapping("/member/login")
+	@PostMapping("/member/login")
 	public ResponseToken login(@RequestBody MemberVO memberVO) {
 		return new ResponseToken(jwtService.createToken(memberService.login(memberVO)));
 	}
+	
+	@PostMapping("/member/loginApp")
+	public Object loginApp(@RequestBody MemberVO memberVO) {
+		AuthVO authVO = memberService.login(memberVO); 
+		return gson.toJson(authVO);
+	}
 
-	@RequestMapping("/findId")
+	@PostMapping("/findId")
 	public Object findId(@RequestBody MemberVO memberVO) {
 		String mvo = memberService.findId(memberVO);
 		return gson.toJson(mvo);
 	}
 
-	@RequestMapping("/confirmPassword")
-	public void confirmPassword(@RequestBody MemberVO memberVO) {
-		 memberService.changePassword(memberVO);
+	@PostMapping("/findPassword")
+	public boolean findPassword(@RequestBody MemberVO memberVO) {
+		return memberService.findPassword(memberVO);
 	}
-	@RequestMapping("/changePassword")
-	public void changePassword(@RequestBody MemberVO memberVO) {
-		memberService.changePassword(memberVO);
+	@PostMapping("/changePassword")
+	public boolean changePassword(@RequestBody MemberVO memberVO) {
+		try {
+			memberService.changePassword(memberVO);
+			return true;
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
-	@RequestMapping("/myPage")
+	@PostMapping("/myPage")
 	public Object myPage(@RequestBody MemberVO memberVO) {
 		MemberVO mvo = memberService.myPage(memberVO).get();
 		return gson.toJson(mvo);
 	}
 
-	@RequestMapping("/changeMember")
-	public Boolean update(@RequestBody MemberVO memberVO) {
+	@PostMapping("/changeMember")
+	public boolean update(@RequestBody MemberVO memberVO) {
 		try {
-		memberService.changeMember(memberVO);
-		return true;
-		}catch(Exception e) {
-			e.printStackTrace();
+			memberService.changeMember(memberVO);
+			return true;
+		} catch (Exception e) {
 			return false;
 		}
 	}
 
-	@RequestMapping("/quit")
-	public void quit(@RequestBody MemberVO memberVO) {
-		memberService.quit(memberVO);
+	@PostMapping("/quit")
+	public boolean quit(@RequestBody MemberVO memberVO) {
+		try {
+			memberService.quit(memberVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
-
 }

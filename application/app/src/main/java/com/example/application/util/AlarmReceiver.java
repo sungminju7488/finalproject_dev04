@@ -24,7 +24,8 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         NotificationCompat.Builder notifyBuilder = new NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
                 .setContentTitle("선빵! 빵 판매 시각 알림")
-                .setContentText(intent.getExtras().get("foodName").toString()+"판매 시작합니다.")
+                .setContentText(intent.getExtras().get("storeName").toString()+" "+intent.getExtras().get("foodName").toString()+" "+
+                        intent.getExtras().get("saleTime").toString()+" 판매 시작합니다.")
                 .setSmallIcon(R.drawable.ic_food);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);

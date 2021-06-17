@@ -66,9 +66,24 @@ export default {
     sessionStorage.setItem("name", jwtDecode.name);
     sessionStorage.setItem("nickName", jwtDecode.nickName);
     sessionStorage.setItem("grade", jwtDecode.grade);
-    sessionStorage.setItem("alarmSet", jwtDecode.alarmSet);
-    sessionStorage.setItem("followSet", jwtDecode.followSet);
-    sessionStorage.setItem("copRegNum", jwtDecode.copRegNum);
+    sessionStorage.setItem(
+      "alarmSet",
+      jwtDecode.alarmSet === undefined || jwtDecode.alarmSet === null
+        ? ""
+        : jwtDecode.alarmSet
+    );
+    sessionStorage.setItem(
+      "followSet",
+      jwtDecode.followSet === undefined || jwtDecode.followSet === null
+        ? ""
+        : jwtDecode.followSet
+    );
+    sessionStorage.setItem(
+      "copRegNum",
+      jwtDecode.copRegNum === undefined || jwtDecode.copRegNum === null
+        ? ""
+        : jwtDecode.copRegNum
+    );
     sessionStorage.setItem("accessToken", data.accessToken);
     sessionStorage.setItem("refreshToken", data.refreshToken);
 

@@ -1,0 +1,14 @@
+.tvar {
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 51px;
+  background-color: #f0e8d9;
+  border: 1px solid #000;
+  font-size: 15px;
+  resize: none;
+}
+
+textarea {
+  font-family: Dotum, "돋움", Helvetica, sans-serif;
+}

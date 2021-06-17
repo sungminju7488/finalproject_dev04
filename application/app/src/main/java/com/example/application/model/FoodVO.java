@@ -8,7 +8,9 @@ public class FoodVO {
     private String foodPath;
     private int price;
     private String saleTime;
-    private int bakerySeq;
+    private BakeryVO bakeryVO;
+
+    private boolean isChecked = false;
 
     public int getFoodSeq() {
         return foodSeq;
@@ -32,10 +34,6 @@ public class FoodVO {
 
     public String getSaleTime() {
         return saleTime;
-    }
-
-    public int getBakerySeq() {
-        return bakerySeq;
     }
 
     public void setFoodSeq(int foodSeq) {
@@ -62,7 +60,19 @@ public class FoodVO {
         this.saleTime = saleTime;
     }
 
-    public void setBakerySeq(int bakerySeq) {
-        this.bakerySeq = bakerySeq;
+    public BakeryVO getBakeryVO() {
+        return bakeryVO;
+    }
+
+    public void setBakeryVO(BakeryVO bakeryVO) {
+        this.bakeryVO = bakeryVO;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }

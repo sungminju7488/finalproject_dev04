@@ -1,21 +1,18 @@
 package com.example.application.ui.base;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 import com.example.application.R;
-import com.example.application.model.AuthVO;
-import com.example.application.model.MemberVO;
-import com.example.application.ui.alarm.AlarmListFragment;
+import com.example.application.ui.login.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,15 +23,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MemberVO memberVO = new MemberVO();
-        memberVO.setMemberId("hans");
-        memberVO.setAlarmSet("6,2,3,4,5,");
-        memberVO.setMemberSeq(1);
-
-        AuthVO.getInstance().setMemberVO(memberVO);
+//        MemberVO memberVO = new MemberVO();
+//        memberVO.setMemberId("hans");
+//        memberVO.setAlarmSet("6,2,3,4,5,");
+//        memberVO.setMemberSeq(1);
+//
+//        AuthVO.getInstance().setMemberVO(memberVO);
 
         createNotificationChannel();
-        navigateTo(new AlarmListFragment(), false);
+        navigateTo(new LoginFragment(), false);
     }
 
     public void navigateTo(Fragment fragment, boolean addToBackStack){
@@ -48,6 +45,25 @@ public class MainActivity extends AppCompatActivity {
 
             transaction.commit();
         }
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(false);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public boolean moveTaskToBack(boolean b) {
+        return b;
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
+        super.onBackPressed();
+
     }
 
     public void createNotificationChannel(){
