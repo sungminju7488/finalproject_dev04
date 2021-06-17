@@ -6,6 +6,7 @@ import auth from "../Logic/Auth";
 function ReadArticle() {
   const [a_Seq, setA_Seq] = useState("");
   const [title, setTitle] = useState("");
+  const [writerSeq, setWriterSeq] = useState("");
   const [writerNickname, setWriterNickname] = useState("");
   const [score, setScore] = useState(0);
   const [content, setContent] = useState("");
@@ -27,6 +28,7 @@ function ReadArticle() {
 
   function init(articleData) {
     setTitle(articleData.title);
+    setWriterSeq(articleData.writerSeq);
     setWriterNickname(articleData.writerNickname);
     setScore(articleData.score);
     setContent(articleData.content);
@@ -128,6 +130,21 @@ function ReadArticle() {
       </Fragment>
     );
   }
+
+  const deleteArticleHandler = (event) => {
+    event.preventDefault();
+
+    let articleSeq = sessionStorage.getItem("articleSeq");
+
+    axios.post("/article/deleteArticle", { articleSeq }).then((res) => {
+      if (res.data === true) {
+        alert("게시글을 삭제하였습니다.");
+        window.location.href = "/article/bakeryarticlelistpage";
+      } else {
+        alert("게시글 삭제에 실패하였습니다.");
+      }
+    });
+  };
 
   return (
     <div>
@@ -266,13 +283,25 @@ function ReadArticle() {
             )}
           </div>
           {/* 글 작성 버튼 */}
-          <div id="btn_area">
-            <Link to="/article/modifyarticlepage">
-              <button type="button" id="login_btn">
-                <span>글 수정하기</span>
+          {writerSeq == auth.memberSeq ? (
+            <div id="btn_area">
+              <Link to="/article/modifyarticlepage">
+                <button type="button" id="login_btn">
+                  <span>글 수정하기</span>
+                </button>
+              </Link>
+              <button
+                type="button"
+                id="login_btn"
+                className="mt-3"
+                onClick={(e) => deleteArticleHandler(e)}
+              >
+                <span>글 삭제하기</span>
               </button>
-            </Link>
-          </div>
+            </div>
+          ) : (
+            ""
+          )}
         </form>
       </div>
     </div>
