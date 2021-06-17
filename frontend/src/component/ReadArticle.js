@@ -2,49 +2,40 @@ import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import auth from "../Logic/Auth";
-import ReactPaginate from "react-js-pagination";
-import "../css/BakeryArticleList.css";
 
-function BakeryArticleList(props) {
-  const [articleCopRegNum, setArticleCopRegNum] = useState("");
-  const [articleStoreName, setArticleStoreName] = useState("");
-  var [page, setPage] = useState(0);
-  var [count, setCount] = useState(0);
-  var [perPage, setPerPage] = useState(0);
-  const [articleData, setArticleData] = useState([]);
+function ReadArticle() {
+  const [a_Seq, setA_Seq] = useState("");
+  const [title, setTitle] = useState("");
+  const [writerNickname, setWriterNickname] = useState("");
+  const [score, setScore] = useState(0);
+  const [content, setContent] = useState("");
+  const [articlePath, setArticlePath] = useState("");
 
   useEffect(() => {
-    setArticleCopRegNum(sessionStorage.getItem("ArticleCopRegNum"));
-    setArticleStoreName(sessionStorage.getItem("ArticleStoreName"));
-    handlePage(1);
-  }, []);
+    setA_Seq(sessionStorage.getItem("articleSeq"));
 
-  function handlePage(No) {
-    let copRegNum = sessionStorage.getItem("ArticleCopRegNum");
-    let pageNo = No - 1;
+    let articleSeq = sessionStorage.getItem("articleSeq");
 
     axios
-      .post("/article/articleList", { copRegNum, pageNo })
+      .post("/article/readArticle", { articleSeq })
       .then((res) => {
-        setArticleData(res.data.content);
-        settingPage(
-          res.data.pageable.page,
-          res.data.total,
-          res.data.pageable.size
-        );
+        console.log(res.data);
+        init(res.data);
       })
       .catch((err) => alert(err.response.data.msg));
-  }
+  }, []);
 
-  function settingPage(_page, _total, _perPage) {
-    setPage(_page + 1);
-    setCount(_total);
-    setPerPage(_perPage);
+  function init(articleData) {
+    setTitle(articleData.title);
+    setWriterNickname(articleData.writerNickname);
+    setScore(articleData.score);
+    setContent(articleData.content);
+    setArticlePath(articleData.articlePath);
   }
 
   //로그인 상태에 따른 태그 구분
-  function ViewLogFunc(props) {
-    const isloggedIn = props.isloggedIn;
+  function ViewLogFunc(Props) {
+    const isloggedIn = Props.isloggedIn;
     if (isloggedIn) return <LoginFunc />;
     else return <NotLoginFunc />;
   }
@@ -138,11 +129,6 @@ function BakeryArticleList(props) {
     );
   }
 
-  function readArticleHandler(Seq) {
-    sessionStorage.setItem("articleSeq", Seq);
-    window.location.href = "/article/readarticlepage";
-  }
-
   return (
     <div>
       {/* 네비게이션 바 */}
@@ -195,60 +181,102 @@ function BakeryArticleList(props) {
         {/* header부분 */}
         <div id="header">
           <a href="/" target="_self" title="선빵 회원가입 페이지 보러가기">
-            <span id="sunbbang">{articleStoreName}</span>
+            <span id="sunbbang">글읽기</span>
           </a>
         </div>
-        {/* 게시판 구현 */}
-        <table className="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">제목</th>
-              <th scope="col">작성자</th>
-              <th scope="col">작성일자</th>
-              <th scope="col">평점</th>
-            </tr>
-          </thead>
-          <tbody>
-            {articleData.map((obj, index) => (
-              <tr key={index}>
-                <td>
-                  <button
-                    className="ArticleListTitle"
-                    onClick={() => readArticleHandler(obj.articleSeq)}
-                  >
-                    {obj.title}
-                  </button>
-                </td>
-                <td>{obj.writerNickname}</td>
-                <td>{obj.regDate}</td>
-                <td>{obj.score}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <ReactPaginate
-          activePage={page}
-          totalItemsCount={count}
-          itemsCountPerPage={perPage}
-          onChange={(event) => handlePage(event)}
-          innerClass="pagination"
-          itemClass="page-item"
-          activeClass="active"
-          nextPageText="다음"
-          prevPageText="이전"
-          className="d-flex justify-content-center"
-        />
-        {/* 리뷰작성 */}
-        <div className="btn_area">
-          <Link to="/article/writearticlepage">
-            <button id="btnJoin">
-              <span>리뷰작성</span>
-            </button>
-          </Link>
-        </div>
+        {/* 내용작성 */}
+        <form>
+          {/* 제목 */}
+          <h3 className="join_title">
+            <label>제목</label>
+          </h3>
+          <span className="box">
+            <input
+              type="text"
+              id="title"
+              className="var"
+              value={title || ""}
+              readOnly
+            ></input>
+          </span>
+          {/* 작성자 */}
+          <h3 className="join_title">
+            <label>작성자</label>
+          </h3>
+          <span className="box">
+            <input
+              type="text"
+              id="title"
+              className="var"
+              value={writerNickname || ""}
+              readOnly
+            ></input>
+          </span>
+          {/* 평점 */}
+          <h3 className="join_title">
+            <label>평점</label>
+          </h3>
+          <span className="box">
+            <input
+              type="number"
+              id="score"
+              className="var"
+              placeholder="1~5점으로 점수를 입력해주세요."
+              value={score || ""}
+              readOnly
+            ></input>
+          </span>
+          {/* 평가내용 */}
+          <h3 className="join_title">
+            <label>평가내용</label>
+          </h3>
+          <span className="">
+            <textarea
+              className="tvar"
+              rows="10"
+              value={content || ""}
+              readOnly
+            ></textarea>
+          </span>
+          {/*articlePath 부분 */}
+          <div>
+            <h3 className="join_title">
+              <label>등록한 사진</label>
+            </h3>
+            {articlePath ? (
+              <div
+                className="bakeryImage"
+                style={{
+                  width: "300px",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                }}
+              >
+                <img
+                  src={articlePath}
+                  style={{
+                    backgroundColor: "#efefef",
+                    width: "300px",
+                    height: "300px",
+                  }}
+                />
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+          {/* 글 작성 버튼 */}
+          <div id="btn_area">
+            <Link to="/article/modifyarticlepage">
+              <button type="button" id="login_btn">
+                <span>글 수정하기</span>
+              </button>
+            </Link>
+          </div>
+        </form>
       </div>
     </div>
   );
 }
 
-export default BakeryArticleList;
+export default ReadArticle;

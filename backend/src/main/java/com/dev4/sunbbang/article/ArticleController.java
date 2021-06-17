@@ -17,7 +17,6 @@ import com.google.gson.Gson;
 
 @Async
 @RestController
-@RequestMapping("/article")
 public class ArticleController {
 	@Autowired
 	ArticleService articleService;
@@ -26,7 +25,7 @@ public class ArticleController {
 	Gson gson;
 
 	@PostMapping("/article/articleList")
-	public Object articleList(@RequestBody BakeryVO bakeryVO, @RequestBody PageVO pageVO) {
+	public Object articleList(@RequestBody BakeryVO bakeryVO, PageVO pageVO) {
 		pageVO.setPageSize(10);
 		Page<ArticleVO> mvo = articleService.articleList(bakeryVO, pageVO);
 		return gson.toJson(mvo);
@@ -39,6 +38,7 @@ public class ArticleController {
 			articleService.writeArticle(memberVO, articleVO, bakeryVO, image, imageName);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

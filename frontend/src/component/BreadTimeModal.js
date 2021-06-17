@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Form, Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "../css/BreadTimeModal.css";
 
 const BreadTimeModal = (props) => {
@@ -34,6 +35,12 @@ const BreadTimeModal = (props) => {
     return result;
   };
 
+  function MoveArticleListHandler(BakeryData) {
+    sessionStorage.setItem("ArticleCopRegNum", BakeryData.copRegNum);
+    sessionStorage.setItem("ArticleStoreName", BakeryData.storeName);
+    window.location.href = "/article/bakeryarticlelistpage";
+  }
+
   return (
     //modal이 열릴 때 openModal 클래스가 생성된다.
     <div className={open ? "openModal modal" : "modal"}>
@@ -63,7 +70,11 @@ const BreadTimeModal = (props) => {
               <br />
             </div>
             {/* 게시판 버튼 */}
-            {bakeryData.boardSet === "T" ? <button>리뷰 게시판</button> : null}
+            {bakeryData.boardSet === "T" ? (
+              <button onClick={() => MoveArticleListHandler(bakeryData)}>
+                리뷰 게시판
+              </button>
+            ) : null}
             {/* 빵나오는 시간 */}
             <Table striped bordered size="sm">
               {viewBreadTimeTable()}

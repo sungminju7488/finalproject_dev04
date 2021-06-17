@@ -106,7 +106,7 @@ const BakeryMap = () => {
   function setMapAndBakery(listData) {
     //GPS지원 여부 검사
     if (navigator.geolocation) {
-      //GPS로 현재 위치의 경고와 위도를 받아옵니다.
+      //GPS로 현재 위치의 경도와 위도를 받아옵니다.
       navigator.geolocation.getCurrentPosition(
         //정상처리 되었다면 콜백함수를 실행합니다.(매개변수: 위치값)
         function (position) {
@@ -454,7 +454,7 @@ const BakeryMap = () => {
           </div>
         ))}
         {/* 페이징 처리(react-js-pagination 라이브러리 사용) */}
-        <div style={{ width: "250px", margin: "0px auto" }}>
+        <div style={{ width: "300px", margin: "0px auto" }}>
           <ReactPaginate
             activePage={page}
             totalItemsCount={count}
