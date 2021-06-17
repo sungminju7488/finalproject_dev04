@@ -6,7 +6,6 @@ import ReactPaginate from "react-js-pagination";
 import "../css/BakeryArticleList.css";
 
 function BakeryArticleList(props) {
-  const [articleCopRegNum, setArticleCopRegNum] = useState("");
   const [articleStoreName, setArticleStoreName] = useState("");
   var [page, setPage] = useState(0);
   var [count, setCount] = useState(0);
@@ -14,7 +13,6 @@ function BakeryArticleList(props) {
   const [articleData, setArticleData] = useState([]);
 
   useEffect(() => {
-    setArticleCopRegNum(sessionStorage.getItem("ArticleCopRegNum"));
     setArticleStoreName(sessionStorage.getItem("ArticleStoreName"));
     handlePage(1);
   }, []);
@@ -199,13 +197,13 @@ function BakeryArticleList(props) {
           </a>
         </div>
         {/* 게시판 구현 */}
-        <table className="table table-hover">
+        <table className="table table-hover" style={{ textAlign: "center" }}>
           <thead>
             <tr>
-              <th scope="col">제목</th>
-              <th scope="col">작성자</th>
-              <th scope="col">작성일자</th>
-              <th scope="col">평점</th>
+              <th style={{ textAlign: "center" }}>제목</th>
+              <th style={{ textAlign: "center" }}>작성자</th>
+              <th style={{ textAlign: "center" }}>작성일자</th>
+              <th style={{ textAlign: "center" }}>평점</th>
             </tr>
           </thead>
           <tbody>
@@ -226,18 +224,20 @@ function BakeryArticleList(props) {
             ))}
           </tbody>
         </table>
-        <ReactPaginate
-          activePage={page}
-          totalItemsCount={count}
-          itemsCountPerPage={perPage}
-          onChange={(event) => handlePage(event)}
-          innerClass="pagination"
-          itemClass="page-item"
-          activeClass="active"
-          nextPageText="다음"
-          prevPageText="이전"
-          className="d-flex justify-content-center"
-        />
+        <div style={{ margin: "0 auto", width: "230px" }}>
+          <ReactPaginate
+            activePage={page}
+            totalItemsCount={count}
+            itemsCountPerPage={perPage}
+            onChange={(event) => handlePage(event)}
+            innerClass="pagination"
+            itemClass="page-item"
+            activeClass="active"
+            nextPageText="다음"
+            prevPageText="이전"
+            // className="d-flex justify-content-center"
+          />
+        </div>
         {/* 리뷰작성 */}
         <div className="btn_area">
           <Link to="/article/writearticlepage">
