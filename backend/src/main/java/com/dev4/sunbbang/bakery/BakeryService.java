@@ -160,9 +160,10 @@ public class BakeryService {
 		return list;
 	}
 
-	public void setAlarm(AuthVO authVO, FoodVO foodVO) {
+	public AuthVO setAlarm(AuthVO authVO, FoodVO foodVO) {
 		MemberVO memberVO = memberRepository.findById(authVO.getMemberSeq()).get();
 		memberVO.setAlarmSet(memberVO.getAlarmSet() + foodVO.getFoodSeq() + ",");
+		return new AuthVO(memberVO);
 	}
 
 	public List<FoodVO> useAlarm(AuthVO authVO) {

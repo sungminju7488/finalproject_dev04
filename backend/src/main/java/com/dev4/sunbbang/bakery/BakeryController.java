@@ -118,13 +118,8 @@ public class BakeryController {
 	}
 
 	@PostMapping("/bakery/setAlarm")
-	public boolean setAlarm(@RequestBody AuthVO authVO, @RequestBody FoodVO foodVO) {
-		try {
-			bakeryService.setAlarm(authVO, foodVO);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
+	public ResponseToken setAlarm(@RequestBody AuthVO authVO, @RequestBody FoodVO foodVO) {
+		return new ResponseToken(jwtService.createToken(bakeryService.setAlarm(authVO, foodVO)));
 	}
 
 	@PostMapping("/bakery/useAlarm")
