@@ -31,7 +31,7 @@ public class ArticleService {
 	BakeryRepository bakeryRepository;
 
 	public Page<ArticleVO> articleList(BakeryVO bakeryVO, PageVO pageVO) {
-		return articleRepository.findByBakeryVO(bakeryVO, PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize()))
+		return articleRepository.findByBakeryVOOrderByArticleSeqDesc(bakeryVO, PageRequest.of(pageVO.getPageNo(), pageVO.getPageSize()))
 				.get();
 	}
 

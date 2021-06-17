@@ -12,7 +12,7 @@ import com.dev4.sunbbang.model.BakeryVO;
 
 public interface ArticleRepository extends JpaRepository<ArticleVO, String> {
 
-	public Optional<Page<ArticleVO>> findByBakeryVO(BakeryVO bakeryVO, Pageable pagealbe);
+	public Optional<Page<ArticleVO>> findByBakeryVOOrderByArticleSeqDesc(BakeryVO bakeryVO, Pageable pagealbe);
 
 	@Query(value = "SELECT ARTICLE_SEQ.CURRVAL FROM DUAL", nativeQuery = true)
 	public Optional<Integer> getArticleSeq();
