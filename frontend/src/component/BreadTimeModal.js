@@ -1,10 +1,31 @@
+import axios from "axios";
 import { useEffect } from "react";
 import { Form, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../css/BreadTimeModal.css";
+import auth from "../Logic/Auth";
 
 const BreadTimeModal = (props) => {
   const { open, close, bakeryData, breadData } = props;
+
+  const regAlarmSet = (event, Seq) => {
+    event.preventDefault();
+
+    let foodSeq = Seq;
+    let memberSeq = auth.memberSeq;
+
+    axios
+      .post("/bakery/setAlarm", { foodSeq, memberSeq })
+      .then((res) => {
+        if (res.data === true) {
+          alert("해당 빵이 알람등록되었습니다.");
+          window.location.reload();
+        } else {
+          alert("알람 등록에 실패하였습니다.");
+        }
+      })
+      .catch((err) => alert(err.response.data.msg));
+  };
 
   const viewBreadTimeTable = () => {
     if (!open) return;
@@ -24,7 +45,11 @@ const BreadTimeModal = (props) => {
       result.push(
         <tr>
           <td>
-            <input inline type="checkbox" />
+            <input
+              inline
+              type="checkbox"
+              onClick={(e) => regAlarmSet(e, breadData[i].foodSeq)}
+            />
           </td>
           <td>{breadData[i].foodName}</td>
           <td>{breadData[i].saleTime}</td>
