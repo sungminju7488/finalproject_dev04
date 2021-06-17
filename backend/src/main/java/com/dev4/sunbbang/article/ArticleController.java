@@ -25,7 +25,7 @@ public class ArticleController {
 	Gson gson;
 
 	@PostMapping("/article/articleList")
-	public Object articleList(@RequestBody BakeryVO bakeryVO, PageVO pageVO) {
+	public Object articleList(BakeryVO bakeryVO, PageVO pageVO) {
 		pageVO.setPageSize(10);
 		Page<ArticleVO> mvo = articleService.articleList(bakeryVO, pageVO);
 		return gson.toJson(mvo);

@@ -18,11 +18,12 @@ function BakeryArticleList(props) {
   }, []);
 
   function handlePage(No) {
-    let copRegNum = sessionStorage.getItem("ArticleCopRegNum");
-    let pageNo = No - 1;
+    const formData = new FormData();
+    formData.append("copRegNum", sessionStorage.getItem("ArticleCopRegNum"));
+    formData.append("pageNo", No - 1);
 
     axios
-      .post("/article/articleList", { copRegNum, pageNo })
+      .post("/article/articleList", formData)
       .then((res) => {
         setArticleData(res.data.content);
         settingPage(

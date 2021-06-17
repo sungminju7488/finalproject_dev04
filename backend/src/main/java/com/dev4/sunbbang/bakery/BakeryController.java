@@ -118,8 +118,7 @@ public class BakeryController {
 	}
 
 	@PostMapping("/bakery/setAlarm")
-
-	public ResponseToken setAlarm(@RequestBody AuthVO authVO, FoodVO foodVO) {
+	public ResponseToken setAlarm(AuthVO authVO, FoodVO foodVO, MultipartFile image) {
 		return new ResponseToken(jwtService.createToken(bakeryService.setAlarm(authVO, foodVO)));
 	}
 

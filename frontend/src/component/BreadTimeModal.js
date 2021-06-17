@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Form, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../css/BreadTimeModal.css";
@@ -7,19 +7,31 @@ import auth from "../Logic/Auth";
 
 const BreadTimeModal = (props) => {
   const { open, close, bakeryData, breadData } = props;
+  const { alarmArr, setAlarmArr } = useState("");
 
-  const regAlarmSet = (event, Seq) => {
+  useEffect(() => {
+    //접속시에 alarmSet을 가져온다.
+    // setAlarmArr(auth.alarmSet);
+  }, []);
+
+  const handleOnChange = (event, Seq) => {
     event.preventDefault();
 
-    let foodSeq = Seq;
-    let memberSeq = auth.memberSeq;
+    // let foodSeq = Seq;
+    // console.log("Seq : " + foodSeq);
+    // let memberSeq = auth.memberSeq;
+
+    const formData = new FormData();
+    formData.append("foodSeq", Seq);
+    formData.append("memberSeq", auth.memberSeq);
 
     axios
-      .post("/bakery/setAlarm", { foodSeq, memberSeq })
+      .post("/bakery/setAlarm", formData)
       .then((res) => {
-        if (res.data === true) {
+        if (res.data !== null) {
+          auth.setAuth(res.data);
+          //window.location.reload();
           alert("해당 빵이 알람등록되었습니다.");
-          window.location.reload();
         } else {
           alert("알람 등록에 실패하였습니다.");
         }
@@ -48,7 +60,8 @@ const BreadTimeModal = (props) => {
             <input
               inline
               type="checkbox"
-              onClick={(e) => regAlarmSet(e, breadData[i].foodSeq)}
+              id={breadData[i].foodSeq}
+              onClick={(e) => handleOnChange(e, breadData[i].foodSeq)}
             />
           </td>
           <td>{breadData[i].foodName}</td>
