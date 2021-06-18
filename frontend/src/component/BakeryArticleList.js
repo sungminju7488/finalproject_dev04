@@ -190,7 +190,7 @@ function BakeryArticleList(props) {
           </ul>
         </div>
       </nav>
-      <div id="content">
+      <div id="content" style={{ width: "700px" }}>
         {/* header부분 */}
         <div id="header">
           <a href="/" target="_self" title="선빵 회원가입 페이지 보러가기">

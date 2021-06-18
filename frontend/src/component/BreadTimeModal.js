@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
-import { Form, Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Table } from "react-bootstrap";
 import "../css/BreadTimeModal.css";
 import auth from "../Logic/Auth";
 
@@ -72,17 +71,24 @@ const BreadTimeModal = (props) => {
     result.push(
       <thead>
         <tr>
-          <th>알림등록</th>
-          <th>빵 이름</th>
-          <th>나오는 시간</th>
-          <th>가격</th>
+          <th style={{ textAlign: "center" }}>이미지</th>
+          <th style={{ textAlign: "center" }}>알림등록</th>
+          <th style={{ textAlign: "center" }}>빵 이름</th>
+          <th style={{ textAlign: "center" }}>나오는 시간</th>
+          <th style={{ textAlign: "center" }}>가격</th>
         </tr>
       </thead>
     );
     for (let i = 0; i < breadData.length; i++) {
       result.push(
         <tr>
-          <td>
+          <td style={{ textAlignLast: "center" }}>
+            <img
+              src={breadData[i].foodPath}
+              style={{ width: "30px", height: "30px" }}
+            />
+          </td>
+          <td style={{ textAlignLast: "center" }}>
             <button
               onClick={(e) => {
                 handleOnChange(e, breadData[i].foodSeq);
@@ -151,7 +157,7 @@ const BreadTimeModal = (props) => {
             {/* 게시판 버튼 */}
             <ViewBoardBtn BoardSet={bakeryData.boardSet} />
             {/* 빵나오는 시간 */}
-            <Table striped bordered size="sm">
+            <Table striped bordered size="sm" style={{ textAlign: "center" }}>
               {viewBreadTimeTable()}
             </Table>
           </main>

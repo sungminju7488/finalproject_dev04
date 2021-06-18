@@ -115,10 +115,8 @@ const BakeryMap = () => {
           //중심 위치를 GPS로 가져온 값으로 세팅합니다.
           const options = {
             center: new kakao.maps.LatLng(
-              // position.coords.latitude,
-              // position.coords.longitude
-              37.478929,
-              126.87904
+              position.coords.latitude,
+              position.coords.longitude
             ),
             level: 3,
           };
@@ -128,10 +126,8 @@ const BakeryMap = () => {
 
           //마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다.
           const userLocPosition = new kakao.maps.LatLng(
-            // position.coords.latitude,
-            // position.coords.longitude
-            37.478929,
-            126.87904
+            position.coords.latitude,
+            position.coords.longitude
           );
 
           //사용자의 마커를 표시한다.
@@ -217,7 +213,7 @@ const BakeryMap = () => {
     }
   }
 
-  //임시 빵집 더미데이터
+  //빵집 데이터 가공
   function bakeryLoadData(listData) {
     var BakeryListData = [];
 

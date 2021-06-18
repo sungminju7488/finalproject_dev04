@@ -15,6 +15,8 @@ function MyPage() {
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
   const [grade, setGrade] = useState("");
+  // 알림 리스트
+  const [breadAlarmList, setBreadAlarmList] = useState([]);
 
   const init = (data) => {
     setMemberId(data.memberId);
@@ -33,17 +35,26 @@ function MyPage() {
 
   useEffect(() => {
     const memberId = auth.memberId;
+    const alarmSet = auth.alarmSet;
 
     axios
       .post("/myPage", { memberId })
       .then((res) => {
         init(res.data);
+        if (res.data.alarmSet === null || res.data.alarmSet === undefined)
+          return;
+        axios
+          .post("/bakery/useAlarm", { alarmSet })
+          .then((f_res) => {
+            setBreadAlarmList(f_res.data);
+          })
+          .catch((f_err) => alert(f_err.response.data.msg));
       })
       .catch((err) => alert(err.response.data.msg));
   }, []);
 
   return (
-    <div id="content">
+    <div id="content" style={{ width: "600px" }}>
       <div id="header">
         <a href="/" target="_self" title="선빵 메인 페이지 보러가기">
           <span id="sunbbang">마이페이지</span>
@@ -179,10 +190,47 @@ function MyPage() {
         ></input>
       </span>
 
+      {/* 알림 리스트 */}
+      <h3 className="mypage_title">
+        <label>알림 리스트</label>
+      </h3>
+      <table className="table">
+        <thead>
+          <tr style={{ textAlignLast: "center" }}>
+            <th>알림해제</th>
+            <th>빵이름</th>
+            <th>가게이름</th>
+            <th>나오는시간</th>
+            <th>가격</th>
+          </tr>
+        </thead>
+        <tbody>
+          {breadAlarmList.map((obj, index) => (
+            <tr key={index} style={{ textAlignLast: "center" }}>
+              <td>
+                <img
+                  src={obj.foodPath}
+                  style={{ width: "50px", height: "50px" }}
+                />
+              </td>
+              <td>{obj.foodName}</td>
+              <td>{obj.bakeryVO.storeName}</td>
+              <td>{obj.saleTime}</td>
+              <td>{obj.price}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
       <div id="btn_area">
         <Link to="/member/changememberpage">
           <button type="button" id="mypage_btn">
             <span>정보 변경하기</span>
+          </button>
+        </Link>
+        <Link to="/member/quitpage">
+          <button type="button" id="mypage_btn">
+            <span>회원탈퇴</span>
           </button>
         </Link>
       </div>

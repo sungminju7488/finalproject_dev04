@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import auth from "../Logic/Auth";
 import "../css/Login.css";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [memberId, setMemberId] = useState("");
@@ -61,6 +62,9 @@ function Login() {
             <button type="submit" id="login_btn">
               <span>로 그 인</span>
             </button>
+          </div>
+          <div style={{ width: "85px", margin: "-50px auto 0px auto" }}>
+            <Link to="/member/findidpage">아이디 찾기</Link>
           </div>
         </form>
       </div>

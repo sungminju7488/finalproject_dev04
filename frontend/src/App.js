@@ -6,11 +6,14 @@ import auth from "./Logic/Auth";
 import Main from "./component/Main";
 import Join from "./component/Join";
 import Login from "./component/Login";
+import Quit from "./component/Quit";
 import BakeryMap from "./component/BakeryMap";
 import ChangeGradeConfirm from "./component/ChangeGradeConfirm";
 import JoinBakery from "./component/JoinBakery";
 import MyShop from "./component/MyShop";
 import Mypage from "./component/Mypage";
+import FindId from "./component/FindId";
+import FindIdResult from "./component/FindIdResult";
 import Modify from "./component/Modify";
 import ChangeBakery from "./component/ChangeBakery";
 import MenuList from "./component/MenuList";
@@ -39,14 +42,19 @@ class App extends Component {
           <Route exact path="/member/joinpage" component={Join} />
           <Route exact path="/member/loginpage" component={Login} />
           <Route exact path="/member/mypagepage" component={Mypage} />
+          <Route exact path="/member/findidpage" component={FindId} />
+          <Route
+            exact
+            path="/member/findidresultpage"
+            component={FindIdResult}
+          />
           <Route exact path="/member/changememberpage" component={Modify} />
           <Route
             exact
             path="/member/changegradeconfirmpage"
             component={ChangeGradeConfirm}
           />
-          <Route exact path="/member/mypagepage" component={Mypage} />
-          <Route exact path="/member/changememberpage" component={Modify} />
+          <Route exact path="/member/quitpage" component={Quit} />
           {/* 베이커리 */}
           <Route exact path="/bakery/joinbakerypage" component={JoinBakery} />
           <Route exact path="/bakery/myshoppage" component={MyShop} />
