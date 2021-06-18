@@ -115,8 +115,10 @@ const BakeryMap = () => {
           //중심 위치를 GPS로 가져온 값으로 세팅합니다.
           const options = {
             center: new kakao.maps.LatLng(
-              position.coords.latitude,
-              position.coords.longitude
+              // position.coords.latitude,
+              // position.coords.longitude
+              37.478929,
+              126.87904
             ),
             level: 3,
           };
@@ -126,8 +128,10 @@ const BakeryMap = () => {
 
           //마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다.
           const userLocPosition = new kakao.maps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude
+            // position.coords.latitude,
+            // position.coords.longitude
+            37.478929,
+            126.87904
           );
 
           //사용자의 마커를 표시한다.
@@ -157,7 +161,7 @@ const BakeryMap = () => {
   //베이커리 마커 표시 메서드
   function displayBakeryMarker(map, listData) {
     //베이커리 위치 정보
-    const bakeryPositions = bakeryDummyData(listData);
+    const bakeryPositions = bakeryLoadData(listData);
 
     //베이커리 마커 이미지
     var imageSrc =
@@ -214,16 +218,14 @@ const BakeryMap = () => {
   }
 
   //임시 빵집 더미데이터
-  function bakeryDummyData(listData) {
-    var testData = [];
-
-    console.log("length : " + listData.length);
+  function bakeryLoadData(listData) {
+    var BakeryListData = [];
 
     for (let i = 0; i < listData.length; i++) {
       const address =
         listData[i].storeAddress1 + " " + listData[i].storeAddress2;
 
-      testData.push({
+      BakeryListData.push({
         title: listData[i].storeName,
         latlng: new kakao.maps.LatLng(
           listData[i].latitude,
@@ -248,7 +250,7 @@ const BakeryMap = () => {
           `</div>`,
       });
     }
-    return testData;
+    return BakeryListData;
   }
 
   //로그인 상태에 따른 태그 구분
@@ -351,7 +353,7 @@ const BakeryMap = () => {
   function sideBakeryBtnHandler(BakeryData) {
     const copRegNum = BakeryData.copRegNum;
 
-    //TODO: 중앙잡기
+    //중앙잡기
     viewMap.setCenter(
       new kakao.maps.LatLng(BakeryData.latitude, BakeryData.longitude)
     );
@@ -457,7 +459,7 @@ const BakeryMap = () => {
           </div>
         ))}
         {/* 페이징 처리(react-js-pagination 라이브러리 사용) */}
-        <div style={{ width: "300px", margin: "0px auto" }}>
+        <div style={{ width: "250px", margin: "0px auto" }}>
           <ReactPaginate
             activePage={page}
             totalItemsCount={count}

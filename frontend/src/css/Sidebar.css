@@ -25,6 +25,12 @@
   border-left: 0;
 }
 
+.toggle-menu,
+.toggle-menu:focus {
+  border: 0;
+  outline: 0;
+}
+
 .sliderBakeryBtn {
   border: 0;
   outline: 0;
