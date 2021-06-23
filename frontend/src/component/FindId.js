@@ -5,7 +5,7 @@ import { Link, Redirect } from "react-router-dom";
 function FindId() {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [memberId, setMemberId] = useState("");
+  const [memberIdList, setMemberIdList] = useState([]);
   const [findSuccess, setFindSuccess] = useState(false);
 
   const FindIdHandler = (event) => {
@@ -18,7 +18,7 @@ function FindId() {
       .post("/findId", { email, phoneNumber })
       .then((res) => {
         if (res.data !== undefined) {
-          setMemberId(res.data);
+          setMemberIdList(res.data);
           setFindSuccess(true);
         } else {
           alert("해당 정보와 매칭되는 아이디가 존재하지 않습니다.");
@@ -33,7 +33,7 @@ function FindId() {
         to={{
           pathname: "/member/findidresultpage",
           state: {
-            memberId: memberId,
+            memberIdList: memberIdList,
           },
         }}
       />
