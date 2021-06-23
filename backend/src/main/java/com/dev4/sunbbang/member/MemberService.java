@@ -54,16 +54,12 @@ public class MemberService {
 		return returnList;
 	}
 	
-	public boolean findPassword(MemberVO memberVO){
-		if(memberRepository.findByPhoneNumberAndEmail(memberVO.getPhoneNumber(), memberVO.getEmail()).get()!=null) {
-			return true;
-		} else {
-			return false;
-		}
+	public AuthVO findPassword(MemberVO memberVO){
+		return new AuthVO(memberRepository.findByMemberIdAndPhoneNumberAndEmail(memberVO.getMemberId(), memberVO.getPhoneNumber(), memberVO.getEmail()).get()); 
 	}
 	
 	public void changePassword(MemberVO memberVO) {
-		memberRepository.save(memberVO);
+		memberRepository.findById(memberVO.getMemberSeq()).get().setPassword(memberVO.getPassword());
 	}
 	
 	public Optional<MemberVO> myPage(MemberVO memberVO){

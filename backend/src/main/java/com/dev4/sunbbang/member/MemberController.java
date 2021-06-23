@@ -55,9 +55,10 @@ public class MemberController {
 	}
 
 	@PostMapping("/findPassword")
-	public boolean findPassword(@RequestBody MemberVO memberVO) {
-		return memberService.findPassword(memberVO);
+	public Object findPassword(@RequestBody MemberVO memberVO) {
+		return gson.toJson(memberService.findPassword(memberVO));
 	}
+	
 	@PostMapping("/changePassword")
 	public boolean changePassword(@RequestBody MemberVO memberVO) {
 		try {
