@@ -13,6 +13,8 @@ public interface MemberRepository extends JpaRepository<MemberVO, Integer>{
 	
 	Optional<List<MemberVO>> findByPhoneNumberAndEmail(String phoneNumber, String email);
 	
+	Optional<MemberVO> findByMemberIdAndPhoneNumberAndEmail(String memberId, String phoneNumber, String email);
+	
 	Optional<MemberVO> findByMemberId(String memberId);
 	
 	Optional<MemberVO> deleteByMemberIdAndPassword(String memberId, String password);
