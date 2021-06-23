@@ -135,7 +135,7 @@ public class BakeryController {
 	}
 
 	@PostMapping("/bakery/deleteAlarm")
-	public Object deleteAlarm(@RequestBody MemberVO memberVO, @RequestBody FoodVO foodVO) {
+	public Object deleteAlarm(MemberVO memberVO, FoodVO foodVO) {
 		try {
 			bakeryService.deleteAlarm(memberVO, foodVO);
 			return true;

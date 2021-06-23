@@ -63,7 +63,8 @@ function MyPage() {
     axios
       .post("/bakery/deleteAlarm", formData)
       .then((res) => {
-        if (res.data === true) {
+        if (res.data !== null || res.data !== undefined) {
+          sessionStorage.setItem("alarmSet", res.data);
           alert("해당 빵 알람이 삭제되었습니다.");
           window.location.reload();
         } else {
@@ -230,8 +231,11 @@ function MyPage() {
             <tr key={index} style={{ textAlignLast: "center" }}>
               <td>
                 <button
+                  type="button"
                   onClick={(e) => removeAlarmHandler(e, obj.foodSeq)}
-                ></button>
+                >
+                  해제
+                </button>
               </td>
               <td>
                 <img
