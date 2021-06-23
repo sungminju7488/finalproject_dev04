@@ -193,7 +193,7 @@ public class BakeryService {
 		return mvo;
 	}
 
-	public void deleteAlarm(MemberVO memberVO, FoodVO foodVO) {
+	public String deleteAlarm(MemberVO memberVO, FoodVO foodVO) {
 		MemberVO vo = memberRepository.getById(memberVO.getMemberSeq());
 		StringTokenizer st = new StringTokenizer(vo.getAlarmSet());
 		String alarmSet = "";
@@ -203,6 +203,7 @@ public class BakeryService {
 				alarmSet += token + ",";
 		}
 		vo.setAlarmSet(alarmSet);
+		return alarmSet;
 	}
 
 	public Page<FoodVO> searchFood(PageVO pageVO) {

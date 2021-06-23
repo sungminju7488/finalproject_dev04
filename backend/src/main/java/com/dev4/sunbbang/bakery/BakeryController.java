@@ -136,12 +136,7 @@ public class BakeryController {
 
 	@PostMapping("/bakery/deleteAlarm")
 	public Object deleteAlarm(MemberVO memberVO, FoodVO foodVO) {
-		try {
-			bakeryService.deleteAlarm(memberVO, foodVO);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
+		return gson.toJson(bakeryService.deleteAlarm(memberVO, foodVO));
 	}
 
 	@PostMapping("/bakery/searchFood")
