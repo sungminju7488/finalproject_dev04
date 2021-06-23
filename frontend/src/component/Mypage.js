@@ -53,6 +53,26 @@ function MyPage() {
       .catch((err) => alert(err.response.data.msg));
   }, []);
 
+  function removeAlarmHandler(event, foodSeq) {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("memberSeq", auth.memberSeq);
+    formData.append("foodSeq", foodSeq);
+
+    axios
+      .post("/bakery/deleteAlarm", formData)
+      .then((res) => {
+        if (res.data === true) {
+          alert("해당 빵 알람이 삭제되었습니다.");
+          window.location.reload();
+        } else {
+          alert("해당 빵 알림 삭제를 실패하였습니다.");
+        }
+      })
+      .catch((err) => alert(err.response.data.msg));
+  }
+
   return (
     <div id="content" style={{ width: "600px" }}>
       <div id="header">
@@ -198,6 +218,7 @@ function MyPage() {
         <thead>
           <tr style={{ textAlignLast: "center" }}>
             <th>알림해제</th>
+            <th>이미지</th>
             <th>빵이름</th>
             <th>가게이름</th>
             <th>나오는시간</th>
@@ -207,6 +228,11 @@ function MyPage() {
         <tbody>
           {breadAlarmList.map((obj, index) => (
             <tr key={index} style={{ textAlignLast: "center" }}>
+              <td>
+                <button
+                  onClick={(e) => removeAlarmHandler(e, obj.foodSeq)}
+                ></button>
+              </td>
               <td>
                 <img
                   src={obj.foodPath}
