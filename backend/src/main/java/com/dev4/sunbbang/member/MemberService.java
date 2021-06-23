@@ -43,10 +43,10 @@ public class MemberService {
 		for(MemberVO vo : list) {
 			String id = vo.getMemberId();
 			if(id.length()<=7) {
-				id = id.substring(id.length()-3, id.length());
+				id = id.substring(0, id.length()-3);
 				id += "***";
 			} else {
-				id = id.substring(id.length()-4, id.length());
+				id = id.substring(0, id.length()-4);
 				id += "****";
 			}
 			returnList.add(id);

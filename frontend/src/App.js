@@ -13,7 +13,9 @@ import JoinBakery from "./component/JoinBakery";
 import MyShop from "./component/MyShop";
 import Mypage from "./component/Mypage";
 import FindId from "./component/FindId";
+import FindPassword from "./component/FindPassword";
 import FindIdResult from "./component/FindIdResult";
+import FindPasswordResult from "./component/FindPasswordResult";
 import Modify from "./component/Modify";
 import ChangeBakery from "./component/ChangeBakery";
 import MenuList from "./component/MenuList";
@@ -45,8 +47,18 @@ class App extends Component {
           <Route exact path="/member/findidpage" component={FindId} />
           <Route
             exact
+            path="/member/findpasswordpage"
+            component={FindPassword}
+          />
+          <Route
+            exact
             path="/member/findidresultpage"
             component={FindIdResult}
+          />
+          <Route
+            exact
+            path="/member/findpasswordresultpage"
+            component={FindPasswordResult}
           />
           <Route exact path="/member/changememberpage" component={Modify} />
           <Route

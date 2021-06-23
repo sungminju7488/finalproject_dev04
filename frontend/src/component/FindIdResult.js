@@ -15,7 +15,7 @@ function FindIdResult(props) {
       {props.location.state.memberIdList.map((obj, index) => (
         <div key={index}>
           <h3 className="join_title">
-            <label>아이디({index})</label>
+            <label>아이디({index + 1})</label>
           </h3>
           <span className="box var_id">
             <input

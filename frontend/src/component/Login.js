@@ -63,8 +63,10 @@ function Login() {
               <span>로 그 인</span>
             </button>
           </div>
-          <div style={{ width: "85px", margin: "-50px auto 0px auto" }}>
+          <div style={{ width: "230px", margin: "-50px auto 0px auto" }}>
             <Link to="/member/findidpage">아이디 찾기</Link>
+            &emsp;|&emsp;
+            <Link to="/member/findpasswordpage">비밀번호 찾기</Link>
           </div>
         </form>
       </div>
