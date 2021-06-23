@@ -134,10 +134,15 @@ public class BakeryController {
 		return gson.toJson(bakeryService.deleteAlarmApp(memberVO));
 	}
 
-//	@PostMapping("/bakery/deleteAlarm")
-//	public Object deleteAlarm(@RequestBody AuthVO authVO, @RequestBody FoodVO foodVO) {
-//		return gson.toJson(bakeryService.deleteAlarm(authVO, foodVO));
-//	}
+	@PostMapping("/bakery/deleteAlarm")
+	public Object deleteAlarm(@RequestBody MemberVO memberVO, @RequestBody FoodVO foodVO) {
+		try {
+			bakeryService.deleteAlarm(memberVO, foodVO);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 	@PostMapping("/bakery/searchFood")
 	public Object searchFood(PageVO pageVO) {
