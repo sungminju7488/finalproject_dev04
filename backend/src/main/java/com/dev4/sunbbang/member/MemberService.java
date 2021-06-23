@@ -1,6 +1,8 @@
 package com.dev4.sunbbang.member;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +37,21 @@ public class MemberService {
 		return authVO;
 	}
 	
-	public String findId(MemberVO memberVO){
-		return memberRepository.findByPhoneNumberAndEmail(memberVO.getPhoneNumber(), memberVO.getEmail()).get().getMemberId();
+	public List<String> findId(MemberVO memberVO){
+		List<MemberVO> list = memberRepository.findByPhoneNumberAndEmail(memberVO.getPhoneNumber(), memberVO.getEmail()).get();
+		List<String> returnList = new ArrayList<String>();
+		for(MemberVO vo : list) {
+			String id = vo.getMemberId();
+			if(id.length()<=7) {
+				id = id.substring(id.length()-3, id.length());
+				id += "***";
+			} else {
+				id = id.substring(id.length()-4, id.length());
+				id += "****";
+			}
+			returnList.add(id);
+		}
+		return returnList;
 	}
 	
 	public boolean findPassword(MemberVO memberVO){
