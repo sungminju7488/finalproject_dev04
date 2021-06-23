@@ -193,17 +193,17 @@ public class BakeryService {
 		return mvo;
 	}
 
-//	public MemberVO deleteAlarm(AuthVO authVO, FoodVO foodVO) {
-//		StringTokenizer st = new StringTokenizer(authVO.getAlarmSet());
-//		String alarmSet = "";
-//		while (st.hasMoreTokens()) {
-//			int token = Integer.parseInt(st.nextToken(","));
-//			if (foodVO.getFoodSeq() != token)
-//				alarmSet += token + ",";
-//		}
-//		memberRepository.modifyToAlarmSet(alarmSet, authVO.getMemberSeq());
-//		return memberRepository.findById(authVO.getMemberSeq()).get();
-//	}
+	public void deleteAlarm(MemberVO memberVO, FoodVO foodVO) {
+		MemberVO vo = memberRepository.getById(memberVO.getMemberSeq());
+		StringTokenizer st = new StringTokenizer(vo.getAlarmSet());
+		String alarmSet = "";
+		while (st.hasMoreTokens()) {
+			int token = Integer.parseInt(st.nextToken(","));
+			if (foodVO.getFoodSeq() != token)
+				alarmSet += token + ",";
+		}
+		vo.setAlarmSet(alarmSet);
+	}
 
 	public Page<FoodVO> searchFood(PageVO pageVO) {
 		Page<FoodVO> page = foodRepository
